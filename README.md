@@ -18,5 +18,5 @@ This service manages the core functionalities for an e-commerce platform, includ
 - **Real-time Discounts**: Apply discounts (volume-based, seasonal) automatically.
 - **Automated Checkout**: Automatically apply promotions at checkout.
 
-### 4. **Product Recommendation** (Optional) 🤖
+### 4. **Product Recommendations** (Optional) 🤖
 - **Suggestions**: Suggest related products based on user purchase and browsing history.
