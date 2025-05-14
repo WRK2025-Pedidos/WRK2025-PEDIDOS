@@ -31,4 +31,14 @@ public class OrderLinesTest {
 
         assertEquals(uuid, orderLines.getProduct());
     }
+
+    @Test
+    void setter_quantity_test() {
+
+        OrderLines orderLines = new OrderLines();
+
+        orderLines.setQuantity(1);
+
+        assertEquals(1, orderLines.getQuantity());
+    }
 }
