@@ -18,5 +18,4 @@ class OrdersApplicationTests {
 
         assertTrue(true);
     }
-
 }
