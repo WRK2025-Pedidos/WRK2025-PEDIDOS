@@ -51,4 +51,23 @@ public class OrderLinesTest {
 
         assertEquals(true, orderLines.getRefund());
     }
+
+    @Test
+    void getter_equals_test() {
+
+        UUID uuid = UUID.randomUUID();
+
+        OrderLines orderLines1 = new OrderLines();
+
+        orderLines1.setProduct(uuid);
+        orderLines1.setQuantity(1);
+        orderLines1.setRefund(true);
+
+        OrderLines orderLines2 = new OrderLines();
+        orderLines2.setProduct(uuid);
+        orderLines2.setQuantity(1);
+        orderLines2.setRefund(true);
+
+        assertEquals(orderLines1, orderLines2);
+    }
 }
