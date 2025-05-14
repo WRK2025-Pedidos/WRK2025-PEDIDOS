@@ -58,9 +58,9 @@ class OrderTest {
         Order order = new Order();
         Double countryTax = 1.0;
 
-        order.setCountrytax(countryTax);
+        order.setCountryTax(countryTax);
 
-        assertEquals(countryTax, order.getCountrytax());
+        assertEquals(countryTax, order.getCountryTax());
     }
 
     @Test
@@ -68,9 +68,9 @@ class OrderTest {
         Order order = new Order();
         Double paymenthMethod = 1.0;
 
-        order.setPaymenthMethod(paymenthMethod);
+        order.setPaymentMethod(paymenthMethod);
 
-        assertEquals(paymenthMethod, order.getPaymenthMethod());
+        assertEquals(paymenthMethod, order.getPaymentMethod());
     }
 
 
