@@ -18,7 +18,7 @@ public class OrderLinesTest {
         assertNull(orderLines.getProduct());
         assertEquals(0, orderLines.getQuantity());
         assertNull(orderLines.getRefund());
-
+        assertNull(orderLines.getLineWeight());
     }
 
     @Test
@@ -52,6 +52,26 @@ public class OrderLinesTest {
         assertEquals(true, orderLines.getRefund());
     }
 
+    @Test
+    void setter_line_weight_test() {
+
+        OrderLines orderLines = new OrderLines();
+
+        orderLines.setLineWeight(1.0);
+
+        assertEquals(1.0, orderLines.getLineWeight());
+    }
+
+    @Test
+    void setter_line_price_test() {
+
+        OrderLines orderLines = new OrderLines();
+
+        orderLines.setLinePrice(1.0);
+
+        assertEquals(1.0, orderLines.getLinePrice());
+    }
+  
     @Test
     void getter_equals_test() {
 
