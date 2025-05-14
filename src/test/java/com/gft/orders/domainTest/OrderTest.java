@@ -11,10 +11,17 @@ import java.util.UUID;
 import static org.junit.jupiter.api.Assertions.*;
 
 class OrderTest {
-    @Test
+   @Test
     void constructor_Test() {
+
         Order order = new Order();
-        assertNotNull(order);
+
+        assertNull(order.getId());
+        assertNull(order.getCartId());
+        assertNull(order.getCreationDate());
+        assertNull(order.getOrderLines());
+        assertNull(order.getOffers());
+
     }
 
     @Test
