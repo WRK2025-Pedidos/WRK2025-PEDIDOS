@@ -1,4 +1,4 @@
-package com.gft.pedidos;
+package com.gft.orders;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
