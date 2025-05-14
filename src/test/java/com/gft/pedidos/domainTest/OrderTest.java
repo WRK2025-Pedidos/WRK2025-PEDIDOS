@@ -72,9 +72,22 @@ class OrderTest {
         assertEquals(offers, order.getOffers());
     }
 
-//    @Test
-//    void equals_Test() {
-//
-//    }
 
+    @Test
+    void equals_Test() {
+        UUID id = UUID.randomUUID();
+        UUID cartId = UUID.randomUUID();
+
+        Order order1 = new Order();
+        order1.setId(id);
+        order1.setCartId(cartId);
+
+        Order order2 = new Order();
+        order2.setId(id);
+        order2.setCartId(cartId);
+
+        order2.setOffers(List.of());
+
+        assertEquals(order1, order2);
+    }
 }
