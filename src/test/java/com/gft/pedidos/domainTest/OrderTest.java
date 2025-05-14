@@ -3,7 +3,6 @@ package com.gft.pedidos.domainTest;
 import com.gft.pedidos.domain.model.Order;
 import com.gft.pedidos.domain.model.OrderLines;
 import org.junit.jupiter.api.Test;
-import org.springframework.boot.test.context.SpringBootTest;
 
 import java.time.LocalDate;
 import java.util.List;
