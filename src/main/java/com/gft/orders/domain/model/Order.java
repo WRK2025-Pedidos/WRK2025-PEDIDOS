@@ -16,6 +16,9 @@ import java.util.UUID;
 public class Order {
     UUID id;
     UUID cartId;
+    Double totalPrice;
+    Double countrytax;
+    Double paymenthMethod;
     LocalDate creationDate;
     List<OrderLines> orderLines;
     List<UUID> offers;

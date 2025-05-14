@@ -44,6 +44,37 @@ class OrderTest {
     }
 
     @Test
+    void setAndGetTotalPrice_Test() {
+        Order order = new Order();
+        Double totalPrice = 1.0;
+
+        order.setTotalPrice(totalPrice);
+
+        assertEquals(totalPrice, order.getTotalPrice());
+    }
+
+    @Test
+    void setAndGetCountryTax_Test() {
+        Order order = new Order();
+        Double countryTax = 1.0;
+
+        order.setCountrytax(countryTax);
+
+        assertEquals(countryTax, order.getCountrytax());
+    }
+
+    @Test
+    void setAndGetPaymenthMethod_Test() {
+        Order order = new Order();
+        Double paymenthMethod = 1.0;
+
+        order.setPaymenthMethod(paymenthMethod);
+
+        assertEquals(paymenthMethod, order.getPaymenthMethod());
+    }
+
+
+    @Test
     void setAndGetCreationDate_Test() {
         Order order = new Order();
         LocalDate creationDate = LocalDate.now();
