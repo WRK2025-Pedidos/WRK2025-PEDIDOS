@@ -1,13 +1,10 @@
 package com.gft.orders.domain.model;
 
 import lombok.Data;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
 
 import java.util.UUID;
 
-@Getter
-@NoArgsConstructor
+@Data
 public class OrderLines {
 
   UUID product;
