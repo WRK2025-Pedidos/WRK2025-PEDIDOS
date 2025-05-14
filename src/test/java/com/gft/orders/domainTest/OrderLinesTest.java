@@ -64,6 +64,15 @@ public class OrderLinesTest {
     }
 
     @Test
+    void setter_line_price_test() {
+
+        OrderLines orderLines = new OrderLines();
+
+        orderLines.setLinePrice(1.0);
+
+        assertEquals(1.0, orderLines.getLinePrice());
+    }
+    @Test
     void getter_equals_test() {
 
         UUID uuid = UUID.randomUUID();
