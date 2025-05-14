@@ -18,6 +18,9 @@ class OrderTest {
 
         assertNull(order.getId());
         assertNull(order.getCartId());
+        assertNull(order.getTotalPrice());
+        assertNull(order.getCountrytax());
+        assertNull(order.getPaymenthMethod());
         assertNull(order.getCreationDate());
         assertNull(order.getOrderLines());
         assertNull(order.getOffers());
@@ -42,6 +45,36 @@ class OrderTest {
         order.setCartId(cartId);
 
         assertEquals(cartId, order.getCartId());
+    }
+
+    @Test
+    void setAndGetTotalPrice_Test() {
+        Order order = new Order();
+        Double totalPrice = 1.0;
+
+        order.setTotalPrice(totalPrice);
+
+        assertEquals(totalPrice, order.getTotalPrice());
+    }
+
+    @Test
+    void setAndGetCountryTax_Test() {
+        Order order = new Order();
+        Double countryTax = 1.0;
+
+        order.setCountrytax(countryTax);
+
+        assertEquals(countryTax, order.getCountrytax());
+    }
+
+    @Test
+    void setAndGetPaymenthMethod_Test() {
+        Order order = new Order();
+        Double paymenthMethod = 1.0;
+
+        order.setPaymenthMethod(paymenthMethod);
+
+        assertEquals(paymenthMethod, order.getPaymenthMethod());
     }
 
     @Test
