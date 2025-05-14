@@ -41,4 +41,14 @@ public class OrderLinesTest {
 
         assertEquals(1, orderLines.getQuantity());
     }
+
+    @Test
+    void setter_refund_test() {
+
+        OrderLines orderLines = new OrderLines();
+
+        orderLines.setRefund(true);
+
+        assertEquals(true, orderLines.getRefund());
+    }
 }
