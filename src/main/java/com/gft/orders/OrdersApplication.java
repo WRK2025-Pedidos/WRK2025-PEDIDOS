@@ -1,13 +1,13 @@
-package com.gft.pedidos;
+package com.gft.orders;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class PedidosApplication {
+public class OrdersApplication {
 
     public static void main(String[] args) {
-        SpringApplication.run(PedidosApplication.class, args);
+        SpringApplication.run(OrdersApplication.class, args);
     }
 
 }
