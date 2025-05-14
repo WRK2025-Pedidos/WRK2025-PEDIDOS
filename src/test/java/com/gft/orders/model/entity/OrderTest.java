@@ -1,7 +1,7 @@
-package com.gft.orders.domainTest;
+package com.gft.orders.model.entity;
 
-import com.gft.orders.domain.model.Order;
-import com.gft.orders.domain.model.OrderLines;
+import com.gft.orders.domain.model.entity.Order;
+import com.gft.orders.domain.model.valueObject.OrderLines;
 import org.junit.jupiter.api.Test;
 
 import java.time.LocalDate;
