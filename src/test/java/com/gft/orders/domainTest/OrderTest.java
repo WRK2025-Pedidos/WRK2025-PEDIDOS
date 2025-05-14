@@ -21,7 +21,6 @@ class OrderTest {
         assertNull(order.getCreationDate());
         assertNull(order.getOrderLines());
         assertNull(order.getOffers());
-
     }
 
     @Test
@@ -96,3 +95,4 @@ class OrderTest {
         assertEquals(order1, order2);
     }
 }
+
