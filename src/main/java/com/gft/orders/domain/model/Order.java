@@ -14,11 +14,12 @@ import java.util.UUID;
 @NoArgsConstructor
 @EqualsAndHashCode(of="id")
 public class Order {
+
     UUID id;
     UUID cartId;
     Double totalPrice;
-    Double countrytax;
-    Double paymenthMethod;
+    Double countryTax;
+    Double paymentMethod;
     LocalDate creationDate;
     List<OrderLines> orderLines;
     List<UUID> offers;
