@@ -1,6 +1,6 @@
-package com.gft.pedidos.domainTest;
+package com.gft.orders.domainTest;
 
-import com.gft.pedidos.domain.model.Order;
+import com.gft.orders.domain.model.Order;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 

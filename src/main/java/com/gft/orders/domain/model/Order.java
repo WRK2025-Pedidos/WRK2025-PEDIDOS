@@ -1,4 +1,4 @@
-package com.gft.pedidos.domain.model;
+package com.gft.orders.domain.model;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
