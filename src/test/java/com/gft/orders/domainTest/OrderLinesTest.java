@@ -54,6 +54,16 @@ public class OrderLinesTest {
     }
 
     @Test
+    void setter_line_weight_test() {
+
+        OrderLines orderLines = new OrderLines();
+
+        orderLines.setLineWeight(1.0);
+
+        assertEquals(1.0, orderLines.getLineWeight());
+    }
+
+    @Test
     void getter_equals_test() {
 
         UUID uuid = UUID.randomUUID();
