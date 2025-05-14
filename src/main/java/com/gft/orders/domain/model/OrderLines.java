@@ -10,5 +10,6 @@ public class OrderLines {
   UUID product;
   int quantity;
   Boolean refund;
-
+  Double LineWeight;
+  Double LinePrice;
 }

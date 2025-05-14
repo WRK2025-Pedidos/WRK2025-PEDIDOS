@@ -18,7 +18,8 @@ public class OrderLinesTest {
         assertNull(orderLines.getProduct());
         assertEquals(0, orderLines.getQuantity());
         assertNull(orderLines.getRefund());
-
+        assertNull(orderLines.getLineWeight());
+        assertNull(orderLines.getLinePrice());
     }
 
     @Test
