@@ -1,0 +1,73 @@
+package com.gft.orders.domainTest;
+
+import com.gft.orders.domain.model.OrderLines;
+import org.junit.jupiter.api.Test;
+
+import java.util.UUID;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNull;
+
+public class OrderLinesTest {
+
+    @Test
+    void no_arguments_constructor_test() {
+
+        OrderLines orderLines = new OrderLines();
+
+        assertNull(orderLines.getProduct());
+        assertEquals(0, orderLines.getQuantity());
+        assertNull(orderLines.getRefund());
+
+    }
+
+    @Test
+    void setter_product_test() {
+
+        OrderLines orderLines = new OrderLines();
+
+        UUID uuid = UUID.randomUUID();
+        orderLines.setProduct(uuid);
+
+        assertEquals(uuid, orderLines.getProduct());
+    }
+
+    @Test
+    void setter_quantity_test() {
+
+        OrderLines orderLines = new OrderLines();
+
+        orderLines.setQuantity(1);
+
+        assertEquals(1, orderLines.getQuantity());
+    }
+
+    @Test
+    void setter_refund_test() {
+
+        OrderLines orderLines = new OrderLines();
+
+        orderLines.setRefund(true);
+
+        assertEquals(true, orderLines.getRefund());
+    }
+
+    @Test
+    void getter_equals_test() {
+
+        UUID uuid = UUID.randomUUID();
+
+        OrderLines orderLines1 = new OrderLines();
+
+        orderLines1.setProduct(uuid);
+        orderLines1.setQuantity(1);
+        orderLines1.setRefund(true);
+
+        OrderLines orderLines2 = new OrderLines();
+        orderLines2.setProduct(uuid);
+        orderLines2.setQuantity(1);
+        orderLines2.setRefund(true);
+
+        assertEquals(orderLines1, orderLines2);
+    }
+}

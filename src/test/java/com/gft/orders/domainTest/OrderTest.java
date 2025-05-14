@@ -13,12 +13,19 @@ import static org.junit.jupiter.api.Assertions.*;
 class OrderTest {
     @Test
     void constructor_Test() {
+
         Order order = new Order();
-        assertNotNull(order);
+
+        assertNull(order.getId());
+        assertNull(order.getIdCart());
+        assertNull(order.getCreationDate());
+        assertNull(order.getOrderLines());
+        assertNull(order.getOffers());
     }
 
     @Test
     void setAndGetId_Test() {
+      
         Order order = new Order();
         UUID id = UUID.randomUUID();
 
@@ -29,6 +36,7 @@ class OrderTest {
 
     @Test
     void setAndGetCartId_Test() {
+      
         Order order = new Order();
         UUID cartId = UUID.randomUUID();
 
@@ -39,6 +47,7 @@ class OrderTest {
 
     @Test
     void setAndGetCreationDate_Test() {
+      
         Order order = new Order();
         LocalDate creationDate = LocalDate.now();
 
@@ -49,6 +58,7 @@ class OrderTest {
 
     @Test
     void setAndGetOrderLines_Test() {
+      
         Order order = new Order();
         OrderLines line = new OrderLines();
         List<OrderLines> orderLines = List.of(line);
@@ -60,6 +70,7 @@ class OrderTest {
 
     @Test
     void setAndGetOffers_Test() {
+      
         Order order = new Order();
         UUID offer1 = UUID.randomUUID();
         UUID offer2 = UUID.randomUUID();
@@ -73,6 +84,7 @@ class OrderTest {
 
     @Test
     void equals_Test() {
+      
         UUID id = UUID.randomUUID();
         UUID cartId = UUID.randomUUID();
 
