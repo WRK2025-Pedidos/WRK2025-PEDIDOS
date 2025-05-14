@@ -11,7 +11,6 @@ import java.util.UUID;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-@SpringBootTest
 class OrderTest {
     @Test
     void constructor_Test() {
