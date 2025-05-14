@@ -43,7 +43,6 @@ class OrderTest {
         assertEquals(cartId, order.getCartId());
     }
 
-
     @Test
     void setAndGetTotalPrice_Test() {
         Order order = new Order();
@@ -73,6 +72,7 @@ class OrderTest {
 
         assertEquals(paymenthMethod, order.getPaymenthMethod());
     }
+
 
     @Test
     void setAndGetCreationDate_Test() {
