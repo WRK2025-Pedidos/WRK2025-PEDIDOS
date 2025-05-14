@@ -1,67 +1,77 @@
 package com.gft.pedidos.domainTest;
 
 import com.gft.pedidos.domain.model.Order;
+import com.gft.pedidos.domain.model.OrderLines;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNull;
+import java.time.LocalDate;
+import java.util.List;
+import java.util.UUID;
+
+import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
 class OrderTest {
     @Test
     void constructor_Test() {
-
         Order order = new Order();
-
-        assertNull(order.getId());
-        assertNull(order.getIdCart());
-        assertNull(order.getCreationDate());
-        assertNull(order.getOrderLines());
-        assertNull(order.getOffers());
-
+        assertNotNull(order);
     }
-//
-//    @Test
-//    void getterId_Test() {
-//    }
-//
-//    @Test
-//    void getterIdCart_Test() {
-//    }
-//
-//    @Test
-//    void getterCreationDate_Test() {
-//    }
-//
-//    @Test
-//    void getterOrderLines_Test() {
-//    }
-//
-//    @Test
-//    void getterOffers_Test() {
-//    }
-//
-//    @Test
-//    void setterId_Test() {
-//    }
-//
-//    @Test
-//    void setterIdCart_Test() {
-//    }
-//
-//    @Test
-//    void setterCreationDate_Test() {
-//    }
-//
-//    @Test
-//    void setterOrderLines_Test() {
-//    }
-//
-//    @Test
-//    void setterOffers_Test() {
-//    }
-//
+
+    @Test
+    void setAndGetId_Test() {
+        Order order = new Order();
+        UUID id = UUID.randomUUID();
+
+        order.setId(id);
+
+        assertEquals(id, order.getId());
+    }
+
+    @Test
+    void setAndGetCartId_Test() {
+        Order order = new Order();
+        UUID cartId = UUID.randomUUID();
+
+        order.setCartId(cartId);
+
+        assertEquals(cartId, order.getCartId());
+    }
+
+    @Test
+    void setAndGetCreationDate_Test() {
+        Order order = new Order();
+        LocalDate creationDate = LocalDate.now();
+
+        order.setCreationDate(creationDate);
+
+        assertEquals(creationDate, order.getCreationDate());
+    }
+
+    @Test
+    void setAndGetOrderLines_Test() {
+        Order order = new Order();
+        OrderLines line = new OrderLines();
+        List<OrderLines> orderLines = List.of(line);
+
+        order.setOrderLines(orderLines);
+
+        assertEquals(orderLines, order.getOrderLines());
+    }
+
+    @Test
+    void setAndGetOffers_Test() {
+        Order order = new Order();
+        UUID offer1 = UUID.randomUUID();
+        UUID offer2 = UUID.randomUUID();
+        List<UUID> offers = List.of(offer1, offer2);
+
+        order.setOffers(offers);
+
+        assertEquals(offers, order.getOffers());
+    }
+
 //    @Test
 //    void equals_Test() {
 //

@@ -2,15 +2,17 @@ package com.gft.pedidos.domain.model;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import java.time.LocalDate;
 import java.util.List;
 import java.util.UUID;
 @Getter
+@Setter
 @NoArgsConstructor
 public class Order {
     UUID id;
-    UUID idCart;
+    UUID cartId;
     LocalDate creationDate;
     List<OrderLines> orderLines;
     List<UUID> offers;
