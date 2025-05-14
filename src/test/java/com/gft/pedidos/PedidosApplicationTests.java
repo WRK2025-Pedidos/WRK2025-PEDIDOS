@@ -6,7 +6,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 @SpringBootTest
-class PedidosApplicationTests {
+class OrdersApplicationTests {
 
     @Test
     void contextLoads() {
@@ -14,7 +14,7 @@ class PedidosApplicationTests {
 
     @Test
     void test() {
-        PedidosApplication.main(new String[0]);
+        OrdersApplication.main(new String[0]);
 
         assertTrue(true);
     }
