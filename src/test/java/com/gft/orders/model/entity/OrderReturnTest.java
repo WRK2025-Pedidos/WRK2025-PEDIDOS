@@ -57,4 +57,14 @@ class OrderReturnTest {
 
         assertEquals(BigDecimal.valueOf(1.0), orderReturn.getTotalPrice());
     }
+
+    @Test
+    void getCountryTaxTest() {
+
+        OrderReturn orderReturn = new OrderReturn();
+
+        orderReturn.setCountryTax(2.0);
+
+        assertEquals(2.0, orderReturn.getCountryTax());
+    }
 }
