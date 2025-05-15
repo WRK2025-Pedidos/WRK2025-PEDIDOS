@@ -14,7 +14,7 @@ CREATE TABLE ORDERS(
     PRIMARY KEY (ID)
 );
 
-CREATE TABLE RETURNS(
+CREATE TABLE ORDER_RETURNS(
     ID                  UUID                 NOT NULL,
     ORDER_ID            UUID                 NOT NULL,
     CREATION_DATE       TIMESTAMP            NOT NULL,
@@ -25,21 +25,20 @@ CREATE TABLE RETURNS(
 
 CREATE TABLE ORDER_LINES (
      ORDER_ID            UUID                ,
-     RETURN_ID           UUID                ,
+     ORDER_RETURN_ID           UUID                ,
      PRODUCT             UUID                NOT NULL,
      QUANTITY            INT                 NOT NULL,
      LINE_WEIGHT         DOUBLE              NOT NULL,
      PRODUCT_PRICE       DECIMAL(10,3)       NOT NULL,
      LINE_PRICE          DECIMAL(10,3)       NOT NULL,
      FOREIGN KEY (ORDER_ID) REFERENCES ORDERS(ID),
-     FOREIGN KEY (RETURN_ID) REFERENCES RETURNS(ID),
+     FOREIGN KEY (ORDER_RETURN_ID) REFERENCES ORDER_RETURNS(ID),
      CHECK (
-         (ORDER_ID IS NOT NULL AND RETURN_ID IS NULL)
+         (ORDER_ID IS NOT NULL AND ORDER_RETURN_ID IS NULL)
              OR
-         (ORDER_ID IS NULL AND RETURN_ID IS NOT NULL)
+         (ORDER_ID IS NULL AND ORDER_RETURN_ID IS NOT NULL)
          )
 );
-
 
 CREATE TABLE ORDER_OFFERS(
     ORDER_ID            UUID                NOT NULL,
