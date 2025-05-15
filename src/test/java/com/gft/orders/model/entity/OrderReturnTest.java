@@ -35,4 +35,15 @@ class OrderReturnTest {
 
         assertEquals(id, orderReturn.getId());
     }
+
+    @Test
+    void getOrderIdTest() {
+
+        OrderReturn orderReturn = new OrderReturn();
+        UUID id = UUID.randomUUID();
+
+        orderReturn.setOrderId(id);
+
+        assertEquals(id, orderReturn.getOrderId());
+    }
 }
