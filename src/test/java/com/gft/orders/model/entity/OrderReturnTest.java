@@ -4,6 +4,7 @@ import com.gft.orders.domain.model.entity.OrderReturn;
 import org.junit.jupiter.api.Test;
 
 import java.math.BigDecimal;
+import java.time.LocalDate;
 import java.util.UUID;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -76,5 +77,16 @@ class OrderReturnTest {
         orderReturn.setPaymentMethod(0.3);
 
         assertEquals(0.3, orderReturn.getPaymentMethod());
+    }
+
+    @Test
+    void getCreationDateTest() {
+
+        OrderReturn orderReturn = new OrderReturn();
+        LocalDate date = LocalDate.now();
+
+        orderReturn.setCreationDate(date);
+
+        assertEquals(date, orderReturn.getCreationDate());
     }
 }
