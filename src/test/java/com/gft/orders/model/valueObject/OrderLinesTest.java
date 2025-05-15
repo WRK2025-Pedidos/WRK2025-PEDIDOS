@@ -3,6 +3,7 @@ package com.gft.orders.model.valueObject;
 import com.gft.orders.domain.model.valueObject.OrderLines;
 import org.junit.jupiter.api.Test;
 
+import java.math.BigDecimal;
 import java.util.UUID;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -67,9 +68,9 @@ public class OrderLinesTest {
 
         OrderLines orderLines = new OrderLines();
 
-        orderLines.setLinePrice(1.0);
+        orderLines.setLinePrice(BigDecimal.valueOf(1.0));
 
-        assertEquals(1.0, orderLines.getLinePrice());
+        assertEquals(BigDecimal.valueOf(1.0), orderLines.getLinePrice());
     }
   
     @Test
