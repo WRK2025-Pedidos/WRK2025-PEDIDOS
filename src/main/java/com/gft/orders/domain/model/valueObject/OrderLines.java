@@ -12,7 +12,6 @@ public class OrderLines {
 
   private UUID product;
   private int quantity;
-  private Boolean refund;
   private Double LineWeight;
   private BigDecimal LinePrice;
   

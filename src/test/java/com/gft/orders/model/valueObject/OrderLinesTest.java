@@ -18,7 +18,6 @@ public class OrderLinesTest {
 
         assertNull(orderLines.getProduct());
         assertEquals(0, orderLines.getQuantity());
-        assertNull(orderLines.getRefund());
         assertNull(orderLines.getLineWeight());
     }
 
@@ -41,16 +40,6 @@ public class OrderLinesTest {
         orderLines.setQuantity(1);
 
         assertEquals(1, orderLines.getQuantity());
-    }
-
-    @Test
-    void setter_refund_test() {
-
-        OrderLines orderLines = new OrderLines();
-
-        orderLines.setRefund(true);
-
-        assertEquals(true, orderLines.getRefund());
     }
 
     @Test
@@ -79,15 +68,12 @@ public class OrderLinesTest {
         UUID uuid = UUID.randomUUID();
 
         OrderLines orderLines1 = new OrderLines();
-
         orderLines1.setProduct(uuid);
         orderLines1.setQuantity(1);
-        orderLines1.setRefund(true);
 
         OrderLines orderLines2 = new OrderLines();
         orderLines2.setProduct(uuid);
         orderLines2.setQuantity(1);
-        orderLines2.setRefund(true);
 
         assertEquals(orderLines1, orderLines2);
     }
