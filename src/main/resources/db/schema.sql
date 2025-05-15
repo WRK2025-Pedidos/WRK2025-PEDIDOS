@@ -5,8 +5,8 @@
 -- ******************************************************
 
 CREATE TABLE ORDERS(
-    ID                  BIGINT              NOT NULL,
-    CART_ID             BIG_INT             NOT NULL,
+    ID                  UUID                NOT NULL,
+    CART_ID             UUID                NOT NULL,
     CREATION_DATE       TIMESTAMP           NOT NULL,
     TOTAL_PRICE         DECIMAL(10, 3)      NOT NULL,
     COUNTRY_TAX         DOUBLE              NOT NULL,
@@ -14,9 +14,18 @@ CREATE TABLE ORDERS(
     PRIMARY KEY (ID)
 );
 
+CREATE TABLE RETURNS(
+   ID                  UUID                 NOT NULL,
+   ORDER_ID            UUID                 NOT NULL,
+   CREATION_DATE       TIMESTAMP            NOT NULL,
+   TOTAL_PRICE         DECIMAL(10, 3)       NOT NULL,
+   PRIMARY KEY (ID),
+   FOREIGN KEY (ORDER_ID) REFERENCES ORDERS (ID)
+);
+
 CREATE TABLE ORDER_LINES(
-    ORDER_ID            BIGINT              NOT NULL,
-    PRODUCT             BIGINT              NOT NULL,
+    ORDER_ID            UUID                NOT NULL,
+    PRODUCT             UUID                NOT NULL,
     QUANTITY            INT                 NOT NULL,
     LINE_WEIGHT         DOUBLE              NOT NULL,
     PRODUCT_PRICE       DECIMAL(10, 3)      NOT NULL,
@@ -25,7 +34,7 @@ CREATE TABLE ORDER_LINES(
 );
 
 CREATE TABLE ORDER_OFFERS(
-    ORDER_ID            BIGINT              NOT NULL,
-    OFFER_ID            BIGINT              NOT NULL,
+    ORDER_ID            UUID                NOT NULL,
+    OFFER_ID            UUID                NOT NULL,
     FOREIGN KEY (ORDER_ID) REFERENCES ORDERS (ID)
 );
