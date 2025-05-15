@@ -1,10 +1,13 @@
 package com.gft.orders.model.entity;
 
 import com.gft.orders.domain.model.entity.OrderReturn;
+import com.gft.orders.domain.model.valueObject.OrderLines;
 import org.junit.jupiter.api.Test;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -88,5 +91,27 @@ class OrderReturnTest {
         orderReturn.setCreationDate(date);
 
         assertEquals(date, orderReturn.getCreationDate());
+    }
+
+    @Test
+    void getOrderLinesTest() {
+
+        OrderReturn orderReturn = new OrderReturn();
+        List<OrderLines> orderLines = new ArrayList<>();
+
+        orderReturn.setOrderLines(orderLines);
+
+        assertEquals(orderLines, orderReturn.getOrderLines());
+    }
+
+    @Test
+    void getOffersTest() {
+
+        OrderReturn orderReturn = new OrderReturn();
+        List<UUID> offers = new ArrayList<>();
+
+        orderReturn.setOffers(offers);
+
+        assertEquals(offers, orderReturn.getOffers());
     }
 }
