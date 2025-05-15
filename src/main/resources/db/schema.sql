@@ -15,26 +15,35 @@ CREATE TABLE ORDERS(
 );
 
 CREATE TABLE RETURNS(
-   ID                  UUID                 NOT NULL,
-   ORDER_ID            UUID                 NOT NULL,
-   CREATION_DATE       TIMESTAMP            NOT NULL,
-   TOTAL_PRICE         DECIMAL(10, 3)       NOT NULL,
-   PRIMARY KEY (ID),
-   FOREIGN KEY (ORDER_ID) REFERENCES ORDERS (ID)
-);
-
-CREATE TABLE ORDER_LINES(
-    ORDER_ID            UUID                NOT NULL,
-    PRODUCT             UUID                NOT NULL,
-    QUANTITY            INT                 NOT NULL,
-    LINE_WEIGHT         DOUBLE              NOT NULL,
-    PRODUCT_PRICE       DECIMAL(10, 3)      NOT NULL,
-    LINE_PRICE          DECIMAL(10, 3)      NOT NULL
+    ID                  UUID                 NOT NULL,
+    ORDER_ID            UUID                 NOT NULL,
+    CREATION_DATE       TIMESTAMP            NOT NULL,
+    TOTAL_PRICE         DECIMAL(10, 3)       NOT NULL,
+    PRIMARY KEY (ID),
     FOREIGN KEY (ORDER_ID) REFERENCES ORDERS (ID)
 );
+
+CREATE TABLE ORDER_LINES (
+     ID                  UUID PRIMARY KEY,
+     ORDER_ID            UUID,
+     RETURN_ID           UUID,
+     PRODUCT             UUID NOT NULL,
+     QUANTITY            INT NOT NULL,
+     LINE_WEIGHT         DOUBLE NOT NULL,
+     PRODUCT_PRICE       DECIMAL(10,3) NOT NULL,
+     LINE_PRICE          DECIMAL(10,3) NOT NULL,
+     FOREIGN KEY (ORDER_ID) REFERENCES ORDERS(ID),
+     FOREIGN KEY (RETURN_ID) REFERENCES RETURNS(ID),
+     CHECK (
+         (ORDER_ID IS NOT NULL AND RETURN_ID IS NULL)
+             OR
+         (ORDER_ID IS NULL AND RETURN_ID IS NOT NULL)
+         )
+);
+
 
 CREATE TABLE ORDER_OFFERS(
     ORDER_ID            UUID                NOT NULL,
     OFFER_ID            UUID                NOT NULL,
-    FOREIGN KEY (ORDER_ID) REFERENCES ORDERS (ID)
+    FOREIGN KEY (ORDER_ID) REFERENCES ORDERS (ID), RETURNS (ID)
 );
