@@ -1,6 +1,7 @@
 package com.gft.orders.domain.model.entity;
 
 import com.gft.orders.domain.model.valueObject.OrderLines;
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -13,6 +14,7 @@ import java.util.UUID;
 @Getter
 @Setter
 @NoArgsConstructor
+@EqualsAndHashCode(of = "id")
 public class OrderReturn {
 
     UUID id;

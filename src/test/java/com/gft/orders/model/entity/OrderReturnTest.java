@@ -114,4 +114,18 @@ class OrderReturnTest {
 
         assertEquals(offers, orderReturn.getOffers());
     }
+
+    @Test
+    void equalsTest() {
+
+        OrderReturn orderReturn = new OrderReturn();
+        OrderReturn orderReturn2 = new OrderReturn();
+
+        UUID id = UUID.randomUUID();
+
+        orderReturn.setId(id);
+        orderReturn2.setId(id);
+
+        assertEquals(orderReturn, orderReturn2);
+    }
 }
