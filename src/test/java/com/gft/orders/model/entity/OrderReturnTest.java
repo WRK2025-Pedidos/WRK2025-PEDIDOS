@@ -3,6 +3,7 @@ package com.gft.orders.model.entity;
 import com.gft.orders.domain.model.entity.OrderReturn;
 import org.junit.jupiter.api.Test;
 
+import java.math.BigDecimal;
 import java.util.UUID;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -45,5 +46,15 @@ class OrderReturnTest {
         orderReturn.setOrderId(id);
 
         assertEquals(id, orderReturn.getOrderId());
+    }
+
+    @Test
+    void getTotalPriceTest() {
+
+        OrderReturn orderReturn = new OrderReturn();
+
+        orderReturn.setTotalPrice(BigDecimal.valueOf(1.0));
+
+        assertEquals(BigDecimal.valueOf(1.0), orderReturn.getTotalPrice());
     }
 }
