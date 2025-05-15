@@ -4,6 +4,7 @@ import com.gft.orders.domain.model.entity.Order;
 import com.gft.orders.domain.model.valueObject.OrderLines;
 import org.junit.jupiter.api.Test;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.UUID;
@@ -18,6 +19,9 @@ class OrderTest {
 
         assertNull(order.getId());
         assertNull(order.getCartId());
+        assertNull(order.getTotalPrice());
+        assertNull(order.getCountryTax());
+        assertNull(order.getPaymentMethod());
         assertNull(order.getCreationDate());
         assertNull(order.getOrderLines());
         assertNull(order.getOffers());
@@ -46,7 +50,7 @@ class OrderTest {
     @Test
     void setAndGetTotalPrice_Test() {
         Order order = new Order();
-        Double totalPrice = 1.0;
+        BigDecimal totalPrice = new BigDecimal("1.00");
 
         order.setTotalPrice(totalPrice);
 
@@ -64,15 +68,14 @@ class OrderTest {
     }
 
     @Test
-    void setAndGetPaymenthMethod_Test() {
+    void setAndGetPaymentMethod_Test() {
         Order order = new Order();
-        Double paymenthMethod = 1.0;
+        Double paymentMethod = 1.0;
 
-        order.setPaymentMethod(paymenthMethod);
+        order.setPaymentMethod(paymentMethod);
 
-        assertEquals(paymenthMethod, order.getPaymentMethod());
+        assertEquals(paymentMethod, order.getPaymentMethod());
     }
-
 
     @Test
     void setAndGetCreationDate_Test() {
