@@ -6,6 +6,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.UUID;
@@ -18,7 +19,7 @@ public class Order {
 
     UUID id;
     UUID cartId;
-    Double totalPrice;
+    BigDecimal totalPrice;
     Double countryTax;
     Double paymentMethod;
     LocalDate creationDate;

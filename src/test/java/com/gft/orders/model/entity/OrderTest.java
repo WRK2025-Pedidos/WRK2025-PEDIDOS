@@ -4,6 +4,7 @@ import com.gft.orders.domain.model.entity.Order;
 import com.gft.orders.domain.model.valueObject.OrderLines;
 import org.junit.jupiter.api.Test;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.UUID;
@@ -49,7 +50,7 @@ class OrderTest {
     @Test
     void setAndGetTotalPrice_Test() {
         Order order = new Order();
-        Double totalPrice = 1.0;
+        BigDecimal totalPrice = new BigDecimal("1.00");
 
         order.setTotalPrice(totalPrice);
 

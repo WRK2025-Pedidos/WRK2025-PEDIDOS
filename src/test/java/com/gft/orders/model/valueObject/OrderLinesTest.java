@@ -3,6 +3,7 @@ package com.gft.orders.model.valueObject;
 import com.gft.orders.domain.model.valueObject.OrderLines;
 import org.junit.jupiter.api.Test;
 
+import java.math.BigDecimal;
 import java.util.UUID;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -17,7 +18,6 @@ public class OrderLinesTest {
 
         assertNull(orderLines.getProduct());
         assertEquals(0, orderLines.getQuantity());
-        assertNull(orderLines.getRefund());
         assertNull(orderLines.getLineWeight());
     }
 
@@ -43,16 +43,6 @@ public class OrderLinesTest {
     }
 
     @Test
-    void setter_refund_test() {
-
-        OrderLines orderLines = new OrderLines();
-
-        orderLines.setRefund(true);
-
-        assertEquals(true, orderLines.getRefund());
-    }
-
-    @Test
     void setter_line_weight_test() {
 
         OrderLines orderLines = new OrderLines();
@@ -67,9 +57,9 @@ public class OrderLinesTest {
 
         OrderLines orderLines = new OrderLines();
 
-        orderLines.setLinePrice(1.0);
+        orderLines.setLinePrice(BigDecimal.valueOf(1.0));
 
-        assertEquals(1.0, orderLines.getLinePrice());
+        assertEquals(BigDecimal.valueOf(1.0), orderLines.getLinePrice());
     }
   
     @Test
@@ -78,15 +68,12 @@ public class OrderLinesTest {
         UUID uuid = UUID.randomUUID();
 
         OrderLines orderLines1 = new OrderLines();
-
         orderLines1.setProduct(uuid);
         orderLines1.setQuantity(1);
-        orderLines1.setRefund(true);
 
         OrderLines orderLines2 = new OrderLines();
         orderLines2.setProduct(uuid);
         orderLines2.setQuantity(1);
-        orderLines2.setRefund(true);
 
         assertEquals(orderLines1, orderLines2);
     }
