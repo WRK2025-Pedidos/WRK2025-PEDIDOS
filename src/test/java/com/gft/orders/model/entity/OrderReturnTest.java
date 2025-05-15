@@ -67,4 +67,14 @@ class OrderReturnTest {
 
         assertEquals(2.0, orderReturn.getCountryTax());
     }
+
+    @Test
+    void getPaymentMethodTest() {
+
+        OrderReturn orderReturn = new OrderReturn();
+
+        orderReturn.setPaymentMethod(0.3);
+
+        assertEquals(0.3, orderReturn.getPaymentMethod());
+    }
 }
