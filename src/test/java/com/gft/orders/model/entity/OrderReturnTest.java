@@ -3,6 +3,9 @@ package com.gft.orders.model.entity;
 import com.gft.orders.domain.model.entity.OrderReturn;
 import org.junit.jupiter.api.Test;
 
+import java.util.UUID;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNull;
 
 class OrderReturnTest {
@@ -22,5 +25,14 @@ class OrderReturnTest {
         assertNull(orderReturn.getOffers());
     }
 
+    @Test
+    void getIdTest() {
 
+        OrderReturn orderReturn = new OrderReturn();
+        UUID id = UUID.randomUUID();
+
+        orderReturn.setId(id);
+
+        assertEquals(id, orderReturn.getId());
+    }
 }
