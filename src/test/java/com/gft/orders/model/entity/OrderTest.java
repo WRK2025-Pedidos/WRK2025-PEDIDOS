@@ -1,7 +1,7 @@
-package com.gft.orders.domainTest;
+package com.gft.orders.model.entity;
 
-import com.gft.orders.domain.model.Order;
-import com.gft.orders.domain.model.OrderLines;
+import com.gft.orders.domain.model.entity.Order;
+import com.gft.orders.domain.model.valueObject.OrderLines;
 import org.junit.jupiter.api.Test;
 
 import java.time.LocalDate;
@@ -19,8 +19,8 @@ class OrderTest {
         assertNull(order.getId());
         assertNull(order.getCartId());
         assertNull(order.getTotalPrice());
-        assertNull(order.getCountrytax());
-        assertNull(order.getPaymenthMethod());
+        assertNull(order.getCountryTax());
+        assertNull(order.getPaymentMethod());
         assertNull(order.getCreationDate());
         assertNull(order.getOrderLines());
         assertNull(order.getOffers());
@@ -61,19 +61,19 @@ class OrderTest {
         Order order = new Order();
         Double countryTax = 1.0;
 
-        order.setCountrytax(countryTax);
+        order.setCountryTax(countryTax);
 
-        assertEquals(countryTax, order.getCountrytax());
+        assertEquals(countryTax, order.getCountryTax());
     }
 
     @Test
-    void setAndGetPaymenthMethod_Test() {
+    void setAndGetPaymentMethod_Test() {
         Order order = new Order();
-        Double paymenthMethod = 1.0;
+        Double paymentMethod = 1.0;
 
-        order.setPaymenthMethod(paymenthMethod);
+        order.setPaymentMethod(paymentMethod);
 
-        assertEquals(paymenthMethod, order.getPaymenthMethod());
+        assertEquals(paymentMethod, order.getPaymentMethod());
     }
 
     @Test

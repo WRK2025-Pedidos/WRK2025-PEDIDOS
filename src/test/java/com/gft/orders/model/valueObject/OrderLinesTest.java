@@ -1,6 +1,6 @@
-package com.gft.orders.domainTest;
+package com.gft.orders.model.valueObject;
 
-import com.gft.orders.domain.model.OrderLines;
+import com.gft.orders.domain.model.valueObject.OrderLines;
 import org.junit.jupiter.api.Test;
 
 import java.util.UUID;
