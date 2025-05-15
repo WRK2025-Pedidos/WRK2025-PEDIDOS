@@ -24,14 +24,13 @@ CREATE TABLE RETURNS(
 );
 
 CREATE TABLE ORDER_LINES (
-     ID                  UUID PRIMARY KEY,
-     ORDER_ID            UUID,
-     RETURN_ID           UUID,
-     PRODUCT             UUID NOT NULL,
-     QUANTITY            INT NOT NULL,
-     LINE_WEIGHT         DOUBLE NOT NULL,
-     PRODUCT_PRICE       DECIMAL(10,3) NOT NULL,
-     LINE_PRICE          DECIMAL(10,3) NOT NULL,
+     ORDER_ID            UUID                ,
+     RETURN_ID           UUID                ,
+     PRODUCT             UUID                NOT NULL,
+     QUANTITY            INT                 NOT NULL,
+     LINE_WEIGHT         DOUBLE              NOT NULL,
+     PRODUCT_PRICE       DECIMAL(10,3)       NOT NULL,
+     LINE_PRICE          DECIMAL(10,3)       NOT NULL,
      FOREIGN KEY (ORDER_ID) REFERENCES ORDERS(ID),
      FOREIGN KEY (RETURN_ID) REFERENCES RETURNS(ID),
      CHECK (
