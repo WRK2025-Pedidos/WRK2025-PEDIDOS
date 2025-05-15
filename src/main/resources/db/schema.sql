@@ -16,7 +16,8 @@ CREATE TABLE ORDER_LINES(
     PRODUCT             BIGINT              NOT NULL,
     QUANTITY            INT                 NOT NULL,
     LINE_WEIGHT         DOUBLE              NOT NULL,
-    LINE_PRICE          DOUBLE              NOT NULL,
+    PRODUCT_PRICE       DECIMAL(10, 3)      NOT NULL,
+    LINE_PRICE          DECIMAL(10, 3)      NOT NULL,
     REFUND              BOOLEAN             NOT NULL
     FOREIGN KEY (ORDER_ID) REFERENCES ORDERS (ID)
 );
