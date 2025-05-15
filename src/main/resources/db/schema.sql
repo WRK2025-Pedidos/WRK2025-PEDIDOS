@@ -8,6 +8,9 @@ CREATE TABLE ORDERS(
     ID                  BIGINT              NOT NULL,
     CART_ID             BIG_INT             NOT NULL,
     CREATION_DATE       TIMESTAMP           NOT NULL,
+    TOTAL_PRICE         DECIMAL(10, 3)      NOT NULL,
+    COUNTRY_TAX         DOUBLE              NOT NULL,
+    PAYMENT_METHOD      DOUBLE              NOT NULL,
     PRIMARY KEY (ID)
 );
 
