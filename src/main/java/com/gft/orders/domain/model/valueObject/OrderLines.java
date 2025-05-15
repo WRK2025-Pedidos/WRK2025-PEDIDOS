@@ -15,5 +15,6 @@ public class OrderLines {
   private Boolean refund;
   private Double LineWeight;
   private BigDecimal LinePrice;
+  
 }
 
