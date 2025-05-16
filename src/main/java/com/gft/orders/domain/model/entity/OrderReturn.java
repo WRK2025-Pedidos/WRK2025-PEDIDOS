@@ -1,15 +1,7 @@
 package com.gft.orders.domain.model.entity;
 
-<<<<<<< HEAD
-import com.gft.orders.domain.model.valueObject.OrderLine;
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-=======
 import com.gft.orders.domain.model.valueObject.OrderLines;
 import lombok.*;
->>>>>>> origin/main
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
@@ -21,21 +13,16 @@ import java.util.UUID;
 @Getter
 @Setter
 @NoArgsConstructor
-@EqualsAndHashCode(of="id")
-public class Order {
+@EqualsAndHashCode(of = "id")
+public class OrderReturn {
 
     UUID id;
-    UUID cartId;
+    UUID orderId;
     BigDecimal totalPrice;
     Double countryTax;
     Double paymentMethod;
-<<<<<<< HEAD
-    LocalDate creationDate;
-    List<OrderLine> orderLines;
-=======
     LocalDateTime creationDate;
     List<OrderLines> orderLines;
->>>>>>> origin/main
     List<UUID> offers;
 
 }
