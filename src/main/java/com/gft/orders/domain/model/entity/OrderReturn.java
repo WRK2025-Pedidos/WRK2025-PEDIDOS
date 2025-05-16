@@ -13,11 +13,11 @@ import java.util.UUID;
 @Getter
 @Setter
 @NoArgsConstructor
-@EqualsAndHashCode(of="id")
-public class Order {
+@EqualsAndHashCode(of = "id")
+public class OrderReturn {
 
     UUID id;
-    UUID cartId;
+    UUID orderId;
     BigDecimal totalPrice;
     Double countryTax;
     Double paymentMethod;

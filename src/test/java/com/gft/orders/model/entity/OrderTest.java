@@ -5,7 +5,7 @@ import com.gft.orders.domain.model.valueObject.OrderLines;
 import org.junit.jupiter.api.Test;
 
 import java.math.BigDecimal;
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.UUID;
 
@@ -80,7 +80,7 @@ class OrderTest {
     @Test
     void setAndGetCreationDate_Test() {
         Order order = new Order();
-        LocalDate creationDate = LocalDate.now();
+        LocalDateTime creationDate = LocalDateTime.now();
 
         order.setCreationDate(creationDate);
 
