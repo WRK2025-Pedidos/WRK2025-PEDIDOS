@@ -7,12 +7,4 @@ import java.util.UUID;
 
 public interface OrderRepository extends JpaRepository<Order, UUID> {
 
-//    void create(Order order);
-//    Optional<Order> findById(UUID id);
-//    List<Order> findAll(Order order);
-//    void update(Order order);
-
-    void modifyStockProduct(UUID id, UUID productId, int quantity);
-    void reviewPromotion(UUID id);
-
 }

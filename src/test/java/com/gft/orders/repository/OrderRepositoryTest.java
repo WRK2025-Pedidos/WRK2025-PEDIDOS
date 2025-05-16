@@ -3,7 +3,6 @@ package com.gft.orders.repository;
 import com.gft.orders.domain.model.entity.Order;
 import com.gft.orders.domain.model.valueObject.OrderLine;
 import com.gft.orders.domain.repository.OrderRepository;
-import lombok.Data;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
@@ -59,32 +58,6 @@ public class OrderRepositoryTest {
         order.setTotalPrice(BigDecimal.valueOf(888.00));
         Order updated = orderRepository.save(order);
         assertEquals(BigDecimal.valueOf(888.00), updated.getTotalPrice());
-    }
-
-    @Test
-    public void modifyStockProduct_Test() {
-        Order order = createTestOrder();
-        UUID productId = order.getOrderLines().get(0).getProduct();
-        order = orderRepository.save(order);
-
-        for (OrderLine line : order.getOrderLines()) {
-            if (line.getProduct().equals(productId)) {
-                line.setQuantity(10);
-            }
-        }
-
-        Order updated = orderRepository.save(order);
-        assertEquals(10, updated.getOrderLines().get(0).getQuantity());
-    }
-
-    @Test
-    public void reviewPromotion_Test() {
-        Order order = createTestOrder();
-        UUID offerId =UUID.randomUUID();
-        order.setOffers(List.of(offerId));
-        order = orderRepository.save(order);
-
-        assertFalse(order.getOffers().isEmpty());
     }
 
     private Order createTestOrder() {
