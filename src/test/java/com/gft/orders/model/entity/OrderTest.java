@@ -1,6 +1,6 @@
 package com.gft.orders.model.entity;
 
-import com.gft.orders.domain.model.entity.Order;
+import com.gft.orders.domain.model.entity.OrderEntity;
 import com.gft.orders.domain.model.valueObject.OrderLine;
 import org.junit.jupiter.api.Test;
 
@@ -15,7 +15,7 @@ class OrderTest {
    @Test
     void constructor_Test() {
 
-        Order order = new Order();
+        OrderEntity order = new OrderEntity();
 
         assertNull(order.getId());
         assertNull(order.getCartId());
@@ -23,13 +23,13 @@ class OrderTest {
         assertNull(order.getCountryTax());
         assertNull(order.getPaymentMethod());
         assertNull(order.getCreationDate());
-        assertNull(order.getOrderLines());
+        assertNull(order.getOrderLine());
         assertNull(order.getOffers());
     }
 
     @Test
     void setAndGetId_Test() {
-        Order order = new Order();
+        OrderEntity order = new OrderEntity();
         UUID id = UUID.randomUUID();
 
         order.setId(id);
@@ -39,7 +39,7 @@ class OrderTest {
 
     @Test
     void setAndGetCartId_Test() {
-        Order order = new Order();
+        OrderEntity order = new OrderEntity();
         UUID cartId = UUID.randomUUID();
 
         order.setCartId(cartId);
@@ -49,7 +49,7 @@ class OrderTest {
 
     @Test
     void setAndGetTotalPrice_Test() {
-        Order order = new Order();
+        OrderEntity order = new OrderEntity();
         BigDecimal totalPrice = new BigDecimal("1.00");
 
         order.setTotalPrice(totalPrice);
@@ -59,7 +59,7 @@ class OrderTest {
 
     @Test
     void setAndGetCountryTax_Test() {
-        Order order = new Order();
+        OrderEntity order = new OrderEntity();
         Double countryTax = 1.0;
 
         order.setCountryTax(countryTax);
@@ -69,7 +69,7 @@ class OrderTest {
 
     @Test
     void setAndGetPaymentMethod_Test() {
-        Order order = new Order();
+        OrderEntity order = new OrderEntity();
         Double paymentMethod = 1.0;
 
         order.setPaymentMethod(paymentMethod);
@@ -79,7 +79,7 @@ class OrderTest {
 
     @Test
     void setAndGetCreationDate_Test() {
-        Order order = new Order();
+        OrderEntity order = new OrderEntity();
         LocalDateTime creationDate = LocalDateTime.now();
 
         order.setCreationDate(creationDate);
@@ -89,18 +89,18 @@ class OrderTest {
 
     @Test
     void setAndGetOrderLines_Test() {
-        Order order = new Order();
+        OrderEntity order = new OrderEntity();
         OrderLine line = new OrderLine();
-        List<OrderLine> orderLines = List.of(line);
+        List<OrderLine> orderLine = List.of(line);
 
-        order.setOrderLines(orderLines);
+        order.setOrderLine(orderLine);
 
-        assertEquals(orderLines, order.getOrderLines());
+        assertEquals(orderLine, order.getOrderLine());
     }
 
     @Test
     void setAndGetOffers_Test() {
-        Order order = new Order();
+        OrderEntity order = new OrderEntity();
         UUID offer1 = UUID.randomUUID();
         UUID offer2 = UUID.randomUUID();
         List<UUID> offers = List.of(offer1, offer2);
@@ -116,11 +116,11 @@ class OrderTest {
         UUID id = UUID.randomUUID();
         UUID cartId = UUID.randomUUID();
 
-        Order order1 = new Order();
+        OrderEntity order1 = new OrderEntity();
         order1.setId(id);
         order1.setCartId(cartId);
 
-        Order order2 = new Order();
+        OrderEntity order2 = new OrderEntity();
         order2.setId(id);
         order2.setCartId(cartId);
 
