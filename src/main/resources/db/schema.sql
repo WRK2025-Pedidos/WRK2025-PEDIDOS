@@ -40,8 +40,9 @@ CREATE TABLE ORDER_LINES (
          )
 );
 
-CREATE TABLE ORDER_OFFERS(
-    ORDER_ID            UUID                NOT NULL,
-    OFFER_ID            UUID                NOT NULL,
-    FOREIGN KEY (ORDER_ID) REFERENCES ORDERS (ID), RETURNS (ID)
+CREATE TABLE ORDER_OFFERS (
+    ORDER_ID UUID NOT NULL,
+    OFFER_ID UUID NOT NULL,
+    PRIMARY KEY (order_id, offer_id),
+    FOREIGN KEY (order_id) REFERENCES orders(id)
 );

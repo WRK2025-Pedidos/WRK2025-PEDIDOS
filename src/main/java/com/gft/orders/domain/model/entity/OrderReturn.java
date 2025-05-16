@@ -8,6 +8,7 @@ import lombok.Setter;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.UUID;
 
@@ -22,7 +23,7 @@ public class OrderReturn {
     BigDecimal totalPrice;
     Double countryTax;
     Double paymentMethod;
-    LocalDate creationDate;
+    LocalDateTime creationDate;
     List<OrderLines> orderLines;
     List<UUID> offers;
 

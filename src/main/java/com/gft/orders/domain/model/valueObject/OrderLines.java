@@ -1,5 +1,6 @@
 package com.gft.orders.domain.model.valueObject;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Embeddable;
 import lombok.Data;
 
@@ -12,8 +13,8 @@ public class OrderLines {
 
   private UUID product;
   private int quantity;
-  private Double LineWeight;
-  private BigDecimal LinePrice;
+  private Double lineWeight;
+  private BigDecimal linePrice;
   
 }
 
