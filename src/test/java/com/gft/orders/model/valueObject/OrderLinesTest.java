@@ -6,8 +6,7 @@ import org.junit.jupiter.api.Test;
 import java.math.BigDecimal;
 import java.util.UUID;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.*;
 
 public class OrderLinesTest {
 
@@ -53,6 +52,18 @@ public class OrderLinesTest {
     }
 
     @Test
+    void getter_productPrice_test() {
+
+        OrderLines orderLines = new OrderLines();
+
+        BigDecimal price = BigDecimal.valueOf(1.0);
+
+        orderLines.setProductPrice(price);
+
+        assertEquals(price, orderLines.getProductPrice());
+    }
+
+    @Test
     void setter_line_price_test() {
 
         OrderLines orderLines = new OrderLines();
@@ -63,7 +74,7 @@ public class OrderLinesTest {
     }
   
     @Test
-    void getter_equals_test() {
+    void equals_test() {
 
         UUID uuid = UUID.randomUUID();
 
@@ -76,5 +87,23 @@ public class OrderLinesTest {
         orderLines2.setQuantity(1);
 
         assertEquals(orderLines1, orderLines2);
+    }
+
+    @Test
+    void not_equals_test() {
+
+        UUID uuid = UUID.randomUUID();
+
+        OrderLines orderLines1 = new OrderLines();
+        orderLines1.setProduct(uuid);
+        orderLines1.setQuantity(1);
+        orderLines1.setProductPrice(BigDecimal.valueOf(1.0));
+
+        OrderLines orderLines2 = new OrderLines();
+        orderLines2.setProduct(uuid);
+        orderLines2.setQuantity(1);
+        orderLines2.setProductPrice(BigDecimal.valueOf(2.0));
+
+        assertNotEquals(orderLines1, orderLines2);
     }
 }
