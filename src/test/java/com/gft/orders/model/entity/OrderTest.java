@@ -1,7 +1,7 @@
 package com.gft.orders.model.entity;
 
 import com.gft.orders.domain.model.entity.Order;
-import com.gft.orders.domain.model.valueObject.OrderLines;
+import com.gft.orders.domain.model.valueObject.OrderLine;
 import org.junit.jupiter.api.Test;
 
 import java.math.BigDecimal;
@@ -90,8 +90,8 @@ class OrderTest {
     @Test
     void setAndGetOrderLines_Test() {
         Order order = new Order();
-        OrderLines line = new OrderLines();
-        List<OrderLines> orderLines = List.of(line);
+        OrderLine line = new OrderLine();
+        List<OrderLine> orderLines = List.of(line);
 
         order.setOrderLines(orderLines);
 

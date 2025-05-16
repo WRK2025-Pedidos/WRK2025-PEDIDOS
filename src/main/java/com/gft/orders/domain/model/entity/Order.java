@@ -1,6 +1,6 @@
 package com.gft.orders.domain.model.entity;
 
-import com.gft.orders.domain.model.valueObject.OrderLines;
+import com.gft.orders.domain.model.valueObject.OrderLine;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -23,7 +23,7 @@ public class Order {
     Double countryTax;
     Double paymentMethod;
     LocalDate creationDate;
-    List<OrderLines> orderLines;
+    List<OrderLine> orderLines;
     List<UUID> offers;
 
 }

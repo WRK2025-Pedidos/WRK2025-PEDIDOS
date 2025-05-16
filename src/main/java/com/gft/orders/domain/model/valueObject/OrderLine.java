@@ -8,7 +8,7 @@ import java.util.UUID;
 
 @Data
 @Embeddable
-public class OrderLines {
+public class OrderLine {
 
   private UUID product;
   private int quantity;
