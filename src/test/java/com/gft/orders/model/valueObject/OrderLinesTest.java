@@ -1,6 +1,8 @@
 package com.gft.orders.model.valueObject;
 
 import com.gft.orders.domain.model.valueObject.OrderLines;
+import org.instancio.Instancio;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.math.BigDecimal;
@@ -10,20 +12,24 @@ import static org.junit.jupiter.api.Assertions.*;
 
 public class OrderLinesTest {
 
+    OrderLines orderLines;
+
+    @BeforeEach
+    void setUp() {
+        initData();
+    }
     @Test
     void no_arguments_constructor_test() {
 
-        OrderLines orderLines = new OrderLines();
+        OrderLines orderLinesConstructor = new OrderLines();
 
-        assertNull(orderLines.getProduct());
-        assertEquals(0, orderLines.getQuantity());
-        assertNull(orderLines.getLineWeight());
+        assertNull(orderLinesConstructor.getProduct());
+        assertEquals(0, orderLinesConstructor.getQuantity());
+        assertNull(orderLinesConstructor.getLineWeight());
     }
 
     @Test
     void setter_product_test() {
-
-        OrderLines orderLines = new OrderLines();
 
         UUID uuid = UUID.randomUUID();
         orderLines.setProduct(uuid);
@@ -34,8 +40,6 @@ public class OrderLinesTest {
     @Test
     void setter_quantity_test() {
 
-        OrderLines orderLines = new OrderLines();
-
         orderLines.setQuantity(1);
 
         assertEquals(1, orderLines.getQuantity());
@@ -44,8 +48,6 @@ public class OrderLinesTest {
     @Test
     void setter_line_weight_test() {
 
-        OrderLines orderLines = new OrderLines();
-
         orderLines.setLineWeight(1.0);
 
         assertEquals(1.0, orderLines.getLineWeight());
@@ -53,8 +55,6 @@ public class OrderLinesTest {
 
     @Test
     void getter_productPrice_test() {
-
-        OrderLines orderLines = new OrderLines();
 
         BigDecimal price = BigDecimal.valueOf(1.0);
 
@@ -65,8 +65,6 @@ public class OrderLinesTest {
 
     @Test
     void setter_line_price_test() {
-
-        OrderLines orderLines = new OrderLines();
 
         orderLines.setLinePrice(BigDecimal.valueOf(1.0));
 
@@ -105,5 +103,12 @@ public class OrderLinesTest {
         orderLines2.setProductPrice(BigDecimal.valueOf(2.0));
 
         assertNotEquals(orderLines1, orderLines2);
+    }
+
+    /***********PRIVATE METHODS***********/
+    private void initData() {
+
+        orderLines = Instancio.create(OrderLines.class);
+
     }
 }
