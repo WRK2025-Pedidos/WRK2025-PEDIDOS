@@ -2,10 +2,7 @@ package com.gft.orders.infraestructure.persistence;
 
 import com.gft.orders.domain.model.valueObject.OrderLines;
 import jakarta.persistence.*;
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
@@ -13,6 +10,7 @@ import java.time.LocalDateTime;
 import java.util.List;
 import java.util.UUID;
 
+@Generated
 @Entity
 @Table(name = "ORDERS")
 @Getter
