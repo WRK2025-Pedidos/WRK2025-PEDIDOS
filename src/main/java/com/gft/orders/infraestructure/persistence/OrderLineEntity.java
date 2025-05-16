@@ -2,10 +2,12 @@ package com.gft.orders.infraestructure.persistence;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Embeddable;
+import lombok.Generated;
 
 import java.math.BigDecimal;
 import java.util.UUID;
 
+@Generated
 @Embeddable
 public class OrderLineEntity {
 
