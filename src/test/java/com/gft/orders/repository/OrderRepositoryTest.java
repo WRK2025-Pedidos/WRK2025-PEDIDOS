@@ -27,6 +27,7 @@ public class OrderRepositoryTest {
     @Test
     public void create_Test() {
         OrderEntity order = new OrderEntity();
+        order.setId(UUID.randomUUID());
         OrderEntity saved = orderRepository.save(order);
         assertNotNull(saved.getId());
     }
