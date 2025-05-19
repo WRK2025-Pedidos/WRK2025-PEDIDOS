@@ -19,7 +19,7 @@ public class OrderLineTest {
         initData();
     }
     @Test
-    void no_arguments_constructor_test() {
+    void noArgumentsConstructor_Test() {
 
         OrderLine orderLineConstructor = new OrderLine();
 
@@ -29,7 +29,7 @@ public class OrderLineTest {
     }
 
     @Test
-    void setter_product_test() {
+    void setterProduct_Test() {
 
         UUID uuid = UUID.randomUUID();
         orderLine.setProduct(uuid);
@@ -38,7 +38,7 @@ public class OrderLineTest {
     }
 
     @Test
-    void setter_quantity_test() {
+    void setterQuantity_Test() {
 
         orderLine.setQuantity(1);
 
@@ -46,7 +46,7 @@ public class OrderLineTest {
     }
 
     @Test
-    void setter_line_weight_test() {
+    void setterLineWeight_Test() {
 
         orderLine.setLineWeight(1.0);
 
@@ -54,7 +54,7 @@ public class OrderLineTest {
     }
 
     @Test
-    void getter_productPrice_test() {
+    void getterProductPrice_Test() {
 
         BigDecimal price = BigDecimal.valueOf(1.0);
 
@@ -64,7 +64,7 @@ public class OrderLineTest {
     }
 
     @Test
-    void setter_line_price_test() {
+    void setterLinePrice_Test() {
 
         orderLine.setLinePrice(BigDecimal.valueOf(1.0));
 
@@ -72,7 +72,7 @@ public class OrderLineTest {
     }
   
     @Test
-    void equals_test() {
+    void equals_Test() {
 
         UUID uuid = UUID.randomUUID();
 
@@ -88,7 +88,7 @@ public class OrderLineTest {
     }
 
     @Test
-    void not_equals_test() {
+    void notEquals_Test() {
 
         UUID uuid = UUID.randomUUID();
 
