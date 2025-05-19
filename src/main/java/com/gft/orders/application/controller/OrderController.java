@@ -2,11 +2,13 @@ package com.gft.orders.application.controller;
 
 import com.gft.orders.application.dto.OrderDTO;
 import com.gft.orders.application.service.OrderServices;
+import com.gft.orders.domain.model.entity.Order;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import java.net.URI;
+import java.util.Optional;
 import java.util.UUID;
 
 @RestController
@@ -25,17 +27,21 @@ public class OrderController {
 
         view = view.toUpperCase();
         if (view.equals("ALL")) {
-            response = orderServices.findAllOrders();
+            return ResponseEntity.ok(orderServices.findAllOrders());
         }
 
-        return ResponseEntity.ok(response);
+        return ResponseEntity.badRequest().body("El parametro no esta soportado: " + view);
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<?> getOrderById(@PathVariable UUID id) {
-        return orderServices.findOrderById(id)
-                .map(ResponseEntity::ok)
-                .orElseGet(() -> ResponseEntity.notFound().build());
+        Optional<Order> optional = orderServices.findOrderById(id);
+
+        if (optional.isPresent()) {
+            return ResponseEntity.ok(optional.get());
+        }
+
+        return ResponseEntity.notFound().build();
     }
 
     @PostMapping
