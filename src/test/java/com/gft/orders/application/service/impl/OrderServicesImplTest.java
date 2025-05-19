@@ -73,6 +73,18 @@ public class OrderServicesImplTest {
         assertEquals(order, optional.get());
     }
 
+    @Test
+    void shouldNotFindOrder() {
+
+        UUID uuid = UUID.randomUUID();
+
+        when(orderRepository.findById(uuid)).thenReturn(Optional.empty());
+
+        Optional<Order> optional = orderServicesImpl.findOrderById(uuid);
+
+        assertTrue(optional.isEmpty());
+    }
+
     /***************PRIVATE METHODS***********/
     private void initObjects() {
 
