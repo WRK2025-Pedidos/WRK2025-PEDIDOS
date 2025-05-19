@@ -13,7 +13,7 @@ import java.util.UUID;
 @Setter
 @NoArgsConstructor
 @EqualsAndHashCode(of="id")
-public class OrderEntity {
+public class Order {
 
     UUID id;
     UUID cartId;
