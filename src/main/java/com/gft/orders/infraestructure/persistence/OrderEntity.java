@@ -13,9 +13,7 @@ import java.util.UUID;
 @Generated
 @Entity
 @Table(name = "ORDERS")
-@Getter
-@Setter
-@NoArgsConstructor
+@Data
 @EqualsAndHashCode(of = "id")
 public class OrderEntity {
 

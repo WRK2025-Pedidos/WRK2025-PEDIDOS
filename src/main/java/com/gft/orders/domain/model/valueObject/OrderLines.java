@@ -8,11 +8,7 @@ import java.math.BigDecimal;
 import java.util.UUID;
 
 @Generated
-@Getter
-@Setter
-@NoArgsConstructor
-@AllArgsConstructor
-@EqualsAndHashCode
+@Data
 @Embeddable
 public class OrderLines {
 
