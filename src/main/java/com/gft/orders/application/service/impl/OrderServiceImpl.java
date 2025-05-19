@@ -1,5 +1,6 @@
 package com.gft.orders.application.service.impl;
 
+import com.gft.orders.application.dto.OrderDTO;
 import com.gft.orders.application.service.OrderServices;
 import com.gft.orders.domain.model.entity.Order;
 import com.gft.orders.domain.repository.OrderRepository;
@@ -42,6 +43,16 @@ public class OrderServiceImpl implements OrderServices {
 
     @Override
     public List<Order> findAllOrders() {
-        return List.of();
+
+        return convertList(orderRepository.findAll());
+    }
+
+
+    /*******PRIVATE METHODS********/
+    private List<Order> convertList(List<OrderEntity> orderEntities) {
+
+        return orderEntities.stream()
+                .map(x -> mapper.map(x, Order.class))
+                .toList();
     }
 }
