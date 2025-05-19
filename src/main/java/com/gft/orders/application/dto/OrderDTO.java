@@ -14,5 +14,5 @@ public record OrderDTO(UUID cartId,
                        Double paymentMethod,
                        LocalDateTime creationDate,
                        List<OrderLine> orderLines,
-                       List<UUID> offers) implements Serializable {
-}
+                       List<UUID> offers)
+        implements Serializable {}
