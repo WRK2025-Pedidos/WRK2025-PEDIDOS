@@ -14,6 +14,8 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
+import java.util.Arrays;
+import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -33,9 +35,11 @@ public class OrderServicesImplTest {
     @InjectMocks
     private OrderServicesImpl orderServicesImpl;
 
-    private Order order;
+    private Order order1;
+    private Order order2;
     private OrderDTO orderDTO;
     private OrderEntity orderEntity1;
+    private OrderEntity orderEntity2;
 
     @BeforeEach
     public void setUp() {
@@ -65,12 +69,12 @@ public class OrderServicesImplTest {
         UUID uuid = UUID.randomUUID();
 
         when(orderRepository.findById(uuid)).thenReturn(Optional.of(orderEntity1));
-        when(mapper.map(orderEntity1, Order.class)).thenReturn(order);
+        when(mapper.map(orderEntity1, Order.class)).thenReturn(order1);
 
         Optional<Order> optional = orderServicesImpl.findOrderById(uuid);
 
         assertTrue(optional.isPresent());
-        assertEquals(order, optional.get());
+        assertEquals(order1, optional.get());
     }
 
     @Test
@@ -85,11 +89,28 @@ public class OrderServicesImplTest {
         assertTrue(optional.isEmpty());
     }
 
+    @Test
+    void findAllOrders() {
+
+        List<Order> ordersExpected = Arrays.asList(order1, order2);
+
+        when(orderRepository.findAll()).thenReturn(Arrays.asList(orderEntity1, orderEntity2));
+        when(mapper.map(orderEntity1, Order.class)).thenReturn(order1);
+        when(mapper.map(orderEntity2, Order.class)).thenReturn(order2);
+
+        List<Order> result = orderServicesImpl.findAllOrders();
+
+        assertEquals(2, result.size());
+        assertTrue(result.containsAll(ordersExpected));
+    }
+
     /***************PRIVATE METHODS***********/
     private void initObjects() {
 
-        order = Instancio.create(Order.class);
+        order1 = Instancio.create(Order.class);
+        order2 = Instancio.create(Order.class);
         orderDTO = Instancio.create(OrderDTO.class);
         orderEntity1 = Instancio.create(OrderEntity.class);
+        orderEntity2 = Instancio.create(OrderEntity.class);
     }
 }
