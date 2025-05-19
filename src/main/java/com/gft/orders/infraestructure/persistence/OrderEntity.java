@@ -12,9 +12,7 @@ import java.util.UUID;
 @Generated
 @Entity
 @Table(name = "ORDERS")
-@Getter
-@Setter
-@NoArgsConstructor
+@Data
 @EqualsAndHashCode(of = "id")
 public class OrderEntity {
 
@@ -31,7 +29,7 @@ public class OrderEntity {
 
     @ElementCollection(fetch = FetchType.EAGER)
     @JoinTable(name = "ORDER_LINES", joinColumns = @JoinColumn(name = "ORDER_ID"))
-    List<OrderLine> orderLine;
+    List<OrderLine> orderLines;
 
     @OneToMany
     List<OrderOfferEntity> offers;

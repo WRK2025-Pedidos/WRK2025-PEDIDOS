@@ -27,22 +27,21 @@ class OrderReturnTest {
     @Test
     void constructorTest() {
 
-        OrderReturn orderReturn = new OrderReturn();
+        OrderReturn orderReturnConstructor = OrderReturn.builder().build();
 
-        assertNull(orderReturn.getId());
-        assertNull(orderReturn.getOrderId());
-        assertNull(orderReturn.getTotalPrice());
-        assertNull(orderReturn.getCountryTax());
-        assertNull(orderReturn.getPaymentMethod());
-        assertNull(orderReturn.getCreationDate());
-        assertNull(orderReturn.getOrderLine());
-        assertNull(orderReturn.getOffers());
+        assertNull(orderReturnConstructor.getId());
+        assertNull(orderReturnConstructor.getOrderId());
+        assertNull(orderReturnConstructor.getTotalPrice());
+        assertNull(orderReturnConstructor.getCountryTax());
+        assertNull(orderReturnConstructor.getPaymentMethod());
+        assertNull(orderReturnConstructor.getCreationDate());
+        assertNull(orderReturnConstructor.getOrderLines());
+        assertNull(orderReturnConstructor.getOffers());
     }
 
     @Test
     void getIdTest() {
 
-        OrderReturn orderReturn = new OrderReturn();
         UUID id = UUID.randomUUID();
 
         orderReturn.setId(id);
@@ -53,7 +52,6 @@ class OrderReturnTest {
     @Test
     void getOrderIdTest() {
 
-        OrderReturn orderReturn = new OrderReturn();
         UUID id = UUID.randomUUID();
 
         orderReturn.setOrderId(id);
@@ -64,8 +62,6 @@ class OrderReturnTest {
     @Test
     void getTotalPriceTest() {
 
-        OrderReturn orderReturn = new OrderReturn();
-
         orderReturn.setTotalPrice(BigDecimal.valueOf(1.0));
 
         assertEquals(BigDecimal.valueOf(1.0), orderReturn.getTotalPrice());
@@ -73,8 +69,6 @@ class OrderReturnTest {
 
     @Test
     void getCountryTaxTest() {
-
-        OrderReturn orderReturn = new OrderReturn();
 
         orderReturn.setCountryTax(2.0);
 
@@ -84,8 +78,6 @@ class OrderReturnTest {
     @Test
     void getPaymentMethodTest() {
 
-        OrderReturn orderReturn = new OrderReturn();
-
         orderReturn.setPaymentMethod(0.3);
 
         assertEquals(0.3, orderReturn.getPaymentMethod());
@@ -94,7 +86,6 @@ class OrderReturnTest {
     @Test
     void getCreationDateTest() {
 
-        OrderReturn orderReturn = new OrderReturn();
         LocalDateTime date = LocalDateTime.now();
 
         orderReturn.setCreationDate(date);
@@ -105,18 +96,16 @@ class OrderReturnTest {
     @Test
     void getOrderLinesTest() {
 
-        OrderReturn orderReturn = new OrderReturn();
-        List<OrderLine> orderLine = new ArrayList<>();
+        List<OrderLine> orderLines = Instancio.createList(OrderLine.class);
 
-        orderReturn.setOrderLine(orderLine);
+        orderReturn.setOrderLines(orderLines);
 
-        assertEquals(orderLine, orderReturn.getOrderLine());
+        assertEquals(orderLines, orderReturn.getOrderLines());
     }
 
     @Test
     void getOffersTest() {
 
-        OrderReturn orderReturn = new OrderReturn();
         List<UUID> offers = new ArrayList<>();
 
         orderReturn.setOffers(offers);
@@ -127,8 +116,7 @@ class OrderReturnTest {
     @Test
     void equalsTest() {
 
-        OrderReturn orderReturn = new OrderReturn();
-        OrderReturn orderReturn2 = new OrderReturn();
+        OrderReturn orderReturn2 = Instancio.create(OrderReturn.class);
 
         UUID id = UUID.randomUUID();
 

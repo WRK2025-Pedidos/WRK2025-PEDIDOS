@@ -9,10 +9,8 @@ import java.util.List;
 import java.util.UUID;
 
 @Generated
-@Getter
-@Setter
-@NoArgsConstructor
-@AllArgsConstructor
+@Data
+@Builder
 @EqualsAndHashCode(of = "id")
 public class OrderReturn {
 
@@ -22,7 +20,7 @@ public class OrderReturn {
     Double countryTax;
     Double paymentMethod;
     LocalDateTime creationDate;
-    List<OrderLine> orderLine;
+    List<OrderLine> orderLines;
     List<UUID> offers;
 
 }
