@@ -78,7 +78,7 @@ public class OrderRepositoryTest {
         line1.setLineWeight(1.5);
         line1.setLinePrice(BigDecimal.valueOf(75.00));
 
-        order.setOrderLine(List.of(line1));
+        order.setOrderLines(List.of(line1));
         order.setOffers(new ArrayList<>());
 
         return order;
