@@ -1,6 +1,6 @@
 package com.gft.orders.domain.model.entity;
 
-import com.gft.orders.domain.model.valueObject.OrderLines;
+import com.gft.orders.domain.model.valueObject.OrderLine;
 import lombok.*;
 
 import java.math.BigDecimal;
@@ -22,7 +22,7 @@ public class OrderReturn {
     Double countryTax;
     Double paymentMethod;
     LocalDateTime creationDate;
-    List<OrderLines> orderLines;
+    List<OrderLine> orderLine;
     List<UUID> offers;
 
 }

@@ -1,11 +1,10 @@
 package com.gft.orders.infraestructure.persistence;
 
-import com.gft.orders.domain.model.valueObject.OrderLines;
+import com.gft.orders.domain.model.valueObject.OrderLine;
 import jakarta.persistence.*;
 import lombok.*;
 
 import java.math.BigDecimal;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.UUID;
@@ -32,7 +31,7 @@ public class OrderEntity {
 
     @ElementCollection(fetch = FetchType.EAGER)
     @JoinTable(name = "ORDER_LINES", joinColumns = @JoinColumn(name = "ORDER_ID"))
-    List<OrderLines> orderLines;
+    List<OrderLine> orderLine;
 
     @OneToMany
     List<OrderOfferEntity> offers;

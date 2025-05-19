@@ -1,6 +1,6 @@
 package com.gft.orders.model.valueObject;
 
-import com.gft.orders.domain.model.valueObject.OrderLines;
+import com.gft.orders.domain.model.valueObject.OrderLine;
 import org.instancio.Instancio;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -12,7 +12,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 public class OrderLinesTest {
 
-    OrderLines orderLines;
+    OrderLine orderLine;
 
     @BeforeEach
     void setUp() {
@@ -21,36 +21,36 @@ public class OrderLinesTest {
     @Test
     void no_arguments_constructor_test() {
 
-        OrderLines orderLinesConstructor = new OrderLines();
+        OrderLine orderLineConstructor = new OrderLine();
 
-        assertNull(orderLinesConstructor.getProduct());
-        assertEquals(0, orderLinesConstructor.getQuantity());
-        assertNull(orderLinesConstructor.getLineWeight());
+        assertNull(orderLineConstructor.getProduct());
+        assertEquals(0, orderLineConstructor.getQuantity());
+        assertNull(orderLineConstructor.getLineWeight());
     }
 
     @Test
     void setter_product_test() {
 
         UUID uuid = UUID.randomUUID();
-        orderLines.setProduct(uuid);
+        orderLine.setProduct(uuid);
 
-        assertEquals(uuid, orderLines.getProduct());
+        assertEquals(uuid, orderLine.getProduct());
     }
 
     @Test
     void setter_quantity_test() {
 
-        orderLines.setQuantity(1);
+        orderLine.setQuantity(1);
 
-        assertEquals(1, orderLines.getQuantity());
+        assertEquals(1, orderLine.getQuantity());
     }
 
     @Test
     void setter_line_weight_test() {
 
-        orderLines.setLineWeight(1.0);
+        orderLine.setLineWeight(1.0);
 
-        assertEquals(1.0, orderLines.getLineWeight());
+        assertEquals(1.0, orderLine.getLineWeight());
     }
 
     @Test
@@ -58,17 +58,17 @@ public class OrderLinesTest {
 
         BigDecimal price = BigDecimal.valueOf(1.0);
 
-        orderLines.setProductPrice(price);
+        orderLine.setProductPrice(price);
 
-        assertEquals(price, orderLines.getProductPrice());
+        assertEquals(price, orderLine.getProductPrice());
     }
 
     @Test
     void setter_line_price_test() {
 
-        orderLines.setLinePrice(BigDecimal.valueOf(1.0));
+        orderLine.setLinePrice(BigDecimal.valueOf(1.0));
 
-        assertEquals(BigDecimal.valueOf(1.0), orderLines.getLinePrice());
+        assertEquals(BigDecimal.valueOf(1.0), orderLine.getLinePrice());
     }
   
     @Test
@@ -76,15 +76,15 @@ public class OrderLinesTest {
 
         UUID uuid = UUID.randomUUID();
 
-        OrderLines orderLines1 = new OrderLines();
-        orderLines1.setProduct(uuid);
-        orderLines1.setQuantity(1);
+        OrderLine orderLine1 = new OrderLine();
+        orderLine1.setProduct(uuid);
+        orderLine1.setQuantity(1);
 
-        OrderLines orderLines2 = new OrderLines();
-        orderLines2.setProduct(uuid);
-        orderLines2.setQuantity(1);
+        OrderLine orderLine2 = new OrderLine();
+        orderLine2.setProduct(uuid);
+        orderLine2.setQuantity(1);
 
-        assertEquals(orderLines1, orderLines2);
+        assertEquals(orderLine1, orderLine2);
     }
 
     @Test
@@ -92,23 +92,23 @@ public class OrderLinesTest {
 
         UUID uuid = UUID.randomUUID();
 
-        OrderLines orderLines1 = new OrderLines();
-        orderLines1.setProduct(uuid);
-        orderLines1.setQuantity(1);
-        orderLines1.setProductPrice(BigDecimal.valueOf(1.0));
+        OrderLine orderLine1 = new OrderLine();
+        orderLine1.setProduct(uuid);
+        orderLine1.setQuantity(1);
+        orderLine1.setProductPrice(BigDecimal.valueOf(1.0));
 
-        OrderLines orderLines2 = new OrderLines();
-        orderLines2.setProduct(uuid);
-        orderLines2.setQuantity(1);
-        orderLines2.setProductPrice(BigDecimal.valueOf(2.0));
+        OrderLine orderLine2 = new OrderLine();
+        orderLine2.setProduct(uuid);
+        orderLine2.setQuantity(1);
+        orderLine2.setProductPrice(BigDecimal.valueOf(2.0));
 
-        assertNotEquals(orderLines1, orderLines2);
+        assertNotEquals(orderLine1, orderLine2);
     }
 
     /***********PRIVATE METHODS***********/
     private void initData() {
 
-        orderLines = Instancio.create(OrderLines.class);
+        orderLine = Instancio.create(OrderLine.class);
 
     }
 }

@@ -1,8 +1,7 @@
 package com.gft.orders.model.entity;
 
 import com.gft.orders.domain.model.entity.Order;
-import com.gft.orders.domain.model.entity.OrderReturn;
-import com.gft.orders.domain.model.valueObject.OrderLines;
+import com.gft.orders.domain.model.valueObject.OrderLine;
 import org.instancio.Instancio;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -34,7 +33,7 @@ class OrderTest {
         assertNull(orderConstructor.getCountryTax());
         assertNull(orderConstructor.getPaymentMethod());
         assertNull(orderConstructor.getCreationDate());
-        assertNull(orderConstructor.getOrderLines());
+        assertNull(orderConstructor.getOrderLine());
         assertNull(orderConstructor.getOffers());
     }
 
@@ -101,11 +100,11 @@ class OrderTest {
     @Test
     void setAndGetOrderLines_Test() {
 
-        List<OrderLines> orderLines = Instancio.createList(OrderLines.class);
+        List<OrderLine> orderLine = Instancio.createList(OrderLine.class);
 
-        order.setOrderLines(orderLines);
+        order.setOrderLine(orderLine);
 
-        assertEquals(orderLines, order.getOrderLines());
+        assertEquals(orderLine, order.getOrderLine());
     }
 
     @Test

@@ -14,7 +14,7 @@ import java.util.UUID;
 @AllArgsConstructor
 @EqualsAndHashCode
 @Embeddable
-public class OrderLines {
+public class OrderLine {
 
   private UUID product;
   private int quantity;
