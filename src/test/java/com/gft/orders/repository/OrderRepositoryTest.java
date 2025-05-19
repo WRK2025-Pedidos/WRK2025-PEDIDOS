@@ -1,8 +1,12 @@
 package com.gft.orders.repository;
 
+import com.gft.orders.domain.model.entity.Order;
+import com.gft.orders.domain.model.entity.OrderReturn;
 import com.gft.orders.domain.model.valueObject.OrderLine;
 import com.gft.orders.domain.repository.OrderRepository;
 import com.gft.orders.infraestructure.persistence.OrderEntity;
+import org.instancio.Instancio;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
@@ -10,11 +14,14 @@ import org.springframework.test.context.jdbc.Sql;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
+import static org.instancio.Select.field;
 import static org.junit.jupiter.api.Assertions.*;
 
 @DataJpaTest
@@ -22,12 +29,11 @@ import static org.junit.jupiter.api.Assertions.*;
 public class OrderRepositoryTest {
 
     @Autowired
-    OrderRepository orderRepository;
+    private OrderRepository orderRepository;
 
     @Test
     public void create_Test() {
-        OrderEntity order = new OrderEntity();
-        order.setId(UUID.randomUUID());
+        OrderEntity order = createTestOrder();
         OrderEntity saved = orderRepository.save(order);
         assertNotNull(saved.getId());
     }
@@ -63,24 +69,14 @@ public class OrderRepositoryTest {
         assertEquals(BigDecimal.valueOf(888.00), updated.getTotalPrice());
     }
 
+    /***********PRIVATE METHODS***********/
     private OrderEntity createTestOrder() {
-        OrderEntity order = new OrderEntity();
-        order.setId(UUID.randomUUID());
-        order.setCartId(UUID.randomUUID());
-        order.setTotalPrice(BigDecimal.valueOf(150.00));
-        order.setCountryTax(0.21);
-        order.setPaymentMethod(1.0);
-        order.setCreationDate(LocalDateTime.now());
-
-        OrderLine line1 = new OrderLine();
-        line1.setProduct(UUID.randomUUID());
-        line1.setQuantity(2);
-        line1.setLineWeight(1.5);
-        line1.setLinePrice(BigDecimal.valueOf(75.00));
-
-        order.setOrderLines(List.of(line1));
-        order.setOffers(new ArrayList<>());
-
-        return order;
+        return Instancio.of(OrderEntity.class)
+                .ignore(field(OrderEntity::getOffers))
+                .supply(field(OrderEntity::getId), UUID::randomUUID)
+                .supply(field(OrderEntity::getCartId), UUID::randomUUID)
+                .supply(field(OrderEntity::getCreationDate), () -> LocalDateTime.now())
+                .create();
     }
+
 }
