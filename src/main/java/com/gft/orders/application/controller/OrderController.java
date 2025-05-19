@@ -2,13 +2,11 @@ package com.gft.orders.application.controller;
 
 import com.gft.orders.application.dto.OrderDTO;
 import com.gft.orders.application.service.OrderServices;
-import com.gft.orders.domain.model.entity.Order;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import java.net.URI;
-import java.util.Optional;
 import java.util.UUID;
 
 @RestController
