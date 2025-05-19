@@ -85,4 +85,16 @@ class OrderControllerTest extends AbstractControllerTest {
         assertResponseBodyIsOk(mvcResult, order1);
     }
 
+    @Test
+    void findOrderById_NotFound() throws Exception {
+        UUID orderId = UUID.randomUUID();
+        order1.setId(orderId);
+
+        when(orderServices.findOrderById(orderId)).thenReturn(Optional.empty());
+
+        mockMvc.perform(get("/orders/" + orderId))
+                .andExpect(status().isNotFound());
+    }
+
+
 }
