@@ -4,7 +4,7 @@ import com.gft.orders.application.dto.OrderDTO;
 import com.gft.orders.application.service.OrderServices;
 import com.gft.orders.domain.model.entity.Order;
 import com.gft.orders.domain.repository.OrderRepository;
-import com.gft.orders.infraestructure.persistence.OrderEntity;
+import com.gft.orders.infraestructure.persistence.OrderJPAEntity;
 import jakarta.transaction.Transactional;
 import org.dozer.DozerBeanMapper;
 import org.springframework.stereotype.Service;
@@ -28,9 +28,9 @@ public class OrderServicesImpl implements OrderServices {
     @Transactional
     public UUID createOrder(OrderDTO orderDTO) {
 
-        OrderEntity orderEntity = mapper.map(orderDTO, OrderEntity.class);
+        OrderJPAEntity orderJPAEntity = mapper.map(orderDTO, OrderJPAEntity.class);
 
-        return orderRepository.save(orderEntity).getId();
+        return orderRepository.save(orderJPAEntity).getId();
     }
 
     @Override
@@ -49,7 +49,7 @@ public class OrderServicesImpl implements OrderServices {
 
 
     /*******PRIVATE METHODS********/
-    private List<Order> convertList(List<OrderEntity> orderEntities) {
+    private List<Order> convertList(List<OrderJPAEntity> orderEntities) {
 
         return orderEntities.stream()
                 .map(x -> mapper.map(x, Order.class))

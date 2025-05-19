@@ -14,7 +14,7 @@ import java.util.UUID;
 @Table(name = "ORDERS")
 @Data
 @EqualsAndHashCode(of = "id")
-public class OrderEntity {
+public class OrderJPAEntity {
 
     @Id
     UUID id;
@@ -32,6 +32,6 @@ public class OrderEntity {
     List<OrderLine> orderLines;
 
     @OneToMany
-    List<OrderOfferEntity> offers;
+    List<OrderOfferJPAEntity> offers;
 
 }
