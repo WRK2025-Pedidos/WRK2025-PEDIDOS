@@ -2,6 +2,7 @@
 package com.gft.orders.application.service.impl;
 
 import com.gft.orders.application.dto.OrderDTO;
+import com.gft.orders.domain.model.entity.Order;
 import com.gft.orders.domain.repository.OrderRepository;
 import com.gft.orders.infraestructure.persistence.OrderEntity;
 import org.dozer.DozerBeanMapper;
@@ -13,9 +14,11 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
+import java.util.Optional;
 import java.util.UUID;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
@@ -30,6 +33,7 @@ public class OrderServicesImplTest {
     @InjectMocks
     private OrderServicesImpl orderServicesImpl;
 
+    private Order order;
     private OrderDTO orderDTO;
     private OrderEntity orderEntity1;
 
@@ -55,9 +59,24 @@ public class OrderServicesImplTest {
         assertEquals(uuid, result);
     }
 
+    @Test
+    void shouldFindOrder() {
+
+        UUID uuid = UUID.randomUUID();
+
+        when(orderRepository.findById(uuid)).thenReturn(Optional.of(orderEntity1));
+        when(mapper.map(orderEntity1, Order.class)).thenReturn(order);
+
+        Optional<Order> optional = orderServicesImpl.findOrderById(uuid);
+
+        assertTrue(optional.isPresent());
+        assertEquals(order, optional.get());
+    }
+
     /***************PRIVATE METHODS***********/
     private void initObjects() {
 
+        order = Instancio.create(Order.class);
         orderDTO = Instancio.create(OrderDTO.class);
         orderEntity1 = Instancio.create(OrderEntity.class);
     }
