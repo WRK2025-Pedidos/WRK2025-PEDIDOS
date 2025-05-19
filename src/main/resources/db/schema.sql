@@ -4,7 +4,7 @@
 --
 -- ******************************************************
 
-CREATE TABLE ORDERS(
+CREATE TABLE IF NOT EXISTS ORDERS(
     ID                  UUID                NOT NULL,
     CART_ID             UUID                NOT NULL,
     CREATION_DATE       TIMESTAMP           NOT NULL,
@@ -14,7 +14,7 @@ CREATE TABLE ORDERS(
     PRIMARY KEY (ID)
 );
 
-CREATE TABLE ORDER_RETURNS(
+CREATE TABLE IF NOT EXISTS ORDER_RETURNS(
     ID                  UUID                 NOT NULL,
     ORDER_ID            UUID                 NOT NULL,
     CREATION_DATE       TIMESTAMP            NOT NULL,
@@ -23,7 +23,7 @@ CREATE TABLE ORDER_RETURNS(
     FOREIGN KEY (ORDER_ID) REFERENCES ORDERS (ID)
 );
 
-CREATE TABLE ORDER_LINES (
+CREATE TABLE IF NOT EXISTS ORDER_LINES (
      ORDER_ID            UUID                ,
      ORDER_RETURN_ID           UUID                ,
      PRODUCT             UUID                NOT NULL,
@@ -40,7 +40,7 @@ CREATE TABLE ORDER_LINES (
          )
 );
 
-CREATE TABLE ORDER_OFFERS (
+CREATE TABLE IF NOT EXISTS ORDER_OFFERS (
     ORDER_ID UUID NOT NULL,
     OFFER_ID UUID NOT NULL,
     PRIMARY KEY (order_id, offer_id),

@@ -1,7 +1,9 @@
 package com.gft.orders.model.entity;
 
 import com.gft.orders.domain.model.entity.Order;
-import com.gft.orders.domain.model.valueObject.OrderLines;
+import com.gft.orders.domain.model.valueObject.OrderLine;
+import org.instancio.Instancio;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.math.BigDecimal;
@@ -12,24 +14,32 @@ import java.util.UUID;
 import static org.junit.jupiter.api.Assertions.*;
 
 class OrderTest {
-   @Test
+
+    Order order;
+
+    @BeforeEach
+    void setUp() {
+        initData();
+    }
+
+    @Test
     void constructor_Test() {
 
-        Order order = new Order();
+        Order orderConstructor = new Order();
 
-        assertNull(order.getId());
-        assertNull(order.getCartId());
-        assertNull(order.getTotalPrice());
-        assertNull(order.getCountryTax());
-        assertNull(order.getPaymentMethod());
-        assertNull(order.getCreationDate());
-        assertNull(order.getOrderLines());
-        assertNull(order.getOffers());
+        assertNull(orderConstructor.getId());
+        assertNull(orderConstructor.getCartId());
+        assertNull(orderConstructor.getTotalPrice());
+        assertNull(orderConstructor.getCountryTax());
+        assertNull(orderConstructor.getPaymentMethod());
+        assertNull(orderConstructor.getCreationDate());
+        assertNull(orderConstructor.getOrderLine());
+        assertNull(orderConstructor.getOffers());
     }
 
     @Test
     void setAndGetId_Test() {
-        Order order = new Order();
+
         UUID id = UUID.randomUUID();
 
         order.setId(id);
@@ -39,7 +49,7 @@ class OrderTest {
 
     @Test
     void setAndGetCartId_Test() {
-        Order order = new Order();
+
         UUID cartId = UUID.randomUUID();
 
         order.setCartId(cartId);
@@ -49,7 +59,7 @@ class OrderTest {
 
     @Test
     void setAndGetTotalPrice_Test() {
-        Order order = new Order();
+
         BigDecimal totalPrice = new BigDecimal("1.00");
 
         order.setTotalPrice(totalPrice);
@@ -59,7 +69,7 @@ class OrderTest {
 
     @Test
     void setAndGetCountryTax_Test() {
-        Order order = new Order();
+
         Double countryTax = 1.0;
 
         order.setCountryTax(countryTax);
@@ -69,7 +79,7 @@ class OrderTest {
 
     @Test
     void setAndGetPaymentMethod_Test() {
-        Order order = new Order();
+
         Double paymentMethod = 1.0;
 
         order.setPaymentMethod(paymentMethod);
@@ -79,7 +89,7 @@ class OrderTest {
 
     @Test
     void setAndGetCreationDate_Test() {
-        Order order = new Order();
+
         LocalDateTime creationDate = LocalDateTime.now();
 
         order.setCreationDate(creationDate);
@@ -89,18 +99,17 @@ class OrderTest {
 
     @Test
     void setAndGetOrderLines_Test() {
-        Order order = new Order();
-        OrderLines line = new OrderLines();
-        List<OrderLines> orderLines = List.of(line);
 
-        order.setOrderLines(orderLines);
+        List<OrderLine> orderLine = Instancio.createList(OrderLine.class);
 
-        assertEquals(orderLines, order.getOrderLines());
+        order.setOrderLine(orderLine);
+
+        assertEquals(orderLine, order.getOrderLine());
     }
 
     @Test
     void setAndGetOffers_Test() {
-        Order order = new Order();
+
         UUID offer1 = UUID.randomUUID();
         UUID offer2 = UUID.randomUUID();
         List<UUID> offers = List.of(offer1, offer2);
@@ -116,17 +125,21 @@ class OrderTest {
         UUID id = UUID.randomUUID();
         UUID cartId = UUID.randomUUID();
 
-        Order order1 = new Order();
-        order1.setId(id);
-        order1.setCartId(cartId);
+        order.setId(id);
+        order.setCartId(cartId);
 
         Order order2 = new Order();
         order2.setId(id);
         order2.setCartId(cartId);
 
-        order2.setOffers(List.of());
+        assertEquals(order, order2);
+    }
 
-        assertEquals(order1, order2);
+    /***********PRIVATE METHODS***********/
+    private void initData() {
+
+        order = Instancio.create(Order.class);
+
     }
 }
 

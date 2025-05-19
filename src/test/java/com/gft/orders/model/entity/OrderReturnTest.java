@@ -1,7 +1,9 @@
 package com.gft.orders.model.entity;
 
 import com.gft.orders.domain.model.entity.OrderReturn;
-import com.gft.orders.domain.model.valueObject.OrderLines;
+import com.gft.orders.domain.model.valueObject.OrderLine;
+import org.instancio.Instancio;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.math.BigDecimal;
@@ -15,6 +17,13 @@ import static org.junit.jupiter.api.Assertions.assertNull;
 
 class OrderReturnTest {
 
+    OrderReturn orderReturn;
+
+    @BeforeEach
+    void setUp() {
+        initData();
+    }
+
     @Test
     void constructorTest() {
 
@@ -26,7 +35,7 @@ class OrderReturnTest {
         assertNull(orderReturn.getCountryTax());
         assertNull(orderReturn.getPaymentMethod());
         assertNull(orderReturn.getCreationDate());
-        assertNull(orderReturn.getOrderLines());
+        assertNull(orderReturn.getOrderLine());
         assertNull(orderReturn.getOffers());
     }
 
@@ -97,11 +106,11 @@ class OrderReturnTest {
     void getOrderLinesTest() {
 
         OrderReturn orderReturn = new OrderReturn();
-        List<OrderLines> orderLines = new ArrayList<>();
+        List<OrderLine> orderLine = new ArrayList<>();
 
-        orderReturn.setOrderLines(orderLines);
+        orderReturn.setOrderLine(orderLine);
 
-        assertEquals(orderLines, orderReturn.getOrderLines());
+        assertEquals(orderLine, orderReturn.getOrderLine());
     }
 
     @Test
@@ -128,4 +137,12 @@ class OrderReturnTest {
 
         assertEquals(orderReturn, orderReturn2);
     }
+
+    /***********PRIVATE METHODS***********/
+    private void initData() {
+
+        orderReturn = Instancio.create(OrderReturn.class);
+
+    }
+
 }
