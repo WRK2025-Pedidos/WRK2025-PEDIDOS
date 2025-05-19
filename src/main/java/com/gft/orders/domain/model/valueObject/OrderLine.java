@@ -1,6 +1,5 @@
 package com.gft.orders.domain.model.valueObject;
 
-import jakarta.persistence.Column;
 import jakarta.persistence.Embeddable;
 import lombok.*;
 
@@ -8,12 +7,10 @@ import java.math.BigDecimal;
 import java.util.UUID;
 
 @Generated
-@Getter
-@Setter
-@NoArgsConstructor
-@AllArgsConstructor
-@EqualsAndHashCode
+@Data
+@Builder
 @Embeddable
+@AllArgsConstructor
 public class OrderLine {
 
   private UUID product;
@@ -21,6 +18,9 @@ public class OrderLine {
   private Double lineWeight;
   private BigDecimal productPrice;
   private BigDecimal linePrice;
-  
+
+  public OrderLine() {
+
+  }
 }
 

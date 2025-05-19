@@ -25,7 +25,7 @@ class OrderTest {
     @Test
     void constructor_Test() {
 
-        Order orderConstructor = new Order();
+        Order orderConstructor = Order.builder().build();
 
         assertNull(orderConstructor.getId());
         assertNull(orderConstructor.getCartId());
@@ -33,7 +33,7 @@ class OrderTest {
         assertNull(orderConstructor.getCountryTax());
         assertNull(orderConstructor.getPaymentMethod());
         assertNull(orderConstructor.getCreationDate());
-        assertNull(orderConstructor.getOrderLine());
+        assertNull(orderConstructor.getOrderLines());
         assertNull(orderConstructor.getOffers());
     }
 
@@ -100,11 +100,11 @@ class OrderTest {
     @Test
     void setAndGetOrderLines_Test() {
 
-        List<OrderLine> orderLine = Instancio.createList(OrderLine.class);
+        List<OrderLine> orderLines = Instancio.createList(OrderLine.class);
 
-        order.setOrderLine(orderLine);
+        order.setOrderLines(orderLines);
 
-        assertEquals(orderLine, order.getOrderLine());
+        assertEquals(orderLines, order.getOrderLines());
     }
 
     @Test
@@ -128,9 +128,10 @@ class OrderTest {
         order.setId(id);
         order.setCartId(cartId);
 
-        Order order2 = new Order();
-        order2.setId(id);
-        order2.setCartId(cartId);
+        Order order2 = Order.builder()
+                        .id(id)
+                        .cartId(cartId)
+                        .build();
 
         assertEquals(order, order2);
     }

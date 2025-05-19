@@ -3,18 +3,13 @@ package com.gft.orders.infraestructure.persistence;
 import jakarta.persistence.EmbeddedId;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Table;
-import lombok.Generated;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-
-import java.util.UUID;
-
+import lombok.*;
 
 @Generated
 @Entity
 @Table(name = "ORDER_OFFERS")
-@Getter
-@NoArgsConstructor
+@Data
+@Setter(AccessLevel.NONE)
 public class OrderOfferEntity {
 
     @EmbeddedId

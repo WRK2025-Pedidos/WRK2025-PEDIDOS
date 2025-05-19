@@ -1,15 +1,11 @@
 package com.gft.orders.domain.model.entity;
 
 import com.gft.orders.infraestructure.persistence.OrderOfferId;
-import lombok.AllArgsConstructor;
-import lombok.Generated;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 @Generated
-@Getter
-@NoArgsConstructor
-@AllArgsConstructor
+@Data
+@Builder
 public class OrderOffer {
 
     private OrderOfferId id;
