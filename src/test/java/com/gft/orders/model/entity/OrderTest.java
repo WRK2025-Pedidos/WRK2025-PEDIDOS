@@ -27,14 +27,14 @@ class OrderTest {
 
         Order orderConstructor = new Order();
 
-        assertNull(order.getId());
-        assertNull(order.getCartId());
-        assertNull(order.getTotalPrice());
-        assertNull(order.getCountryTax());
-        assertNull(order.getPaymentMethod());
-        assertNull(order.getCreationDate());
-        assertNull(order.getOrderLine());
-        assertNull(order.getOffers());
+        assertNull(orderConstructor.getId());
+        assertNull(orderConstructor.getCartId());
+        assertNull(orderConstructor.getTotalPrice());
+        assertNull(orderConstructor.getCountryTax());
+        assertNull(orderConstructor.getPaymentMethod());
+        assertNull(orderConstructor.getCreationDate());
+        assertNull(orderConstructor.getOrderLine());
+        assertNull(orderConstructor.getOffers());
     }
 
     @Test
