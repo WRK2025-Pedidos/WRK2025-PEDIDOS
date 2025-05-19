@@ -5,6 +5,7 @@ import lombok.*;
 
 @Generated
 @Data
+@Builder
 public class OrderOffer {
 
     private OrderOfferId id;

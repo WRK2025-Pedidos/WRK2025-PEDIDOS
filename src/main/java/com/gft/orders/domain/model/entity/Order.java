@@ -1,10 +1,9 @@
 package com.gft.orders.domain.model.entity;
 
-import com.gft.orders.domain.model.valueObject.OrderLines;
+import com.gft.orders.domain.model.valueObject.OrderLine;
 import lombok.*;
 
 import java.math.BigDecimal;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.UUID;
@@ -12,6 +11,7 @@ import java.util.UUID;
 
 @Generated
 @Data
+@Builder
 @EqualsAndHashCode(of="id")
 public class Order {
 
@@ -21,7 +21,7 @@ public class Order {
     Double countryTax;
     Double paymentMethod;
     LocalDateTime creationDate;
-    List<OrderLines> orderLines;
+    List<OrderLine> orderLines;
     List<UUID> offers;
 
 }

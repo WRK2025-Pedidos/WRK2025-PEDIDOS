@@ -1,6 +1,5 @@
 package com.gft.orders.domain.model.valueObject;
 
-import jakarta.persistence.Column;
 import jakarta.persistence.Embeddable;
 import lombok.*;
 
@@ -10,7 +9,7 @@ import java.util.UUID;
 @Generated
 @Data
 @Embeddable
-public class OrderLines {
+public class OrderLine {
 
   private UUID product;
   private int quantity;

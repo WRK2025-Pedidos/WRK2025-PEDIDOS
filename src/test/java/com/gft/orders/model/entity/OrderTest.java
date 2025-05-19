@@ -1,8 +1,7 @@
 package com.gft.orders.model.entity;
 
 import com.gft.orders.domain.model.entity.Order;
-import com.gft.orders.domain.model.entity.OrderReturn;
-import com.gft.orders.domain.model.valueObject.OrderLines;
+import com.gft.orders.domain.model.valueObject.OrderLine;
 import org.instancio.Instancio;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -26,7 +25,7 @@ class OrderTest {
     @Test
     void constructor_Test() {
 
-        Order orderConstructor = new Order();
+        Order orderConstructor = Order.builder().build();
 
         assertNull(orderConstructor.getId());
         assertNull(orderConstructor.getCartId());
@@ -101,7 +100,7 @@ class OrderTest {
     @Test
     void setAndGetOrderLines_Test() {
 
-        List<OrderLines> orderLines = Instancio.createList(OrderLines.class);
+        List<OrderLine> orderLines = Instancio.createList(OrderLine.class);
 
         order.setOrderLines(orderLines);
 
@@ -129,9 +128,10 @@ class OrderTest {
         order.setId(id);
         order.setCartId(cartId);
 
-        Order order2 = new Order();
-        order2.setId(id);
-        order2.setCartId(cartId);
+        Order order2 = Order.builder()
+                        .id(id)
+                        .cartId(cartId)
+                        .build();
 
         assertEquals(order, order2);
     }
