@@ -2,14 +2,17 @@ package com.gft.orders.domain.model.valueObject;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Embeddable;
-import lombok.Data;
-import lombok.Generated;
+import lombok.*;
 
 import java.math.BigDecimal;
 import java.util.UUID;
 
 @Generated
-@Data
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
+@EqualsAndHashCode
 @Embeddable
 public class OrderLine {
 

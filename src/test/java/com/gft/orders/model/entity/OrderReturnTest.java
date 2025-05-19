@@ -2,6 +2,8 @@ package com.gft.orders.model.entity;
 
 import com.gft.orders.domain.model.entity.OrderReturn;
 import com.gft.orders.domain.model.valueObject.OrderLine;
+import org.instancio.Instancio;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.math.BigDecimal;
@@ -14,6 +16,13 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNull;
 
 class OrderReturnTest {
+
+    OrderReturn orderReturn;
+
+    @BeforeEach
+    void setUp() {
+        initData();
+    }
 
     @Test
     void constructorTest() {
@@ -128,4 +137,12 @@ class OrderReturnTest {
 
         assertEquals(orderReturn, orderReturn2);
     }
+
+    /***********PRIVATE METHODS***********/
+    private void initData() {
+
+        orderReturn = Instancio.create(OrderReturn.class);
+
+    }
+
 }
