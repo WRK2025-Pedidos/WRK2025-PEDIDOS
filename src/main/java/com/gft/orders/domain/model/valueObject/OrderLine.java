@@ -8,7 +8,9 @@ import java.util.UUID;
 
 @Generated
 @Data
+@Builder
 @Embeddable
+@AllArgsConstructor
 public class OrderLine {
 
   private UUID product;
@@ -16,6 +18,9 @@ public class OrderLine {
   private Double lineWeight;
   private BigDecimal productPrice;
   private BigDecimal linePrice;
-  
+
+  public OrderLine() {
+
+  }
 }
 
