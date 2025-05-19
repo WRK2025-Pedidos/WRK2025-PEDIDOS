@@ -14,12 +14,12 @@ import java.util.Optional;
 import java.util.UUID;
 
 @Service
-public class OrderServiceImpl implements OrderServices {
+public class OrderServicesImpl implements OrderServices {
 
     private final OrderRepository orderRepository;
     private final DozerBeanMapper mapper;
 
-    public OrderServiceImpl(OrderRepository orderRepository, DozerBeanMapper mapper) {
+    public OrderServicesImpl(OrderRepository orderRepository, DozerBeanMapper mapper) {
         this.orderRepository = orderRepository;
         this.mapper = mapper;
     }
