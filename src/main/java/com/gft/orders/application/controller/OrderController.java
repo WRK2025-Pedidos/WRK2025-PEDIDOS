@@ -35,13 +35,9 @@ public class OrderController {
 
     @GetMapping("/{id}")
     public ResponseEntity<?> getOrderById(@PathVariable UUID id) {
-        Optional<Order> optional = orderServices.findOrderById(id);
-
-        if (optional.isPresent()) {
-            return ResponseEntity.ok(optional.get());
-        }
-
-        return ResponseEntity.notFound().build();
+        return orderServices.findOrderById(id)
+                .map(ResponseEntity::ok)
+                .orElseGet(() -> ResponseEntity.notFound().build());
     }
 
     @PostMapping
