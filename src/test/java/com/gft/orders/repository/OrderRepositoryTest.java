@@ -1,12 +1,8 @@
 package com.gft.orders.repository;
 
-import com.gft.orders.domain.model.entity.Order;
-import com.gft.orders.domain.model.entity.OrderReturn;
-import com.gft.orders.domain.model.valueObject.OrderLine;
 import com.gft.orders.domain.repository.OrderRepository;
-import com.gft.orders.infraestructure.persistence.OrderEntity;
+import com.gft.orders.infraestructure.persistence.OrderJPAEntity;
 import org.instancio.Instancio;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
@@ -14,9 +10,6 @@ import org.springframework.test.context.jdbc.Sql;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
-import java.time.ZoneId;
-import java.time.ZonedDateTime;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -33,8 +26,8 @@ public class OrderRepositoryTest {
 
     @Test
     public void create_Test() {
-        OrderEntity order = createTestOrder();
-        OrderEntity saved = orderRepository.save(order);
+        OrderJPAEntity order = createTestOrder();
+        OrderJPAEntity saved = orderRepository.save(order);
         assertNotNull(saved.getId());
     }
 
@@ -44,15 +37,15 @@ public class OrderRepositoryTest {
        orderRepository.save(createTestOrder());
        orderRepository.save(createTestOrder());
 
-       List<OrderEntity> orders = orderRepository.findAll();
+       List<OrderJPAEntity> orders = orderRepository.findAll();
        assertEquals(3, orders.size());
     }
 
     @Test
     public void findById_Test() {
-      OrderEntity order = createTestOrder();
+      OrderJPAEntity order = createTestOrder();
       orderRepository.save(order);
-      Optional<OrderEntity> result = orderRepository.findById(order.getId());
+      Optional<OrderJPAEntity> result = orderRepository.findById(order.getId());
       assertTrue(result.isPresent());
       assertEquals(order.getId(), result.get().getId());
 
@@ -60,22 +53,22 @@ public class OrderRepositoryTest {
 
     @Test
     public void update_Test() {
-        OrderEntity order = createTestOrder();
+        OrderJPAEntity order = createTestOrder();
         order.setTotalPrice(BigDecimal.valueOf(990.00));
         orderRepository.save(order);
 
         order.setTotalPrice(BigDecimal.valueOf(888.00));
-        OrderEntity updated = orderRepository.save(order);
+        OrderJPAEntity updated = orderRepository.save(order);
         assertEquals(BigDecimal.valueOf(888.00), updated.getTotalPrice());
     }
 
     /***********PRIVATE METHODS***********/
-    private OrderEntity createTestOrder() {
-        return Instancio.of(OrderEntity.class)
-                .ignore(field(OrderEntity::getOffers))
-                .supply(field(OrderEntity::getId), UUID::randomUUID)
-                .supply(field(OrderEntity::getCartId), UUID::randomUUID)
-                .supply(field(OrderEntity::getCreationDate), () -> LocalDateTime.now())
+    private OrderJPAEntity createTestOrder() {
+        return Instancio.of(OrderJPAEntity.class)
+                .ignore(field(OrderJPAEntity::getOffers))
+                .supply(field(OrderJPAEntity::getId), UUID::randomUUID)
+                .supply(field(OrderJPAEntity::getCartId), UUID::randomUUID)
+                .supply(field(OrderJPAEntity::getCreationDate), () -> LocalDateTime.now())
                 .create();
     }
 

@@ -10,7 +10,7 @@ import java.util.UUID;
 @Data
 @Setter(AccessLevel.NONE)
 @EqualsAndHashCode
-public class OrderOfferId implements Serializable {
+public class OrderOfferIdJPA implements Serializable {
 
     @Column(name = "ORDER_ID")
     private UUID orderId;

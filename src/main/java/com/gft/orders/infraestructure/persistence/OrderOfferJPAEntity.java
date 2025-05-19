@@ -10,9 +10,9 @@ import lombok.*;
 @Table(name = "ORDER_OFFERS")
 @Data
 @Setter(AccessLevel.NONE)
-public class OrderOfferEntity {
+public class OrderOfferJPAEntity {
 
     @EmbeddedId
-    private OrderOfferId id;
+    private OrderOfferIdJPA id;
 
 }

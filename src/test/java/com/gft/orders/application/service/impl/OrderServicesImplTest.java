@@ -4,7 +4,7 @@ package com.gft.orders.application.service.impl;
 import com.gft.orders.application.dto.OrderDTO;
 import com.gft.orders.domain.model.entity.Order;
 import com.gft.orders.domain.repository.OrderRepository;
-import com.gft.orders.infraestructure.persistence.OrderEntity;
+import com.gft.orders.infraestructure.persistence.OrderJPAEntity;
 import org.dozer.DozerBeanMapper;
 import org.instancio.Instancio;
 import org.junit.jupiter.api.BeforeEach;
@@ -38,8 +38,8 @@ public class OrderServicesImplTest {
     private Order order1;
     private Order order2;
     private OrderDTO orderDTO;
-    private OrderEntity orderEntity1;
-    private OrderEntity orderEntity2;
+    private OrderJPAEntity orderJPAEntity1;
+    private OrderJPAEntity orderJPAEntity2;
 
     @BeforeEach
     public void setUp() {
@@ -51,12 +51,12 @@ public class OrderServicesImplTest {
 
         UUID uuid = UUID.randomUUID();
 
-        when(mapper.map(orderDTO, OrderEntity.class)).thenReturn(orderEntity1);
+        when(mapper.map(orderDTO, OrderJPAEntity.class)).thenReturn(orderJPAEntity1);
 
-        OrderEntity savedEntity = new OrderEntity();
+        OrderJPAEntity savedEntity = new OrderJPAEntity();
         savedEntity.setId(uuid);
 
-        when(orderRepository.save(orderEntity1)).thenReturn(savedEntity);
+        when(orderRepository.save(orderJPAEntity1)).thenReturn(savedEntity);
 
         UUID result = orderServicesImpl.createOrder(orderDTO);
 
@@ -68,8 +68,8 @@ public class OrderServicesImplTest {
 
         UUID uuid = UUID.randomUUID();
 
-        when(orderRepository.findById(uuid)).thenReturn(Optional.of(orderEntity1));
-        when(mapper.map(orderEntity1, Order.class)).thenReturn(order1);
+        when(orderRepository.findById(uuid)).thenReturn(Optional.of(orderJPAEntity1));
+        when(mapper.map(orderJPAEntity1, Order.class)).thenReturn(order1);
 
         Optional<Order> optional = orderServicesImpl.findOrderById(uuid);
 
@@ -94,9 +94,9 @@ public class OrderServicesImplTest {
 
         List<Order> ordersExpected = Arrays.asList(order1, order2);
 
-        when(orderRepository.findAll()).thenReturn(Arrays.asList(orderEntity1, orderEntity2));
-        when(mapper.map(orderEntity1, Order.class)).thenReturn(order1);
-        when(mapper.map(orderEntity2, Order.class)).thenReturn(order2);
+        when(orderRepository.findAll()).thenReturn(Arrays.asList(orderJPAEntity1, orderJPAEntity2));
+        when(mapper.map(orderJPAEntity1, Order.class)).thenReturn(order1);
+        when(mapper.map(orderJPAEntity2, Order.class)).thenReturn(order2);
 
         List<Order> result = orderServicesImpl.findAllOrders();
 
@@ -110,7 +110,7 @@ public class OrderServicesImplTest {
         order1 = Instancio.create(Order.class);
         order2 = Instancio.create(Order.class);
         orderDTO = Instancio.create(OrderDTO.class);
-        orderEntity1 = Instancio.create(OrderEntity.class);
-        orderEntity2 = Instancio.create(OrderEntity.class);
+        orderJPAEntity1 = Instancio.create(OrderJPAEntity.class);
+        orderJPAEntity2 = Instancio.create(OrderJPAEntity.class);
     }
 }
