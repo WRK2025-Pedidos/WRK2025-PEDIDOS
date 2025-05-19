@@ -1,16 +1,21 @@
 package com.gft.orders.application.controller;
 
+import com.gft.orders.application.dto.OrderDTO;
+import com.gft.orders.application.service.OrderServices;
 import com.gft.orders.domain.model.entity.Order;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.util.UriComponentsBuilder;
 
+import java.net.URI;
 import java.util.Optional;
+import java.util.UUID;
 
 @RestController
 @RequestMapping("/orders")
 public class OrderController {
 
-    private OrderServices orderServices;
+    private final OrderServices orderServices;
 
     public OrderController(OrderServices orderServices) {
         this.orderServices = orderServices;
@@ -21,24 +26,31 @@ public class OrderController {
         Object response = null;
 
         view = view.toUpperCase();
-
-        switch (view) {
-            case "ALL": response = orderServices.getAll(); break;
-            case "DTO": response = orderServices.getOrderDTO(); break;
-            default: response = null;
+        if (view.equals("ALL")) {
+            response = orderServices.findAllOrders();
         }
 
         return ResponseEntity.ok(response);
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<?> getOrderById(@PathVariable Long id) {
+    public ResponseEntity<?> getOrderById(@PathVariable UUID id) {
+        Optional<Order> optional = orderServices.findOrderById(id);
 
-        Optional<Order> optional = orderServices.read(id);
         if (optional.isPresent()) {
             return ResponseEntity.ok(optional.get());
         }
+
         return ResponseEntity.notFound().build();
+    }
+
+    @PostMapping
+    public ResponseEntity<?> createOrder(@RequestBody OrderDTO orderDTO, UriComponentsBuilder ucb) {
+        UUID id = orderServices.createOrder(orderDTO);
+
+        URI uri = ucb.path("/orders/{id}").buildAndExpand(id).toUri();
+        return ResponseEntity.created(uri).build();
+
     }
 
 }
