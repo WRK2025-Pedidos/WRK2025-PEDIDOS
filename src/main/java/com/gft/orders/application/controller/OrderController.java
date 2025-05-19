@@ -27,10 +27,10 @@ public class OrderController {
 
         view = view.toUpperCase();
         if (view.equals("ALL")) {
-            return ResponseEntity.ok(orderServices.findAllOrders());
+            response = orderServices.findAllOrders();
         }
 
-        return ResponseEntity.badRequest().body("El parametro no esta soportado: " + view);
+        return ResponseEntity.ok(response);
     }
 
     @GetMapping("/{id}")
