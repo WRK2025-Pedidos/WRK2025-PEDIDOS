@@ -20,21 +20,10 @@ jobs:
           distribution: 'temurin'
           cache: maven
 
-      - name: Build with Maven (using H2)
-        run: |
-          mvn clean verify \
-            -Dspring.profiles.active=test \
-            -Dspring.datasource.url=jdbc:h2:mem:testdb;DB_CLOSE_DELAY=-1;MODE=PostgreSQL \
-            -Dspring.datasource.driver-class-name=org.h2.Driver \
-            -Dspring.datasource.username=sa \
-            -Dspring.datasource.password= \
-            -Dspring.jpa.hibernate.ddl-auto=update \
-            -Dspring.jpa.database-platform=org.hibernate.dialect.H2Dialect \
-            -Dspring.sql.init.mode=never \
-            -e
+      - name: Build with Maven
+        run: mvn clean verify -Dspring.profiles.active=test -e
       
       - name: Check JaCoCo coverage
-        if: success() || failure()
         run: |
           mvn jacoco:report
           covered_lines=$(grep -oP 'covered="\K[0-9]+' target/site/jacoco/jacoco.xml | awk '{s+=$1} END {print s}')
