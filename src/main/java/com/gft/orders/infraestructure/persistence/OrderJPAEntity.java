@@ -20,13 +20,11 @@ public class OrderJPAEntity {
     UUID id;
 
     UUID cartId;
-
     BigDecimal totalPrice;
     Double countryTax;
     Double paymentMethod;
-
     LocalDateTime creationDate;
-
+  
     @ElementCollection
     @CollectionTable(name = "order_lines", joinColumns = @JoinColumn(name = "order_id"))
     List<OrderLineJPAEntity> orderLines;
