@@ -4,45 +4,45 @@
 --
 -- ******************************************************
 
-CREATE TABLE IF NOT EXISTS ORDERS(
-    ID                  UUID                NOT NULL,
-    CART_ID             UUID                NOT NULL,
-    CREATION_DATE       TIMESTAMP           NOT NULL,
-    TOTAL_PRICE         DECIMAL(10, 3)      NOT NULL,
-    COUNTRY_TAX         DOUBLE PRECISION    NOT NULL,
-    PAYMENT_METHOD      DOUBLE PRECISION    NOT NULL,
-    PRIMARY KEY (ID)
+CREATE TABLE IF NOT EXISTS orders(
+    id                  UUID                NOT NULL,
+    cart_id             UUID                NOT NULL,
+    creation_date       TIMESTAMP           NOT NULL,
+    total_price         DECIMAL(10, 3)      NOT NULL,
+    country_tax         DOUBLE PRECISION    NOT NULL,
+    payment_method      DOUBLE PRECISION    NOT NULL,
+    PRIMARY KEY (id)
 );
 
-CREATE TABLE IF NOT EXISTS ORDER_RETURNS(
-    ID                  UUID                 NOT NULL,
-    ORDER_ID            UUID                 NOT NULL,
-    CREATION_DATE       TIMESTAMP            NOT NULL,
-    TOTAL_PRICE         DECIMAL(10, 3)       NOT NULL,
-    PRIMARY KEY (ID),
-    FOREIGN KEY (ORDER_ID) REFERENCES ORDERS (ID)
+CREATE TABLE IF NOT EXISTS order_returns(
+    id                  UUID                 NOT NULL,
+    order_id            UUID                 NOT NULL,
+    creation_date       TIMESTAMP            NOT NULL,
+    total_price         DECIMAL(10, 3)       NOT NULL,
+    PRIMARY KEY (id),
+    FOREIGN KEY (order_id) REFERENCES orders (id)
 );
 
-CREATE TABLE IF NOT EXISTS ORDER_LINES (
-     ORDER_ID            UUID                ,
-     ORDER_RETURN_ID     UUID                ,
-     PRODUCT             UUID                NOT NULL,
-     QUANTITY            INT                 NOT NULL,
-     LINE_WEIGHT         DOUBLE  PRECISION   NOT NULL,
-     PRODUCT_PRICE       DECIMAL(10,3)       NOT NULL,
-     LINE_PRICE          DECIMAL(10,3)       NOT NULL,
-     FOREIGN KEY (ORDER_ID) REFERENCES ORDERS(ID),
-     FOREIGN KEY (ORDER_RETURN_ID) REFERENCES ORDER_RETURNS(ID),
+CREATE TABLE IF NOT EXISTS order_lines (
+     order_id            UUID                ,
+     order_return_id     UUID                ,
+     product             UUID                NOT NULL,
+     quantity            INT                 NOT NULL,
+     line_weight         DOUBLE  PRECISION   NOT NULL,
+     product_price       DECIMAL(10,3)       NOT NULL,
+     line_price          DECIMAL(10,3)       NOT NULL,
+     FOREIGN KEY (order_id) REFERENCES orders(id),
+     FOREIGN KEY (order_return_id) REFERENCES order_return(id),
      CHECK (
-            (ORDER_ID IS NULL AND ORDER_RETURN_ID IS NOT NULL)
+            (order_id IS NULL AND order_return_id IS NOT NULL)
             OR
-            (ORDER_ID IS NOT NULL AND ORDER_RETURN_ID IS NULL)
+            (order_id IS NOT NULL AND order_return_id IS NULL)
          )
 );
 
-CREATE TABLE IF NOT EXISTS ORDER_OFFERS (
-    ORDER_ID UUID NOT NULL,
-    OFFER_ID UUID NOT NULL,
+CREATE TABLE IF NOT EXISTS order_offers (
+    order_id UUID NOT NULL,
+    offer_id UUID NOT NULL,
     PRIMARY KEY (order_id, offer_id),
     FOREIGN KEY (order_id) REFERENCES orders(id)
 );
