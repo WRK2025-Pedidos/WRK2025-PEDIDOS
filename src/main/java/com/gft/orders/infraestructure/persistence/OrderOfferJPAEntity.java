@@ -7,7 +7,7 @@ import lombok.*;
 
 @Generated
 @Entity
-@Table(name = "ORDER_OFFERS")
+@Table(name = "order_offers")
 @Data
 @Setter(AccessLevel.NONE)
 public class OrderOfferJPAEntity {
