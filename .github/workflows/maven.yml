@@ -43,6 +43,8 @@ jobs:
             done
             echo "❌ PostgreSQL no respondió a tiempo"
             exit 1
+          env:
+            PGPASSWORD: testpass
 
       - name: Build with Maven
         run: mvn clean verify -Dspring.jpa.show-sql=true -e
