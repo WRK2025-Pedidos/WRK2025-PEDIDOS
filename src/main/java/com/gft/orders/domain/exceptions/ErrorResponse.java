@@ -1,14 +1,14 @@
 package com.gft.orders.domain.exceptions;
 
+import lombok.Getter;
+
+@Getter
 public class ErrorResponse {
 
-    private String error;
+    final String error;
 
     public ErrorResponse(String error) {
         this.error = error;
     }
 
-    public String getError() {
-        return error;
-    }
 }
