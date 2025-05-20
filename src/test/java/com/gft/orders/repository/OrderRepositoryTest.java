@@ -3,11 +3,11 @@ package com.gft.orders.repository;
 import com.gft.orders.domain.repository.OrderRepository;
 import com.gft.orders.infraestructure.persistence.OrderJPAEntity;
 import com.gft.orders.infraestructure.persistence.OrderLineJPAEntity;
-import com.gft.orders.infraestructure.persistence.OrderOfferJPAEntity;
-import org.instancio.Instancio;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
+import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.jdbc.Sql;
 
 import java.math.BigDecimal;
@@ -16,10 +16,11 @@ import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
-import static org.instancio.Select.field;
 import static org.junit.jupiter.api.Assertions.*;
 
 @DataJpaTest
+@AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
+@ActiveProfiles("tests")
 @Sql(scripts= {"/db/schema.sql"})
 public class OrderRepositoryTest {
 
