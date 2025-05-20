@@ -8,8 +8,19 @@ on:
 
 jobs:
   build:
-
     runs-on: ubuntu-latest
+    
+    # Configura PostgreSQL como servicio
+    services:
+      postgres:
+        image: postgres:latest
+        env:
+          POSTGRES_USER: testuser
+          POSTGRES_PASSWORD: testpass
+          POSTGRES_DB: testdb
+        ports:
+          - 5432:5432
+        options: --health-cmd pg_isready --health-interval 10s --health-timeout 5s --health-retries 5
 
     steps:
       - uses: actions/checkout@v4
@@ -22,7 +33,7 @@ jobs:
 
       - name: Build with Maven
         run: mvn clean verify
-
+      
       - name: Check JaCoCo coverage
         run: |
           mvn jacoco:report
@@ -42,4 +53,3 @@ jobs:
             echo "Coverage is below 100%: $coverage"
             exit 1
           fi
-
