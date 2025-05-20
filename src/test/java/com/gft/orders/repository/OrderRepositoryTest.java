@@ -63,7 +63,6 @@ public class OrderRepositoryTest {
         assertEquals(BigDecimal.valueOf(888.00), updated.getTotalPrice());
     }
 
-
     /***********PRIVATE METHODS***********/
     private OrderJPAEntity createTestOrder() {
         OrderJPAEntity order = new OrderJPAEntity();
