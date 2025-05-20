@@ -1,7 +1,5 @@
 package com.gft.orders.application.dto;
 
-import com.gft.orders.domain.model.entity.Order;
-import com.gft.orders.infraestructure.persistence.OrderEntity;
 import org.instancio.Instancio;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;

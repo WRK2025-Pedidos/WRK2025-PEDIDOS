@@ -1,6 +1,6 @@
 package com.gft.orders.domain.model.entity;
 
-import com.gft.orders.infraestructure.persistence.OrderOfferId;
+import com.gft.orders.infraestructure.persistence.OrderOfferIdJPA;
 import lombok.*;
 
 @Generated
@@ -8,6 +8,6 @@ import lombok.*;
 @Builder
 public class OrderOffer {
 
-    private OrderOfferId id;
+    private OrderOfferIdJPA id;
 
 }

@@ -9,7 +9,7 @@ import java.util.UUID;
 
 @Generated
 @Embeddable
-public class OrderLineEntity {
+public class OrderLineJPAEntity {
 
     @Column(name = "PRODUCT", nullable = false)
     private UUID product;
