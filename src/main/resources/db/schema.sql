@@ -25,7 +25,7 @@ CREATE TABLE IF NOT EXISTS ORDER_RETURNS(
 
 CREATE TABLE IF NOT EXISTS ORDER_LINES (
      ORDER_ID            UUID                ,
-     ORDER_RETURN_ID           UUID                ,
+     ORDER_RETURN_ID     UUID                ,
      PRODUCT             UUID                NOT NULL,
      QUANTITY            INT                 NOT NULL,
      LINE_WEIGHT         DOUBLE              NOT NULL,
@@ -34,9 +34,9 @@ CREATE TABLE IF NOT EXISTS ORDER_LINES (
      FOREIGN KEY (ORDER_ID) REFERENCES ORDERS(ID),
      FOREIGN KEY (ORDER_RETURN_ID) REFERENCES ORDER_RETURNS(ID),
      CHECK (
-         (ORDER_ID IS NOT NULL AND ORDER_RETURN_ID IS NULL)
-             OR
-         (ORDER_ID IS NULL AND ORDER_RETURN_ID IS NOT NULL)
+            (ORDER_ID IS NULL AND ORDER_RETURN_ID IS NOT NULL)
+            OR
+            (ORDER_ID IS NOT NULL AND ORDER_RETURN_ID IS NULL)
          )
 );
 
