@@ -3,21 +3,24 @@ spring:
     name: pedidos
 
   datasource:
-    url: jdbc:postgresql://localhost:5432/springdb_test
-    username: springuser
-    password: springpass
+    url: jdbc:postgresql://localhost:5432/testdb
+    driver-class-name: org.postgresql.Driver
+    username: testuser
+    password: testpass
 
   jpa:
     hibernate:
-      ddl-auto: none
+      ddl-auto: validate
+      naming:
+        physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
+    open-in-view: false
     show-sql: true
+    properties:
+      hibernate:
+        format_sql: true
 
   sql:
     init:
-      mode: always
       schema-locations: classpath:/db/schema.sql
-
-  autoconfigure:
-    exclude:
-      - org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration
-      - org.springframework.boot.autoconfigure.orm.jpa.HibernateJpaAutoConfiguration
+      mode: never
+      data-locations: classpath:/db/data.sql
