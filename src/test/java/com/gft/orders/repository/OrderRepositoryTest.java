@@ -81,8 +81,10 @@ public class OrderRepositoryTest {
         order.setCreationDate(LocalDateTime.now());
         order.setCountryTax(0.2);
         order.setPaymentMethod(0.3);
+        order.setTotalPrice(BigDecimal.TEN);
 
         return order;
     }
+
 
 }
