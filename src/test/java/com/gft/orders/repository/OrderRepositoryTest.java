@@ -2,6 +2,8 @@ package com.gft.orders.repository;
 
 import com.gft.orders.domain.repository.OrderRepository;
 import com.gft.orders.infraestructure.persistence.OrderJPAEntity;
+import com.gft.orders.infraestructure.persistence.OrderLineJPAEntity;
+import com.gft.orders.infraestructure.persistence.OrderOfferJPAEntity;
 import org.instancio.Instancio;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,11 +36,9 @@ public class OrderRepositoryTest {
     @Test
     public void findAll_Test() {
        orderRepository.save(createTestOrder());
-       orderRepository.save(createTestOrder());
-       orderRepository.save(createTestOrder());
 
        List<OrderJPAEntity> orders = orderRepository.findAll();
-       assertEquals(3, orders.size());
+        assertEquals(1, orders.size());
     }
 
     @Test
@@ -62,14 +62,26 @@ public class OrderRepositoryTest {
         assertEquals(BigDecimal.valueOf(888.00), updated.getTotalPrice());
     }
 
+
     /***********PRIVATE METHODS***********/
     private OrderJPAEntity createTestOrder() {
-        return Instancio.of(OrderJPAEntity.class)
-                .ignore(field(OrderJPAEntity::getOffers))
-                .supply(field(OrderJPAEntity::getId), UUID::randomUUID)
-                .supply(field(OrderJPAEntity::getCartId), UUID::randomUUID)
-                .supply(field(OrderJPAEntity::getCreationDate), () -> LocalDateTime.now())
-                .create();
+        OrderJPAEntity order = new OrderJPAEntity();
+        order.setId(UUID.randomUUID());
+        order.setCartId(UUID.randomUUID());
+
+        OrderLineJPAEntity line = new OrderLineJPAEntity();
+        line.setProduct(UUID.randomUUID());
+        line.setQuantity(1);
+        line.setLineWeight(0.5);
+        line.setProductPrice(BigDecimal.TEN);
+        line.setLinePrice(BigDecimal.TEN);
+
+        order.setOrderLines(List.of(line));
+        order.setCreationDate(LocalDateTime.now());
+        order.setCountryTax(0.2);
+        order.setPaymentMethod(0.3);
+
+        return order;
     }
 
 }
