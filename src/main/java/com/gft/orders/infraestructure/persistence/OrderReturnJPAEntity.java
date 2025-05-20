@@ -1,21 +1,18 @@
 package com.gft.orders.infraestructure.persistence;
 
+import com.gft.orders.domain.model.valueObject.OrderLine;
 import jakarta.persistence.*;
 import lombok.Data;
-import lombok.EqualsAndHashCode;
-import lombok.Generated;
+
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.UUID;
 
-
-@Generated
 @Entity
-@Table(name = "ORDER_RETURNS")
+@Table(name = "order_returns")
 @Data
-@EqualsAndHashCode(of = "id")
 public class OrderReturnJPAEntity {
 
     @Id
@@ -27,8 +24,8 @@ public class OrderReturnJPAEntity {
     Double paymentMethod;
     LocalDateTime creationDate;
 
-    @ElementCollection(fetch = FetchType.EAGER)
-    @JoinTable(name = "ORDER_LINES", joinColumns = @JoinColumn(name = "ORDER_RETURN_ID"))
+    @ElementCollection
+    @CollectionTable(name = "order_lines", joinColumns = @JoinColumn(name = "order_return_id"))
     List<OrderLineJPAEntity> orderLines;
 
     @OneToMany
