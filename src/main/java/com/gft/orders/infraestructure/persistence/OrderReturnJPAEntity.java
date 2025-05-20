@@ -10,7 +10,7 @@ import java.util.List;
 import java.util.UUID;
 
 @Entity
-@Table(name = "ORDER_RETURNS")
+@Table(name = "order_returns")
 @Data
 public class OrderReturnJPAEntity {
 
@@ -25,7 +25,7 @@ public class OrderReturnJPAEntity {
 
 
     @ElementCollection
-    @CollectionTable(name = "ORDER_LINES", joinColumns = @JoinColumn(name = "ORDER_RETURN_ID"))
+    @CollectionTable(name = "order_lines", joinColumns = @JoinColumn(name = "order_return_id"))
     List<OrderLineJPAEntity> orderLines;
 
     @OneToMany

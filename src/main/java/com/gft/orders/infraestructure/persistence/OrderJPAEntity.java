@@ -11,7 +11,7 @@ import java.util.UUID;
 
 @Generated
 @Entity
-@Table(name = "ORDERS")
+@Table(name = "orders")
 @Data
 @EqualsAndHashCode(of = "id")
 public class OrderJPAEntity {
@@ -28,7 +28,7 @@ public class OrderJPAEntity {
     LocalDateTime creationDate;
 
     @ElementCollection
-    @CollectionTable(name = "ORDER_LINES", joinColumns = @JoinColumn(name = "ORDER_ID"))
+    @CollectionTable(name = "order_lines", joinColumns = @JoinColumn(name = "order_id"))
     List<OrderLineJPAEntity> orderLines;
 
     @OneToMany
