@@ -9,8 +9,8 @@ CREATE TABLE IF NOT EXISTS ORDERS(
     CART_ID             UUID                NOT NULL,
     CREATION_DATE       TIMESTAMP           NOT NULL,
     TOTAL_PRICE         DECIMAL(10, 3)      NOT NULL,
-    COUNTRY_TAX         DOUBLE              NOT NULL,
-    PAYMENT_METHOD      DOUBLE              NOT NULL,
+    COUNTRY_TAX         DOUBLE PRECISION    NOT NULL,
+    PAYMENT_METHOD      DOUBLE PRECISION    NOT NULL,
     PRIMARY KEY (ID)
 );
 
@@ -28,7 +28,7 @@ CREATE TABLE IF NOT EXISTS ORDER_LINES (
      ORDER_RETURN_ID     UUID                ,
      PRODUCT             UUID                NOT NULL,
      QUANTITY            INT                 NOT NULL,
-     LINE_WEIGHT         DOUBLE              NOT NULL,
+     LINE_WEIGHT         DOUBLE  PRECISION   NOT NULL,
      PRODUCT_PRICE       DECIMAL(10,3)       NOT NULL,
      LINE_PRICE          DECIMAL(10,3)       NOT NULL,
      FOREIGN KEY (ORDER_ID) REFERENCES ORDERS(ID),
