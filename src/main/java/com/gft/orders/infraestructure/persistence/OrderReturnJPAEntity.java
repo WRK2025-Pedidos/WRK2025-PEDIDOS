@@ -23,7 +23,6 @@ public class OrderReturnJPAEntity {
     Double paymentMethod;
     LocalDateTime creationDate;
 
-
     @ElementCollection
     @CollectionTable(name = "order_lines", joinColumns = @JoinColumn(name = "order_return_id"))
     List<OrderLineJPAEntity> orderLines;
