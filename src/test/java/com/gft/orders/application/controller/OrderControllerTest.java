@@ -4,7 +4,6 @@ import com.gft.orders.application.dto.OrderDTO;
 import com.gft.orders.application.service.OrderServices;
 import com.gft.orders.domain.model.entity.Order;
 import org.instancio.Instancio;
-import org.instancio.internal.generator.util.UUIDGenerator;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,8 +12,6 @@ import org.springframework.http.MediaType;
 import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.util.UriComponentsBuilder;
 
 import java.util.Arrays;
 import java.util.List;
@@ -44,7 +41,7 @@ class OrderControllerTest extends AbstractControllerTest {
     private MockMvc mockMvc;
 
     @Test
-    void createOrder() throws Exception {
+    void createOrder_Test() throws Exception {
         UUID orderId = UUID.randomUUID();
 
         OrderDTO orderDTO = Instancio.create(OrderDTO.class);
@@ -61,18 +58,24 @@ class OrderControllerTest extends AbstractControllerTest {
     }
 
     @Test
-    void findAllOrders() throws Exception {
+    void findAllOrders_Test() throws Exception {
         List<Order> orders = Arrays.asList(order1, order2);
 
         when(orderServices.findAllOrders()).thenReturn(orders);
 
-        MvcResult mvcResult = mockMvc.perform(get("/orders"))
+        mockMvc.perform(get("/orders"))
                 .andExpect(status().isOk())
                 .andReturn();
     }
 
     @Test
-    void findOrderById() throws Exception {
+    void notFindAllOrders_Test() throws Exception {
+        mockMvc.perform(get("/orders").param("view", "INVALID"))
+                .andExpect(status().isBadRequest());
+    }
+
+    @Test
+    void findOrderById_Test() throws Exception {
         UUID orderId = UUID.randomUUID();
         order1.setId(orderId);
 
@@ -86,7 +89,7 @@ class OrderControllerTest extends AbstractControllerTest {
     }
 
     @Test
-    void findOrderById_NotFound() throws Exception {
+    void findOrderById_NotFound_Test() throws Exception {
         UUID orderId = UUID.randomUUID();
         order1.setId(orderId);
 
@@ -95,6 +98,5 @@ class OrderControllerTest extends AbstractControllerTest {
         mockMvc.perform(get("/orders/" + orderId))
                 .andExpect(status().isNotFound());
     }
-
 
 }

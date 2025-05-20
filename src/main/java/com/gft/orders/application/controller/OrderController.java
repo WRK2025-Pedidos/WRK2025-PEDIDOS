@@ -23,14 +23,14 @@ public class OrderController {
 
     @GetMapping
     public ResponseEntity<?> getAllOrders(@RequestParam(required = false, defaultValue = "ALL") String view) {
-        Object response = null;
 
         view = view.toUpperCase();
-        if (view.equals("ALL")) {
-            response = orderServices.findAllOrders();
+        if ("ALL".equals(view)) {
+            return ResponseEntity.ok(orderServices.findAllOrders());
         }
 
-        return ResponseEntity.ok(response);
+        return ResponseEntity.badRequest().body("Unsupported view parameter: " + view);
+
     }
 
     @GetMapping("/{id}")
