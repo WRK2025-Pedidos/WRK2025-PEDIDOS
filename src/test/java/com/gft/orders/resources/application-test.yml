@@ -24,3 +24,8 @@ spring:
       schema-locations: classpath:/db/schema.sql
       mode: never
       data-locations: classpath:/db/data.sql
+
+  liquibase:
+    enabled: false
+  flyway:
+    enabled: false
