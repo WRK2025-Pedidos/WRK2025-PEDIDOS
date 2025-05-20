@@ -1,86 +1,98 @@
 package com.gft.orders.domain.exceptions;
 
-import org.hibernate.TypeMismatchException;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.springframework.core.MethodParameter;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
+import org.springframework.beans.TypeMismatchException;
+import org.springframework.http.*;
 import org.springframework.http.converter.HttpMessageNotReadableException;
-import org.springframework.validation.BeanPropertyBindingResult;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.MethodArgumentNotValidException;
-import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.context.request.WebRequest;
 
 import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
-@ControllerAdvice
-public class ExceptionsGeneralHandlerTest {
+class ExceptionsGeneralHandlerTest {
 
-    ExceptionsGeneralHandlerTest handler = new ExceptionsGeneralHandlerTest();
+    private ExceptionsGeneralHandler handler;
+    private WebRequest webRequest;
+
+    @BeforeEach
+    void setUp() {
+        handler = new ExceptionsGeneralHandler();
+        webRequest = mock(WebRequest.class);
+    }
 
     @Test
-    void handleGenericException_ShouldReturnInternalServerError() {
-        Exception ex = new Exception("Unexpected error");
+    void handleAllExceptions_ShouldReturnInternalServerError_Test() {
+        Exception ex = new Exception("Test exception");
         ResponseEntity<Object> response = handler.handleAllExceptions(ex);
+
         assertEquals(HttpStatus.INTERNAL_SERVER_ERROR, response.getStatusCode());
-        assertTrue(((ErrorResponse) response.getBody()).getError().contains("Something went wrong"));
+        assertEquals("Something went wrong", ((ErrorResponse)response.getBody()).getError());
     }
 
-
     @Test
-    void handleBusinessException_ShouldReturnInternalServerError() {
-        BusinessExceptions ex = new BusinessExceptions("Domain error");
+    void handleBusinessExceptions_ShouldReturnInternalServerError_Test() {
+        BusinessExceptions ex = new BusinessExceptions("Business error");
         ResponseEntity<Object> response = handler.handleBusinessExceptions(ex);
+
         assertEquals(HttpStatus.INTERNAL_SERVER_ERROR, response.getStatusCode());
-        assertEquals("Domain error", ((ErrorResponse) response.getBody()).getError());
+        assertEquals("Business error", ((ErrorResponse)response.getBody()).getError());
     }
 
     @Test
-    void handleHttpMessageNotReadable_ShouldReturnBadRequest() {
-        HttpMessageNotReadableException ex = new HttpMessageNotReadableException("Malformed JSON", (HttpInputMessage) null);
-        WebRequest request = mock(WebRequest.class);
-        ResponseEntity<Object> response = handler.handleHttpMessageNotReadable(ex, new HttpHeaders(), HttpStatus.BAD_REQUEST, request);
+    void handleHttpMessageNotReadable_ShouldReturnBadRequest_Test() throws Exception {
+        HttpMessageNotReadableException ex = new HttpMessageNotReadableException("Invalid JSON");
+        ResponseEntity<Object> response = handler.handleHttpMessageNotReadable(ex, new HttpHeaders(), HttpStatus.BAD_REQUEST, webRequest);
+
         assertEquals(HttpStatus.BAD_REQUEST, response.getStatusCode());
-        assertEquals("Malformed JSON", response.getBody());
+        assertEquals("Invalid JSON", response.getBody());
     }
 
     @Test
-    void handleMethodArgumentNotValid_ShouldReturnBadRequest() {
-        BindingResult bindingResult = new BeanPropertyBindingResult(new Object(), "object");
-        MethodParameter param = mock(MethodParameter.class);
-        MethodArgumentNotValidException ex = new MethodArgumentNotValidException(param, bindingResult);
-        WebRequest request = mock(WebRequest.class);
-        ResponseEntity<Object> response = handler.handleMethodArgumentNotValid(ex, new HttpHeaders(), HttpStatus.BAD_REQUEST, request);
+    void handleMethodArgumentNotValid_ShouldReturnBadRequest_Test() throws Exception {
+        MethodArgumentNotValidException ex = mock(MethodArgumentNotValidException.class);
+        ResponseEntity<Object> response = handler.handleMethodArgumentNotValid(ex, new HttpHeaders(), HttpStatus.BAD_REQUEST, webRequest);
+
         assertEquals(HttpStatus.BAD_REQUEST, response.getStatusCode());
-        assertTrue(((ErrorResponse) response.getBody()).getError().contains("Unable to validate request parameters"));
+        assertEquals("Unable to validate request parameters", ((ErrorResponse)response.getBody()).getError());
     }
 
     @Test
-    void handleTypeMismatch_ShouldReturnBadRequest() {
+    void handleTypeMismatch_ShouldReturnBadRequestWithDetails_Test() throws Exception {
         TypeMismatchException ex = new TypeMismatchException("abc", Integer.class);
-        WebRequest request = mock(WebRequest.class);
-        ex.initPropertyName("quantity");
-        ResponseEntity<Object> response = handler.handleTypeMismatch(ex, new HttpHeaders(), HttpStatus.BAD_REQUEST, request);
+
+        try {
+            var field = TypeMismatchException.class.getDeclaredField("propertyName");
+            field.setAccessible(true);
+            field.set(ex, "quantity");
+        } catch (Exception e) {
+            fail("Failed to set propertyName via reflection");
+        }
+
+        ResponseEntity<Object> response = handler.handleTypeMismatch(ex, new HttpHeaders(), HttpStatus.BAD_REQUEST, webRequest);
+
         assertEquals(HttpStatus.BAD_REQUEST, response.getStatusCode());
-        assertTrue(((ErrorResponse) response.getBody()).getError().contains("Invalid type"));
+        assertTrue(((ErrorResponse)response.getBody()).getError().contains("quantity"));
+        assertTrue(((ErrorResponse)response.getBody()).getError().contains("abc"));
+        assertTrue(((ErrorResponse)response.getBody()).getError().contains("Integer"));
     }
 
     @Test
-    void handleTypeMismatch_ShouldThrowNullPointerException_WhenRequiredTypeIsNull() {
-        TypeMismatchException ex = mock(TypeMismatchException.class);
-        when(ex.getPropertyName()).thenReturn("price");
-        when(ex.getValue()).thenReturn("abc");
-        when(ex.getRequiredType()).thenReturn(null);
+    void handleTypeMismatch_WithNullRequiredType_ShouldHandleGracefully_Test() throws Exception {
+        TypeMismatchException ex = new TypeMismatchException("abc", null);
 
-        WebRequest request = mock(WebRequest.class);
+        try {
+            var field = TypeMismatchException.class.getDeclaredField("propertyName");
+            field.setAccessible(true);
+            field.set(ex, "price");
+        } catch (Exception e) {
+            fail("Failed to set propertyName via reflection");
+        }
 
-        assertThrows(NullPointerException.class, () ->
-                handler.handleTypeMismatch(ex, new HttpHeaders(), HttpStatus.BAD_REQUEST, request)
-        );
+        ResponseEntity<Object> response = handler.handleTypeMismatch(ex, new HttpHeaders(), HttpStatus.BAD_REQUEST, webRequest);
+
+        assertEquals(HttpStatus.BAD_REQUEST, response.getStatusCode());
+        assertTrue(((ErrorResponse)response.getBody()).getError().contains("unknown type"));
     }
-
 }
