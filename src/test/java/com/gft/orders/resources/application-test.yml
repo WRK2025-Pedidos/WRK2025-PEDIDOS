@@ -3,14 +3,14 @@ spring:
     name: pedidos
 
   datasource:
-    url: jdbc:postgresql://localhost:5432/testdb
-    driver-class-name: org.postgresql.Driver
-    username: testuser
-    password: testpass
+    url: jdbc:h2:mem:testdb;DB_CLOSE_DELAY=-1;MODE=PostgreSQL
+    driver-class-name: org.h2.Driver
+    username: sa
+    password: ""
 
   jpa:
     hibernate:
-      ddl-auto: validate
+      ddl-auto: update
       naming:
         physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
     open-in-view: false
@@ -18,13 +18,13 @@ spring:
     properties:
       hibernate:
         format_sql: true
+    database-platform: org.hibernate.dialect.H2Dialect
 
   sql:
     init:
-      schema-locations: classpath:/db/schema.sql
       mode: never
+      schema-locations: classpath:/db/schema.sql
       data-locations: classpath:/db/data.sql
-
   liquibase:
     enabled: false
   flyway:
