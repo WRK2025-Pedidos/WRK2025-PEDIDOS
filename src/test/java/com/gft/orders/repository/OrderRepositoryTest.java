@@ -20,7 +20,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 @DataJpaTest
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
-@ActiveProfiles("tests")
+@ActiveProfiles("test")
 @Sql(scripts= {"/db/schema.sql"})
 public class OrderRepositoryTest {
 
