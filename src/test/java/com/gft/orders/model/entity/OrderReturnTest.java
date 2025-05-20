@@ -25,7 +25,7 @@ class OrderReturnTest {
     }
 
     @Test
-    void constructorTest() {
+    void constructor_Test() {
 
         OrderReturn orderReturnConstructor = OrderReturn.builder().build();
 
@@ -40,7 +40,7 @@ class OrderReturnTest {
     }
 
     @Test
-    void getIdTest() {
+    void getId_Test() {
 
         UUID id = UUID.randomUUID();
 
@@ -50,7 +50,7 @@ class OrderReturnTest {
     }
 
     @Test
-    void getOrderIdTest() {
+    void getOrderId_Test() {
 
         UUID id = UUID.randomUUID();
 
@@ -60,7 +60,7 @@ class OrderReturnTest {
     }
 
     @Test
-    void getTotalPriceTest() {
+    void getTotalPrice_Test() {
 
         orderReturn.setTotalPrice(BigDecimal.valueOf(1.0));
 
@@ -68,7 +68,7 @@ class OrderReturnTest {
     }
 
     @Test
-    void getCountryTaxTest() {
+    void getCountryTax_Test() {
 
         orderReturn.setCountryTax(2.0);
 
@@ -76,7 +76,7 @@ class OrderReturnTest {
     }
 
     @Test
-    void getPaymentMethodTest() {
+    void getPaymentMethod_Test() {
 
         orderReturn.setPaymentMethod(0.3);
 
@@ -84,7 +84,7 @@ class OrderReturnTest {
     }
 
     @Test
-    void getCreationDateTest() {
+    void getCreationDate_Test() {
 
         LocalDateTime date = LocalDateTime.now();
 
@@ -94,7 +94,7 @@ class OrderReturnTest {
     }
 
     @Test
-    void getOrderLinesTest() {
+    void getOrderLines_Test() {
 
         List<OrderLine> orderLines = Instancio.createList(OrderLine.class);
 
@@ -104,7 +104,7 @@ class OrderReturnTest {
     }
 
     @Test
-    void getOffersTest() {
+    void getOffers_Test() {
 
         List<UUID> offers = new ArrayList<>();
 
@@ -114,7 +114,7 @@ class OrderReturnTest {
     }
 
     @Test
-    void equalsTest() {
+    void equals_Test() {
 
         OrderReturn orderReturn2 = Instancio.create(OrderReturn.class);
 
