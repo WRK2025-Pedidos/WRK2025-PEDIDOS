@@ -31,7 +31,7 @@ jobs:
           cache: maven
 
       - name: Wait for PostgreSQL
-          run: |
+        run: |
             echo "Verificando conexión a PostgreSQL..."
             CONTAINER_ID=$(docker ps -qf "name=postgres")
             for i in {1..10}; do
@@ -43,7 +43,7 @@ jobs:
             done
             echo "❌ PostgreSQL no respondió a tiempo"
             exit 1
-          env:
+        env:
             PGPASSWORD: testpass
 
       - name: Build with Maven
