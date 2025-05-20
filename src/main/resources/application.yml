@@ -3,24 +3,23 @@ spring:
     name: pedidos
 
   datasource:
-    url: jdbc:h2:mem:testdb;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE
-    driver-class-name: org.h2.Driver
-    user: sa
-    password: ""
-
-  h2:
-    console:
-      enabled: true
-      path: /h2-console
-      settings:
-        trace: true
-  sql:
-    init:
-      schema-locations: classpath:/db/schema.sql
-      mode: never
+    url: jdbc:postgresql://localhost:5432/springdb
+    driver-class-name: org.postgresql.Driver
+    user: springuser
+    password: springpass
 
   jpa:
     hibernate:
       ddl-auto: update
       naming:
         physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
+    open-in-view: false
+    show-sql: true
+    properties:
+      hibernate:
+        format_sql: true
+
+  sql:
+    init:
+      schema-locations: classpath:/db/schema.sql
+      mode: always
