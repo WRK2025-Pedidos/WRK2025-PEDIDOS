@@ -10,21 +10,6 @@ jobs:
   build:
     runs-on: ubuntu-latest
     
-    services:
-      postgres:
-        image: postgres:latest
-        env:
-          POSTGRES_USER: testuser
-          POSTGRES_PASSWORD: testpass
-          POSTGRES_DB: testdb
-        ports:
-          - 5432:5432
-        options: >-
-          --health-cmd pg_isready
-          --health-interval 10s
-          --health-timeout 5s
-          --health-retries 10
-
     steps:
       - uses: actions/checkout@v4
       
@@ -35,24 +20,9 @@ jobs:
           distribution: 'temurin'
           cache: maven
 
-      - name: Install PostgreSQL client
-        run: sudo apt-get install -y postgresql-client
-
-      - name: Wait for PostgreSQL
-        run: |
-          for i in {1..15}; do
-            if PGPASSWORD=testpass psql -h localhost -U testuser -d testdb -c "SELECT 1"; then
-              echo "PostgreSQL is ready!"
-              exit 0
-            fi
-            sleep 2
-          done
-          echo "Failed to connect to PostgreSQL"
-          exit 1
-
       - name: Build with Maven
-        run: mvn clean verify -Dspring.test.constructor.autowire.mode=all -Dspring.datasource.url=jdbc:postgresql://localhost:5432/testdb -Dspring.datasource.username=testuser -Dspring.datasource.password=testpass -Dspring.jpa.hibernate.ddl-auto=validate -e
-      
+        run: mvn clean verify -Dspring.profiles.active=test -e
+        
       - name: Check JaCoCo coverage
         if: success() || failure()
         run: |
