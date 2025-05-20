@@ -12,10 +12,10 @@ import java.util.UUID;
 @EqualsAndHashCode
 public class OrderOfferIdJPA implements Serializable {
 
-    @Column(name = "ORDER_ID")
+    @Column(name = "order_id")
     private UUID orderId;
 
-    @Column(name = "OFFER_ID")
+    @Column(name = "offer_id")
     private UUID offerId;
 
 }
