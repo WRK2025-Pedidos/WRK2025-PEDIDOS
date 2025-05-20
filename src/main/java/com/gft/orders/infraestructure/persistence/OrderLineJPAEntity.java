@@ -21,4 +21,5 @@ public class OrderLineJPAEntity {
     private Double lineWeight;
     private BigDecimal productPrice;
     private BigDecimal linePrice;
+
 }
