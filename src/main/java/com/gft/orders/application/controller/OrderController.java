@@ -3,6 +3,12 @@ package com.gft.orders.application.controller;
 import com.gft.orders.application.dto.OrderDTO;
 import com.gft.orders.application.service.OrderServices;
 import com.gft.orders.domain.model.entity.Order;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponentsBuilder;
@@ -13,6 +19,7 @@ import java.util.UUID;
 
 @RestController
 @RequestMapping("/orders")
+@Tag(name = "Orders", description = "Manage custom orders")
 public class OrderController {
 
     private final OrderServices orderServices;
@@ -22,6 +29,7 @@ public class OrderController {
     }
 
     @GetMapping
+    @Operation(summary = "Get all orders", description = "Returns a list of orders. Can be filtered using the view parameter.")
     public ResponseEntity<?> getAllOrders(@RequestParam(required = false, defaultValue = "ALL") String view) {
 
         view = view.toUpperCase();
@@ -30,10 +38,10 @@ public class OrderController {
         }
 
         return ResponseEntity.badRequest().body("Unsupported view parameter: " + view);
-
     }
 
     @GetMapping("/{id}")
+    @Operation(summary = "Get orders by ID", description = "Returns a single order by its unique identifier")
     public ResponseEntity<?> getOrderById(@PathVariable UUID id) {
         Optional<Order> optional = orderServices.findOrderById(id);
 
@@ -45,12 +53,12 @@ public class OrderController {
     }
 
     @PostMapping
+    @Operation(summary = "Create a order", description = "Creates a new order and returns the location of the new resource")
     public ResponseEntity<?> createOrder(@RequestBody OrderDTO orderDTO, UriComponentsBuilder ucb) {
         UUID id = orderServices.createOrder(orderDTO);
 
         URI uri = ucb.path("/orders/{id}").buildAndExpand(id).toUri();
         return ResponseEntity.created(uri).build();
-
     }
 
 }

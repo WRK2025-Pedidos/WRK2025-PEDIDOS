@@ -1,6 +1,6 @@
 spring:
   application:
-    name: pedidos
+    name: orders
 
   datasource:
     url: jdbc:postgresql://localhost:5432/springdb
