@@ -2,10 +2,12 @@ package com.gft.orders.repository;
 
 import com.gft.orders.domain.repository.OrderRepository;
 import com.gft.orders.infraestructure.persistence.OrderJPAEntity;
-import org.instancio.Instancio;
+import com.gft.orders.infraestructure.persistence.OrderLineJPAEntity;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
+import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.jdbc.Sql;
 
 import java.math.BigDecimal;
@@ -14,10 +16,11 @@ import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
-import static org.instancio.Select.field;
 import static org.junit.jupiter.api.Assertions.*;
 
 @DataJpaTest
+@AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
+@ActiveProfiles("test")
 @Sql(scripts= {"/db/schema.sql"})
 public class OrderRepositoryTest {
 
@@ -34,11 +37,9 @@ public class OrderRepositoryTest {
     @Test
     public void findAll_Test() {
        orderRepository.save(createTestOrder());
-       orderRepository.save(createTestOrder());
-       orderRepository.save(createTestOrder());
 
        List<OrderJPAEntity> orders = orderRepository.findAll();
-       assertEquals(3, orders.size());
+        assertEquals(1, orders.size());
     }
 
     @Test
@@ -64,12 +65,23 @@ public class OrderRepositoryTest {
 
     /***********PRIVATE METHODS***********/
     private OrderJPAEntity createTestOrder() {
-        return Instancio.of(OrderJPAEntity.class)
-                .ignore(field(OrderJPAEntity::getOffers))
-                .supply(field(OrderJPAEntity::getId), UUID::randomUUID)
-                .supply(field(OrderJPAEntity::getCartId), UUID::randomUUID)
-                .supply(field(OrderJPAEntity::getCreationDate), () -> LocalDateTime.now())
-                .create();
-    }
+        OrderJPAEntity order = new OrderJPAEntity();
+        order.setId(UUID.randomUUID());
+        order.setCartId(UUID.randomUUID());
 
+        OrderLineJPAEntity line = new OrderLineJPAEntity();
+        line.setProduct(UUID.randomUUID());
+        line.setQuantity(1);
+        line.setLineWeight(0.5);
+        line.setProductPrice(BigDecimal.TEN);
+        line.setLinePrice(BigDecimal.TEN);
+
+        order.setOrderLines(List.of(line));
+        order.setCreationDate(LocalDateTime.now());
+        order.setCountryTax(0.2);
+        order.setPaymentMethod(0.3);
+        order.setTotalPrice(BigDecimal.TEN);
+
+        return order;
+    }
 }

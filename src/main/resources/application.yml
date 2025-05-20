@@ -1,0 +1,22 @@
+spring:
+  application:
+    name: pedidos
+
+  datasource:
+    url: jdbc:postgresql://localhost:5432/springdb
+    username: springuser
+    password: springpass
+    driver-class-name: org.postgresql.Driver
+
+  jpa:
+    hibernate:
+      ddl-auto: none
+    show-sql: true
+    properties:
+      hibernate:
+        format_sql: true
+
+  sql:
+    init:
+      mode: always
+      schema-locations: classpath:/db/schema.sql
