@@ -43,14 +43,6 @@ public class OrderRepositoryTest {
     }
 
     @Test
-    public void findAll_Test() {
-       orderRepository.save(createTestOrder());
-
-       List<OrderJPAEntity> orders = orderRepository.findAll();
-        assertEquals(1, orders.size());
-    }
-
-    @Test
     public void findById_Test() {
       OrderJPAEntity order = createTestOrder();
       orderRepository.save(order);

@@ -5,6 +5,7 @@ import lombok.Data;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
@@ -23,7 +24,12 @@ public class OrderReturnJPAEntity {
     BigDecimal totalPrice;
     LocalDateTime creationDate;
 
-    @ElementCollection
-    @CollectionTable(name = "order_lines", joinColumns = @JoinColumn(name = "order_return_id"))
-    List<OrderLineJPAEntity> orderLines;
+    @OneToMany(mappedBy = "orderReturn", cascade = CascadeType.ALL, orphanRemoval = true)
+    List<OrderLineJPAEntity> returnLines = new ArrayList<>();
+
+    public void addReturnLine(OrderLineJPAEntity orderLine) {
+
+        orderLine.setOrderReturn(this);
+        this.returnLines.add(orderLine);
+    }
 }
