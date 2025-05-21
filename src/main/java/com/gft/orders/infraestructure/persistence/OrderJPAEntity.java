@@ -1,6 +1,5 @@
 package com.gft.orders.infraestructure.persistence;
 
-import com.gft.orders.domain.model.valueObject.OrderLine;
 import jakarta.persistence.*;
 import lombok.*;
 
