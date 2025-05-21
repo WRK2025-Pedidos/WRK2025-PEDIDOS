@@ -1,8 +1,6 @@
 package com.gft.orders.infraestructure.persistence;
 
-import jakarta.persistence.EmbeddedId;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.*;
 
 @Generated
@@ -14,5 +12,10 @@ public class OrderOfferJPAEntity {
 
     @EmbeddedId
     private OrderOfferIdJPA id;
+
+    @ManyToOne(optional = false)
+    @MapsId("orderId")
+    @JoinColumn(name = "order_id", nullable = false)
+    private OrderJPAEntity order;
 
 }

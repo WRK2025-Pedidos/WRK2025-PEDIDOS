@@ -2,31 +2,39 @@ package com.gft.orders.infraestructure.persistence;
 
 import jakarta.persistence.*;
 import lombok.Data;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
 @Entity
 @Table(name = "order_returns")
-@Data
+@Getter
+@Setter
+@NoArgsConstructor
 public class OrderReturnJPAEntity {
 
     @Id
-    private UUID id;
+    UUID id;
 
-    private UUID orderId;
-    private BigDecimal totalPrice;
-    private Double countryTax;
-    private Double paymentMethod;
-    private LocalDateTime creationDate;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "order_id", referencedColumnName = "id")
+    private OrderJPAEntity order;
 
-    @ElementCollection
-    @CollectionTable(name = "order_lines", joinColumns = @JoinColumn(name = "order_return_id"))
-    private List<OrderLineJPAEntity> orderLines;
+    BigDecimal totalPrice;
+    LocalDateTime creationDate;
 
-    @OneToMany
-    private List<OrderOfferJPAEntity> offers;
+    @OneToMany(mappedBy = "orderReturn", cascade = CascadeType.ALL, orphanRemoval = true)
+    List<OrderLineJPAEntity> returnLines = new ArrayList<>();
+
+    public void addReturnLine(OrderLineJPAEntity orderLine) {
+
+        orderLine.setOrderReturn(this);
+        this.returnLines.add(orderLine);
+    }
 }
-

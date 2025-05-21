@@ -15,6 +15,7 @@ spring:
     properties:
       hibernate:
         format_sql: true
+    defer-datasource-initialization: true
 
   sql:
     init:
@@ -37,3 +38,4 @@ logging:
         web: DEBUG
         jpa: DEBUG
       hibernate: DEBUG
+
