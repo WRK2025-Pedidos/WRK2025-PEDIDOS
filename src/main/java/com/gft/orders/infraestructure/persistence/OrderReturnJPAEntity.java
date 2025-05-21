@@ -2,6 +2,9 @@ package com.gft.orders.infraestructure.persistence;
 
 import jakarta.persistence.*;
 import lombok.Data;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
@@ -11,7 +14,9 @@ import java.util.UUID;
 
 @Entity
 @Table(name = "order_returns")
-@Data
+@Getter
+@Setter
+@NoArgsConstructor
 public class OrderReturnJPAEntity {
 
     @Id
