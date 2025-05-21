@@ -13,5 +13,20 @@ import java.util.UUID;
 @Service
 public class OrderReturnServicesImpl implements OrderReturnServices {
 
+    private final OrderReturnRepository orderReturnRepository;
+    private final DozerBeanMapper mapper;
+
+    public OrderReturnServicesImpl(OrderReturnRepository orderReturnRepository, DozerBeanMapper mapper) {
+        this.orderReturnRepository = orderReturnRepository;
+        this.mapper = mapper;
+    }
+
+    @Override
+    public Optional<OrderReturn> findOrderReturnById(UUID id) {
+
+        return orderReturnRepository.findById(id).stream()
+                .map(x -> mapper.map(x, OrderReturn.class))
+                .findAny();
+    }
 
 }

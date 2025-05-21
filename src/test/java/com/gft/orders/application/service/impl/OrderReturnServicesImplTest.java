@@ -69,8 +69,6 @@ public class OrderReturnServicesImplTest {
     private void initObjects() {
 
         orderReturn = Instancio.create(OrderReturn.class);
-        orderReturn2 = Instancio.create(OrderReturn.class);
         orderReturnJPAEntity = Instancio.create(OrderReturnJPAEntity.class);
-        orderReturnJPAEntity2 = Instancio.create(OrderReturnJPAEntity.class);
     }
 }
