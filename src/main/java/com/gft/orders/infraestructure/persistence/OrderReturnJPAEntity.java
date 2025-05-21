@@ -14,18 +14,19 @@ import java.util.UUID;
 public class OrderReturnJPAEntity {
 
     @Id
-    UUID id;
+    private UUID id;
 
-    UUID orderId;
-    BigDecimal totalPrice;
-    Double countryTax;
-    Double paymentMethod;
-    LocalDateTime creationDate;
+    private UUID orderId;
+    private BigDecimal totalPrice;
+    private Double countryTax;
+    private Double paymentMethod;
+    private LocalDateTime creationDate;
 
     @ElementCollection
     @CollectionTable(name = "order_lines", joinColumns = @JoinColumn(name = "order_return_id"))
-    List<OrderLineJPAEntity> orderLines;
+    private List<OrderLineJPAEntity> orderLines;
 
     @OneToMany
-    List<OrderOfferJPAEntity> offers;
+    private List<OrderOfferJPAEntity> offers;
 }
+
