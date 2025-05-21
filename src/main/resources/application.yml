@@ -1,6 +1,6 @@
 spring:
   application:
-    name: pedidos
+    name: orders
 
   datasource:
     url: jdbc:postgresql://localhost:5432/springdb
@@ -20,3 +20,20 @@ spring:
     init:
       mode: always
       schema-locations: classpath:/db/schema.sql
+
+springdoc:
+  api-docs:
+    enabled: true
+    path: /v3/api-docs
+  swagger-ui:
+    enabled: true
+    path: /swagger-ui.html
+
+logging:
+  level:
+    org:
+      springdoc: DEBUG
+      springframework:
+        web: DEBUG
+        jpa: DEBUG
+      hibernate: DEBUG
