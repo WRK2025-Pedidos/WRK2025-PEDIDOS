@@ -32,11 +32,8 @@ class OrderReturnTest {
         assertNull(orderReturnConstructor.getId());
         assertNull(orderReturnConstructor.getOrderId());
         assertNull(orderReturnConstructor.getTotalPrice());
-        assertNull(orderReturnConstructor.getCountryTax());
-        assertNull(orderReturnConstructor.getPaymentMethod());
         assertNull(orderReturnConstructor.getCreationDate());
         assertNull(orderReturnConstructor.getOrderLines());
-        assertNull(orderReturnConstructor.getOffers());
     }
 
     @Test
@@ -68,22 +65,6 @@ class OrderReturnTest {
     }
 
     @Test
-    void getCountryTax_Test() {
-
-        orderReturn.setCountryTax(2.0);
-
-        assertEquals(2.0, orderReturn.getCountryTax());
-    }
-
-    @Test
-    void getPaymentMethod_Test() {
-
-        orderReturn.setPaymentMethod(0.3);
-
-        assertEquals(0.3, orderReturn.getPaymentMethod());
-    }
-
-    @Test
     void getCreationDate_Test() {
 
         LocalDateTime date = LocalDateTime.now();
@@ -101,16 +82,6 @@ class OrderReturnTest {
         orderReturn.setOrderLines(orderLines);
 
         assertEquals(orderLines, orderReturn.getOrderLines());
-    }
-
-    @Test
-    void getOffers_Test() {
-
-        List<UUID> offers = new ArrayList<>();
-
-        orderReturn.setOffers(offers);
-
-        assertEquals(offers, orderReturn.getOffers());
     }
 
     @Test

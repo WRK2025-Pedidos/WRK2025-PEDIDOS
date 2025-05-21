@@ -3,6 +3,9 @@ package com.gft.orders.repository;
 import com.gft.orders.domain.repository.OrderRepository;
 import com.gft.orders.infraestructure.persistence.OrderJPAEntity;
 import com.gft.orders.infraestructure.persistence.OrderLineJPAEntity;
+import com.gft.orders.infraestructure.persistence.OrderOfferIdJPA;
+import com.gft.orders.infraestructure.persistence.OrderOfferJPAEntity;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
@@ -27,6 +30,11 @@ public class OrderRepositoryTest {
     @Autowired
     private OrderRepository orderRepository;
 
+    @BeforeEach
+    public void setUp() {
+        orderRepository.deleteAll();
+    }
+
     @Test
     public void create_Test() {
         OrderJPAEntity order = createTestOrder();
@@ -49,7 +57,6 @@ public class OrderRepositoryTest {
       Optional<OrderJPAEntity> result = orderRepository.findById(order.getId());
       assertTrue(result.isPresent());
       assertEquals(order.getId(), result.get().getId());
-
     }
 
     @Test
@@ -64,6 +71,7 @@ public class OrderRepositoryTest {
     }
 
     /***********PRIVATE METHODS***********/
+
     private OrderJPAEntity createTestOrder() {
         OrderJPAEntity order = new OrderJPAEntity();
         order.setId(UUID.randomUUID());

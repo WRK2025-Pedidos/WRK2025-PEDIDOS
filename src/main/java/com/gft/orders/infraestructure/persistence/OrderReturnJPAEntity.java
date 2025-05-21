@@ -18,16 +18,14 @@ public class OrderReturnJPAEntity {
     @Id
     UUID id;
 
-    UUID orderId;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "order_id", referencedColumnName = "id")
+    private OrderJPAEntity order;
+
     BigDecimal totalPrice;
-    Double countryTax;
-    Double paymentMethod;
     LocalDateTime creationDate;
 
     @ElementCollection
     @CollectionTable(name = "order_lines", joinColumns = @JoinColumn(name = "order_return_id"))
     List<OrderLineJPAEntity> orderLines;
-
-    @OneToMany
-    List<OrderOfferJPAEntity> offers;
 }

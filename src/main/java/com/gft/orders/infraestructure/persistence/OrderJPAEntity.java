@@ -29,7 +29,9 @@ public class OrderJPAEntity {
     @CollectionTable(name = "order_lines", joinColumns = @JoinColumn(name = "order_id"))
     List<OrderLineJPAEntity> orderLines;
 
-    @OneToMany
+    @OneToMany(mappedBy = "order", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
     List<OrderOfferJPAEntity> offers;
 
+    @OneToMany(mappedBy = "order", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<OrderReturnJPAEntity> returns;
 }

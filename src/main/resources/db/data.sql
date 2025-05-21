@@ -1,3 +1,8 @@
+DELETE FROM order_offers;
+DELETE FROM order_lines;
+DELETE FROM order_returns;
+DELETE FROM orders;
+
 INSERT INTO orders (id, cart_id, creation_date, total_price, country_tax, payment_method)
 VALUES
     ('11111111-1111-1111-1111-111111111111', '22222222-2222-2222-2222-222222222222', NOW(), 100.00, 21.0, 1.0);
