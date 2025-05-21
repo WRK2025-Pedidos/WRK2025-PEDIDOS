@@ -1,7 +1,6 @@
 package com.gft.orders.infraestructure.persistence;
 
 import jakarta.persistence.*;
-import lombok.Data;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -20,17 +19,17 @@ import java.util.UUID;
 public class OrderReturnJPAEntity {
 
     @Id
-    UUID id;
+    private UUID id;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "order_id", referencedColumnName = "id")
     private OrderJPAEntity order;
 
-    BigDecimal totalPrice;
-    LocalDateTime creationDate;
+    private BigDecimal totalPrice;
+    private LocalDateTime creationDate;
 
     @OneToMany(mappedBy = "orderReturn", cascade = CascadeType.ALL, orphanRemoval = true)
-    List<OrderLineJPAEntity> returnLines = new ArrayList<>();
+    private List<OrderLineJPAEntity> returnLines = new ArrayList<>();
 
     public void addReturnLine(OrderLineJPAEntity orderLine) {
 

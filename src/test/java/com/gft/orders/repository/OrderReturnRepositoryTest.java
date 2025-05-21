@@ -48,10 +48,7 @@ public class OrderReturnRepositoryTest {
     private OrderReturnJPAEntity createTestOrderReturn() {
         OrderReturnJPAEntity orderReturn = new OrderReturnJPAEntity();
         orderReturn.setId(UUID.randomUUID());
-        orderReturn.setOrderId(UUID.randomUUID());
         orderReturn.setTotalPrice(BigDecimal.TEN);
-        orderReturn.setCountryTax(0.2);
-        orderReturn.setPaymentMethod(0.3);
         orderReturn.setCreationDate(LocalDateTime.now());
 
         OrderLineJPAEntity line = new OrderLineJPAEntity();
@@ -60,9 +57,6 @@ public class OrderReturnRepositoryTest {
         line.setLineWeight(0.5);
         line.setProductPrice(BigDecimal.TEN);
         line.setLinePrice(BigDecimal.TEN);
-
-        orderReturn.setOrderLines(List.of(line));
-        orderReturn.setOffers(List.of());
 
         return orderReturn;
     }
