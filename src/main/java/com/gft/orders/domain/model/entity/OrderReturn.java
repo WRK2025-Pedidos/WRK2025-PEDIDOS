@@ -19,10 +19,7 @@ public class OrderReturn {
     UUID id;
     UUID orderId;
     BigDecimal totalPrice;
-    Double countryTax;
-    Double paymentMethod;
     LocalDateTime creationDate;
     List<OrderLine> orderLines;
-    List<UUID> offers;
 
 }

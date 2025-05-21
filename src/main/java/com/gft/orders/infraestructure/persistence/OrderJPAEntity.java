@@ -5,6 +5,7 @@ import lombok.*;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
@@ -16,19 +17,26 @@ import java.util.UUID;
 public class OrderJPAEntity {
 
     @Id
-    UUID id;
+    private UUID id;
 
-    UUID cartId;
-    BigDecimal totalPrice;
-    Double countryTax;
-    Double paymentMethod;
-    LocalDateTime creationDate;
+    private UUID cartId;
+    private BigDecimal totalPrice;
+    private Double countryTax;
+    private Double paymentMethod;
+    private LocalDateTime creationDate;
   
-    @ElementCollection
-    @CollectionTable(name = "order_lines", joinColumns = @JoinColumn(name = "order_id"))
+    @OneToMany(mappedBy = "order", cascade = CascadeType.ALL, orphanRemoval = true)
     List<OrderLineJPAEntity> orderLines;
 
-    @OneToMany
+    @OneToMany(mappedBy = "order", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
     List<OrderOfferJPAEntity> offers;
 
+    @OneToMany(mappedBy = "order", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<OrderReturnJPAEntity> returns = new ArrayList<>();
+
+    public void addOrderLine(OrderLineJPAEntity orderLine) {
+
+        orderLine.setOrder(this);
+        this.orderLines.add(orderLine);
+    }
 }
