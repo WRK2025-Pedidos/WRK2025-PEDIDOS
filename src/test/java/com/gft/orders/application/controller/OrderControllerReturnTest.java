@@ -10,13 +10,12 @@ import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
-import org.springframework.web.servlet.mvc.AbstractController;
 
 import java.util.Optional;
 import java.util.UUID;
 
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.mockito.Mockito.when;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @WebMvcTest(value = OrderReturnController.class)
@@ -42,10 +41,21 @@ class OrderControllerReturnTest extends AbstractControllerTest {
 
         when(orderReturnServices.findOrderReturnById(orderId)).thenReturn(Optional.of(orderReturn));
 
-        MvcResult mvcResult = mockMvc.perform(get("/orders_return/" + orderId))
+        MvcResult mvcResult = mockMvc.perform(post("/orders_returns/" + orderId))
                 .andExpect(status().isOk())
                 .andReturn();
 
         assertResponseBodyIsOk(mvcResult, orderReturn);
     }
+
+    @Test
+    void findOrderById_NotFound_Test() throws Exception {
+        UUID orderId = UUID.randomUUID();
+
+        when(orderReturnServices.findOrderReturnById(orderId)).thenReturn(Optional.empty());
+
+        mockMvc.perform(post("/orders_returns/" + orderId))
+                .andExpect(status().isNotFound());
+    }
+
 }
