@@ -10,6 +10,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 @OpenAPIDefinition(
         info = @Info(
                 title = "Order MicroService",
+                version = "v1",
                 description = "Microservice for order management in the Workshop Amazon system",
                 contact = @Contact(
                         name = "Development Team: Catherine Alventosa and Lorena Sanchis"
