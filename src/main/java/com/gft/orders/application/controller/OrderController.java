@@ -2,7 +2,7 @@ package com.gft.orders.application.controller;
 
 import com.gft.orders.application.dto.OrderDTO;
 import com.gft.orders.application.service.OrderServices;
-import com.gft.orders.domain.model.entity.Order;
+import com.gft.orders.domain.model.Order;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.http.ResponseEntity;
