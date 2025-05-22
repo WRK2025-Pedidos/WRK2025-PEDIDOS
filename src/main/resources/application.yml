@@ -4,15 +4,15 @@ spring:
 
   datasource:
     url: jdbc:postgresql://localhost:5432/springdb
-    # o esta opcion - url: jdbc:postgresql://spring-postgres:5432/springdb
     username: springuser
     password: springpass
     driver-class-name: org.postgresql.Driver
 
   jpa:
     hibernate:
-      ddl-auto: none
+      ddl-auto: update
     show-sql: true
+    open-in-view: false
     properties:
       hibernate:
         format_sql: true
@@ -20,8 +20,9 @@ spring:
 
   sql:
     init:
-      mode: always
+      mode: never
       schema-locations: classpath:/db/schema.sql
+      data-locations: classpath:/db/data.sql
 
 springdoc:
   api-docs:

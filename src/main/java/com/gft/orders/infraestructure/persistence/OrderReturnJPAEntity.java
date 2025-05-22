@@ -32,8 +32,6 @@ public class OrderReturnJPAEntity {
     List<OrderLineJPAEntity> returnLines = new ArrayList<>();
 
     public void addReturnLine(OrderLineJPAEntity orderLine) {
-
         orderLine.setOrderReturn(this);
-        this.returnLines.add(orderLine);
     }
 }
