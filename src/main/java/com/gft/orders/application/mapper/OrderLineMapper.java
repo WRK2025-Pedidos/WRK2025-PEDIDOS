@@ -9,16 +9,10 @@ import org.mapstruct.Mapping;
 @Mapper(componentModel = "spring")
 public interface OrderLineMapper {
 
-    @Mapping(target = "productId", source = "product")
     OrderLine toDomain(OrderLineRequest request);
-
-    @Mapping(target = "product", source = "productId")
     OrderLineResponse toResponse(OrderLine domain);
 
-    @Mapping(target = "product", source = "productId")
     OrderLineJPAEntity toEntity(OrderLine domain);
-
-    @Mapping(target = "productId", source = "product")
     OrderLine toDomain(OrderLineJPAEntity domain);
 
 }
