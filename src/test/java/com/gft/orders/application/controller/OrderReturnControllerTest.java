@@ -19,7 +19,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @WebMvcTest(value = OrderReturnController.class)
-class OrderControllerReturnTest extends AbstractControllerTest {
+class OrderReturnControllerTest extends AbstractControllerTest {
 
     @MockitoBean
     private OrderReturnServices orderReturnServices;

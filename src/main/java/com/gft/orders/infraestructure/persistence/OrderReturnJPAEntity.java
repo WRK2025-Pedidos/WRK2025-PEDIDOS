@@ -19,17 +19,17 @@ import java.util.UUID;
 public class OrderReturnJPAEntity {
 
     @Id
-    private UUID id;
+    UUID id;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "order_id", referencedColumnName = "id")
-    private OrderJPAEntity order;
+    OrderJPAEntity order;
 
-    private BigDecimal totalPrice;
-    private LocalDateTime creationDate;
+    BigDecimal totalPrice;
+    LocalDateTime creationDate;
 
     @OneToMany(mappedBy = "orderReturn", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<OrderLineJPAEntity> returnLines = new ArrayList<>();
+    List<OrderLineJPAEntity> returnLines = new ArrayList<>();
 
     public void addReturnLine(OrderLineJPAEntity orderLine) {
 
