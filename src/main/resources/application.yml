@@ -4,6 +4,7 @@ spring:
 
   datasource:
     url: jdbc:postgresql://localhost:5432/springdb
+    # o esta opcion - url: jdbc:postgresql://spring-postgres:5432/springdb
     username: springuser
     password: springpass
     driver-class-name: org.postgresql.Driver
@@ -15,6 +16,7 @@ spring:
     properties:
       hibernate:
         format_sql: true
+    defer-datasource-initialization: true
 
   sql:
     init:
@@ -37,3 +39,4 @@ logging:
         web: DEBUG
         jpa: DEBUG
       hibernate: DEBUG
+

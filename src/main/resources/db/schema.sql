@@ -24,6 +24,7 @@ CREATE TABLE IF NOT EXISTS order_returns(
 );
 
 CREATE TABLE IF NOT EXISTS order_lines (
+                                           id                  UUID                ,
                                            order_id            UUID                ,
                                            order_return_id     UUID                ,
                                            product             UUID                NOT NULL,

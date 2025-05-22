@@ -1,6 +1,7 @@
 package com.gft.orders.infraestructure.persistence;
 
 import jakarta.persistence.Column;
+import jakarta.persistence.Embeddable;
 import lombok.*;
 
 import java.io.Serializable;
@@ -10,6 +11,7 @@ import java.util.UUID;
 @Data
 @Setter(AccessLevel.NONE)
 @EqualsAndHashCode
+@Embeddable
 public class OrderOfferIdJPA implements Serializable {
 
     @Column(name = "order_id")
