@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
-@ControllerAdvice(basePackages = "com.gft.orders.infraestructure")
+@ControllerAdvice(basePackages = "com.gft.orders.application.controller")
 public class ExceptionsGeneralHandler extends ResponseEntityExceptionHandler {
 
     private static final Logger logger = LoggerFactory.getLogger(ExceptionsGeneralHandler.class);

@@ -26,6 +26,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 
 @WebMvcTest(value = OrderController.class)
 class OrderControllerTest extends AbstractControllerTest {
+
     @MockitoBean
     private OrderServices orderServices;
 

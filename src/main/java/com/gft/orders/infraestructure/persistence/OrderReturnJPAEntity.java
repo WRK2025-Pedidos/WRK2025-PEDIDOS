@@ -1,7 +1,6 @@
 package com.gft.orders.infraestructure.persistence;
 
 import jakarta.persistence.*;
-import lombok.Data;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -24,7 +23,7 @@ public class OrderReturnJPAEntity {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "order_id", referencedColumnName = "id")
-    private OrderJPAEntity order;
+    OrderJPAEntity order;
 
     BigDecimal totalPrice;
     LocalDateTime creationDate;
