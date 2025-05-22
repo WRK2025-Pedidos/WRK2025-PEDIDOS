@@ -13,9 +13,9 @@ import java.util.*;
 @EqualsAndHashCode(of="id")
 public class Order {
 
-    private final UUID id;
-    private final UUID cartId;
-    private final LocalDateTime creationDate;
+    private UUID id;
+    private UUID cartId;
+    private LocalDateTime creationDate;
 
     private BigDecimal totalPrice;
     private Double countryTax;
