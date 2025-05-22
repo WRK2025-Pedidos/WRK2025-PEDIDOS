@@ -1,6 +1,7 @@
 package com.gft.orders.infraestructure.persistence;
 
 import jakarta.persistence.*;
+import lombok.Data;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -13,8 +14,7 @@ import java.util.UUID;
 
 @Entity
 @Table(name = "order_returns")
-@Getter
-@Setter
+@Data
 @NoArgsConstructor
 public class OrderReturnJPAEntity {
 

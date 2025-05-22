@@ -9,7 +9,8 @@ import java.util.List;
 import java.util.UUID;
 
 @Generated
-@Data
+@Getter
+@Setter
 @Builder
 @EqualsAndHashCode(of = "id")
 public class OrderReturn {
