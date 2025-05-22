@@ -4,17 +4,17 @@ import org.instancio.Instancio;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
-public class OrderDTOTest {
+public class OrderResponseTest {
 
     @Test
     public void constructor_Test() {
-        OrderDTO orderDTO = Instancio.create(OrderDTO.class);
-        assertNotNull(orderDTO.cartId());
-        assertNotNull(orderDTO.totalPrice());
-        assertNotNull(orderDTO.countryTax());
-        assertNotNull(orderDTO.paymentMethod());
-        assertNotNull(orderDTO.creationDate());
-        assertNotNull(orderDTO.orderLines());
-        assertNotNull(orderDTO.offers());
+        OrderResponse orderResponse = Instancio.create(OrderResponse.class);
+        assertNotNull(orderResponse.cartId());
+        assertNotNull(orderResponse.totalPrice());
+        assertNotNull(orderResponse.countryTax());
+        assertNotNull(orderResponse.paymentMethod());
+        assertNotNull(orderResponse.creationDate());
+        assertNotNull(orderResponse.orderLines());
+        assertNotNull(orderResponse.offers());
     }
 }

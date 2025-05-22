@@ -1,5 +1,6 @@
 package com.gft.orders.application.mapper;
 
+import com.gft.orders.application.dto.OrderResponse;
 import com.gft.orders.domain.model.entity.Order;
 import com.gft.orders.infraestructure.persistence.OrderJPAEntity;
 import org.mapstruct.Mapper;

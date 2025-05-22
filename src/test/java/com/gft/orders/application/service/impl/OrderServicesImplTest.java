@@ -1,7 +1,7 @@
 
 package com.gft.orders.application.service.impl;
 
-import com.gft.orders.application.dto.OrderDTO;
+import com.gft.orders.application.dto.OrderResponse;
 import com.gft.orders.domain.model.entity.Order;
 import com.gft.orders.domain.repository.OrderRepository;
 import com.gft.orders.infraestructure.persistence.OrderJPAEntity;
@@ -37,7 +37,7 @@ public class OrderServicesImplTest {
 
     private Order order1;
     private Order order2;
-    private OrderDTO orderDTO;
+    private OrderResponse orderResponse;
     private OrderJPAEntity orderJPAEntity1;
     private OrderJPAEntity orderJPAEntity2;
 
@@ -51,14 +51,14 @@ public class OrderServicesImplTest {
 
         UUID uuid = UUID.randomUUID();
 
-        when(mapper.map(orderDTO, OrderJPAEntity.class)).thenReturn(orderJPAEntity1);
+        when(mapper.map(orderResponse, OrderJPAEntity.class)).thenReturn(orderJPAEntity1);
 
         OrderJPAEntity savedEntity = new OrderJPAEntity();
         savedEntity.setId(uuid);
 
         when(orderRepository.save(orderJPAEntity1)).thenReturn(savedEntity);
 
-        UUID result = orderServicesImpl.createOrder(orderDTO);
+        UUID result = orderServicesImpl.createOrder(orderResponse);
 
         assertEquals(uuid, result);
     }
@@ -109,7 +109,7 @@ public class OrderServicesImplTest {
 
         order1 = Instancio.create(Order.class);
         order2 = Instancio.create(Order.class);
-        orderDTO = Instancio.create(OrderDTO.class);
+        orderResponse = Instancio.create(OrderResponse.class);
         orderJPAEntity1 = Instancio.create(OrderJPAEntity.class);
         orderJPAEntity2 = Instancio.create(OrderJPAEntity.class);
     }

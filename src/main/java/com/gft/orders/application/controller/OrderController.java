@@ -1,6 +1,6 @@
 package com.gft.orders.application.controller;
 
-import com.gft.orders.application.dto.OrderDTO;
+import com.gft.orders.application.dto.OrderResponse;
 import com.gft.orders.application.service.OrderServices;
 import com.gft.orders.domain.model.entity.Order;
 import io.swagger.v3.oas.annotations.Operation;
@@ -50,8 +50,8 @@ public class OrderController {
 
     @PostMapping
     @Operation(summary = "Create a order", description = "Creates a new order and returns the location of the new resource")
-    public ResponseEntity<?> createOrder(@RequestBody OrderDTO orderDTO, UriComponentsBuilder ucb) {
-        UUID id = orderServices.createOrder(orderDTO);
+    public ResponseEntity<?> createOrder(@RequestBody OrderResponse orderResponse, UriComponentsBuilder ucb) {
+        UUID id = orderServices.createOrder(orderResponse);
 
         URI uri = ucb.path("/orders/{id}").buildAndExpand(id).toUri();
         return ResponseEntity.created(uri).build();

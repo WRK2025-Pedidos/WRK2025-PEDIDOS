@@ -1,6 +1,6 @@
 package com.gft.orders.application.controller;
 
-import com.gft.orders.application.dto.OrderDTO;
+import com.gft.orders.application.dto.OrderResponse;
 import com.gft.orders.application.service.OrderServices;
 import com.gft.orders.domain.model.entity.Order;
 import org.instancio.Instancio;
@@ -44,11 +44,11 @@ class OrderControllerTest extends AbstractControllerTest {
     void createOrder_Test() throws Exception {
         UUID orderId = UUID.randomUUID();
 
-        OrderDTO orderDTO = Instancio.create(OrderDTO.class);
+        OrderResponse orderResponse = Instancio.create(OrderResponse.class);
 
-        when(orderServices.createOrder(orderDTO)).thenReturn(orderId);
+        when(orderServices.createOrder(orderResponse)).thenReturn(orderId);
 
-        String requestBody = objectMapper.writeValueAsString(orderDTO);
+        String requestBody = objectMapper.writeValueAsString(orderResponse);
 
         mockMvc.perform(post("/orders")
                         .content(requestBody)

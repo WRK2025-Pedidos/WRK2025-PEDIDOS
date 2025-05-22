@@ -1,6 +1,6 @@
 package com.gft.orders.application.service.impl;
 
-import com.gft.orders.application.dto.OrderDTO;
+import com.gft.orders.application.dto.OrderResponse;
 import com.gft.orders.application.service.OrderServices;
 import com.gft.orders.domain.model.entity.Order;
 import com.gft.orders.domain.repository.OrderRepository;
@@ -26,9 +26,9 @@ public class OrderServicesImpl implements OrderServices {
 
     @Override
     @Transactional
-    public UUID createOrder(OrderDTO orderDTO) {
+    public UUID createOrder(OrderResponse orderResponse) {
 
-        OrderJPAEntity orderJPAEntity = mapper.map(orderDTO, OrderJPAEntity.class);
+        OrderJPAEntity orderJPAEntity = mapper.map(orderResponse, OrderJPAEntity.class);
 
         return orderRepository.save(orderJPAEntity).getId();
     }

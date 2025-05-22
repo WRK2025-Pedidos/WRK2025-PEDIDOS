@@ -8,11 +8,11 @@ import java.time.LocalDateTime;
 import java.util.List;
 import java.util.UUID;
 
-public record OrderDTO(UUID cartId,
-                       BigDecimal totalPrice,
-                       Double countryTax,
-                       Double paymentMethod,
-                       LocalDateTime creationDate,
-                       List<OrderLine> orderLines,
-                       List<UUID> offers)
+public record OrderResponse(UUID cartId,
+                            BigDecimal totalPrice,
+                            Double countryTax,
+                            Double paymentMethod,
+                            LocalDateTime creationDate,
+                            List<OrderLine> orderLines,
+                            List<UUID> offers)
         implements Serializable {}
