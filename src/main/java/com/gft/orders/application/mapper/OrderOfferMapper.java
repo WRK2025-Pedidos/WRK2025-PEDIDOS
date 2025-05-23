@@ -2,11 +2,13 @@ package com.gft.orders.application.mapper;
 
 import com.gft.orders.infraestructure.persistence.OrderJPAEntity;
 import com.gft.orders.infraestructure.persistence.OrderOfferJPAEntity;
+import lombok.Generated;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 
 import java.util.UUID;
 
+@Generated
 @Mapper(componentModel = "spring", uses = {OrderOfferIdMapper.class})
 public interface OrderOfferMapper {
 
