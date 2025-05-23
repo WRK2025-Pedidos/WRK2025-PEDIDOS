@@ -1,4 +1,4 @@
-package com.gft.orders.domain.model;
+package com.gft.orders.domain.model.entity;
 
 import com.gft.orders.domain.model.valueObject.OrderLine;
 import lombok.*;

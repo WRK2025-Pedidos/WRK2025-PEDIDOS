@@ -9,7 +9,6 @@ import java.util.UUID;
 
 @Generated
 @Data
-@Setter(AccessLevel.NONE)
 @EqualsAndHashCode
 @Embeddable
 public class OrderOfferIdJPA implements Serializable {

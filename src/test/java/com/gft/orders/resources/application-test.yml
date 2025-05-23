@@ -1,0 +1,39 @@
+spring:
+  config:
+    activate:
+      on-profile: test
+
+  datasource:
+    url: jdbc:postgresql://localhost:5432/testdb
+    driver-class-name: org.postgresql.Driver
+    username: testuser
+    password: testpass
+
+  jpa:
+    hibernate:
+      ddl-auto: none
+    show-sql: true
+    properties:
+      hibernate:
+        format_sql: true
+
+  sql:
+    init:
+      mode: always
+      schema-locations: classpath:/db/schema.sql
+      data-locations: classpath:/db/data.sql
+
+  liquibase:
+    enabled: false
+  flyway:
+    enabled: false
+
+  logging:
+    level:
+      org:
+        springframework:
+          jdbc:
+            datasource: DEBUG
+          boot:
+            autoconfigure:
+              sql: DEBUG

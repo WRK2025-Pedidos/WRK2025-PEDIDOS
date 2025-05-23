@@ -39,4 +39,17 @@ public class OrderLineJPAEntity {
     private BigDecimal linePrice;
 
 
+    public void setOrderReturn(OrderReturnJPAEntity orderReturn) {
+        this.orderReturn = orderReturn;
+        if (orderReturn != null && !orderReturn.getReturnLines().contains(this)) {
+            orderReturn.getReturnLines().add(this);
+        }
+    }
+
+    public void setOrder(OrderJPAEntity order) {
+        this.order = order;
+        if (order != null && !order.getOrderLines().contains(this)) {
+            order.getOrderLines().add(this);
+        }
+    }
 }

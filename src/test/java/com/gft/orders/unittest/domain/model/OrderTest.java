@@ -1,6 +1,6 @@
 package com.gft.orders.unittest.domain.model;
 
-import com.gft.orders.domain.model.Order;
+import com.gft.orders.domain.model.entity.Order;
 import com.gft.orders.domain.model.valueObject.OrderLine;
 import org.instancio.Instancio;
 import org.junit.jupiter.api.BeforeEach;

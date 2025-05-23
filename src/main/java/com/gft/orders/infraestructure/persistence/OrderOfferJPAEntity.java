@@ -7,7 +7,6 @@ import lombok.*;
 @Entity
 @Table(name = "order_offers")
 @Data
-@Setter(AccessLevel.NONE)
 public class OrderOfferJPAEntity {
 
     @EmbeddedId

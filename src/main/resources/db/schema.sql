@@ -32,6 +32,7 @@ CREATE TABLE IF NOT EXISTS order_lines (
                                            line_weight         DOUBLE PRECISION    NOT NULL,
                                            product_price       DECIMAL(10,3)       NOT NULL,
                                            line_price          DECIMAL(10,3)       NOT NULL,
+                                           PRIMARY KEY (id),
                                            FOREIGN KEY (order_id) REFERENCES orders(id),
                                            FOREIGN KEY (order_return_id) REFERENCES order_returns(id),
                                            CONSTRAINT chk_order_or_return CHECK (
