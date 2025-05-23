@@ -13,16 +13,18 @@ import java.util.UUID;
 import java.util.stream.Collectors;
 
 @Mapper(componentModel = "spring",
-        uses = {OrderLineMapper.class, OrderOfferMapper.class})
+        uses = {OrderLineMapper.class, OrderOfferMapper.class, OrderReturnMapper.class})
 public interface OrderMapper {
 
     @Mapping(target = "offers", ignore = true)
+    @Mapping(target = "returns", ignore = true)
     Order toDomain(OrderRequest request);
 
     @Mapping(target = "offers", source = "offers")
     OrderResponse toResponse(Order domain);
 
     @Mapping(target = "offers", ignore = true)
+    @Mapping(target = "returns", ignore = true)
     OrderJPAEntity toEntity(Order domain);
 
     @AfterMapping
@@ -48,4 +50,7 @@ public interface OrderMapper {
             domain.setOffers(offerIds);
         }
     }
+
+    @Mapping(target = "returns", source = "returns")
+    OrderJPAEntity toEntityWithReturns(Order domain);
 }
