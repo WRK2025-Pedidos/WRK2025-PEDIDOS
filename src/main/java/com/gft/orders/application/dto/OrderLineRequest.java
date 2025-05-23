@@ -1,12 +1,14 @@
 package com.gft.orders.application.dto;
 
 import jakarta.validation.constraints.NotNull;
+import lombok.Generated;
 import lombok.Getter;
 import lombok.Setter;
 
 import java.math.BigDecimal;
 import java.util.UUID;
 
+@Generated
 @Getter
 @Setter
 public class OrderLineRequest {
