@@ -21,4 +21,5 @@ public interface OrderOfferMapper {
         }
         return entity.getId().getOfferId();
     }
+
 }

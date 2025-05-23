@@ -4,9 +4,11 @@ import com.gft.orders.application.dto.OrderLineRequest;
 import com.gft.orders.application.dto.OrderLineResponse;
 import com.gft.orders.domain.model.valueObject.OrderLine;
 import com.gft.orders.infraestructure.persistence.OrderLineJPAEntity;
+import lombok.Generated;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 
+@Generated
 @Mapper(componentModel = "spring")
 public interface OrderLineMapper {
 

@@ -45,6 +45,7 @@ public interface OrderMapper {
             List<UUID> offerIds = entity.getOffers().stream()
                                 .map(offerEntity -> offerEntity.getId().getOfferId())
                                 .toList();
+            domain.setOffers(offerIds);
         }
     }
 }
