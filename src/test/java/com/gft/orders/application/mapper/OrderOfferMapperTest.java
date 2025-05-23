@@ -6,19 +6,14 @@ import com.gft.orders.infraestructure.persistence.OrderOfferIdJPA;
 import org.instancio.Instancio;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.InjectMocks;
-import org.mockito.junit.jupiter.MockitoExtension;
 import org.mapstruct.factory.Mappers;
 
 import java.util.UUID;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-@ExtendWith(MockitoExtension.class)
 public class OrderOfferMapperTest {
 
-    @InjectMocks
     private OrderOfferMapperImpl orderOfferMapper;
 
     private OrderJPAEntity orderJPAEntity;
