@@ -34,7 +34,7 @@ public class ExceptionsGeneralHandler extends ResponseEntityExceptionHandler {
     // **********************************************************************************************
 
     @Override
-    protected ResponseEntity<Object> handleHttpMessageNotReadable(HttpMessageNotReadableException ex, HttpHeaders headers, HttpStatusCode status, WebRequest request) {
+    public ResponseEntity<Object> handleHttpMessageNotReadable(HttpMessageNotReadableException ex, HttpHeaders headers, HttpStatusCode status, WebRequest request) {
 
         logger.error("HttpMessageNotReadableException is thrown");
 
@@ -42,7 +42,7 @@ public class ExceptionsGeneralHandler extends ResponseEntityExceptionHandler {
     }
 
     @Override
-    protected ResponseEntity<Object> handleMethodArgumentNotValid(MethodArgumentNotValidException ex, HttpHeaders headers, HttpStatusCode status, WebRequest request) {
+    public ResponseEntity<Object> handleMethodArgumentNotValid(MethodArgumentNotValidException ex, HttpHeaders headers, HttpStatusCode status, WebRequest request) {
 
         ErrorResponse errorResponse = new ErrorResponse("Unable to validate request parameters");
 
@@ -50,7 +50,7 @@ public class ExceptionsGeneralHandler extends ResponseEntityExceptionHandler {
     }
 
     @Override
-    protected ResponseEntity<Object> handleTypeMismatch(TypeMismatchException ex, HttpHeaders headers, HttpStatusCode status, WebRequest request) {
+    public ResponseEntity<Object> handleTypeMismatch(TypeMismatchException ex, HttpHeaders headers, HttpStatusCode status, WebRequest request) {
 
         String invalidParameter = ex.getPropertyName();
         Object invalidValue = ex.getValue();

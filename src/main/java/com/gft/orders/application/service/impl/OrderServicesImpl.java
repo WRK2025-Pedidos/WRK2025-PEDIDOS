@@ -2,7 +2,7 @@ package com.gft.orders.application.service.impl;
 
 import com.gft.orders.application.dto.OrderDTO;
 import com.gft.orders.application.service.OrderServices;
-import com.gft.orders.domain.model.entity.Order;
+import com.gft.orders.domain.model.Order;
 import com.gft.orders.domain.repository.OrderRepository;
 import com.gft.orders.infraestructure.persistence.OrderJPAEntity;
 import jakarta.transaction.Transactional;
