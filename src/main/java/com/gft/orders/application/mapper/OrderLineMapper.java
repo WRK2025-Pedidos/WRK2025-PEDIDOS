@@ -15,10 +15,12 @@ public interface OrderLineMapper {
     OrderLine toDomain(OrderLineRequest request);
     OrderLineResponse toResponse(OrderLine domain);
 
+    @Mapping(target = "id", ignore = true)
     @Mapping(target = "order", ignore = true)
     @Mapping(target = "orderReturn", ignore = true)
     OrderLineJPAEntity toEntity(OrderLine domain);
 
+    @Mapping(target = ".", source = ".")
     OrderLine toDomain(OrderLineJPAEntity domain);
 
 }
