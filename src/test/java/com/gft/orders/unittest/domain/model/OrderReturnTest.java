@@ -1,4 +1,4 @@
-package com.gft.orders.model.entity;
+package com.gft.orders.unittest.domain.model;
 
 import com.gft.orders.domain.model.entity.OrderReturn;
 import com.gft.orders.domain.model.valueObject.OrderLine;

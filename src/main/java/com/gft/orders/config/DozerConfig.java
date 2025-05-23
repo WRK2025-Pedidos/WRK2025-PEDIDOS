@@ -9,16 +9,16 @@ import java.util.List;
 @Configuration
 public class DozerConfig {
 
-    @Bean(name="mapper")
-    DozerBeanMapper getMapper() {
-
-        DozerBeanMapper dozerBeanMapper = new DozerBeanMapper();
-
-        List<String> mapingFiles = List.of("dozer-configuration-mappings.xml");
-
-        dozerBeanMapper.setMappingFiles(mapingFiles);
-
-        return dozerBeanMapper;
-    }
-
+	@Bean(name="mapper")
+	DozerBeanMapper getMapper() {
+		
+		DozerBeanMapper dozerBeanMapper = new DozerBeanMapper();
+		
+		List<String> mapingFiles = List.of("dozer-configuration-mappings.xml");
+		
+		dozerBeanMapper.setMappingFiles(mapingFiles);
+		
+		return dozerBeanMapper;
+	}
+	
 }

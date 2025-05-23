@@ -1,5 +1,6 @@
-package com.gft.orders;
+package com.gft.orders.unittest;
 
+import com.gft.orders.OrdersApplication;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;

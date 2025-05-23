@@ -1,5 +1,8 @@
-package com.gft.orders.domain.exceptions;
+package com.gft.orders.unittest.exceptions;
 
+import com.gft.orders.domain.exceptions.BusinessExceptions;
+import com.gft.orders.domain.exceptions.ErrorResponse;
+import com.gft.orders.domain.exceptions.ExceptionsGeneralHandler;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.TypeMismatchException;

@@ -1,4 +1,4 @@
-package com.gft.orders.application.infraestructure.persistence;
+package com.gft.orders.unittest.infrastructure.persistence.entity;
 
 import com.gft.orders.infraestructure.persistence.OrderLineJPAEntity;
 import com.gft.orders.infraestructure.persistence.OrderReturnJPAEntity;

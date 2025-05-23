@@ -1,4 +1,4 @@
-package com.gft.orders.model.valueObject;
+package com.gft.orders.unittest.domain.model;
 
 import com.gft.orders.domain.model.valueObject.OrderLine;
 import org.instancio.Instancio;
@@ -70,7 +70,7 @@ public class OrderLineTest {
 
         assertEquals(BigDecimal.valueOf(1.0), orderLine.getLinePrice());
     }
-  
+
     @Test
     void equals_Test() {
 

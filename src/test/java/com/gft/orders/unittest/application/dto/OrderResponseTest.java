@@ -1,5 +1,6 @@
-package com.gft.orders.application.dto;
+package com.gft.orders.unittest.application.dto;
 
+import com.gft.orders.application.dto.OrderResponse;
 import org.instancio.Instancio;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;

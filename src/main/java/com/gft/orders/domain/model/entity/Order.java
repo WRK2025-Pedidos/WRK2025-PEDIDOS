@@ -5,23 +5,23 @@ import lombok.*;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
-import java.util.List;
-import java.util.UUID;
+import java.util.*;
 
-
-@Generated
-@Data
+@Getter
+@Setter
 @Builder
 @EqualsAndHashCode(of="id")
 public class Order {
 
-    UUID id;
-    UUID cartId;
-    BigDecimal totalPrice;
-    Double countryTax;
-    Double paymentMethod;
-    LocalDateTime creationDate;
-    List<OrderLine> orderLines;
-    List<UUID> offers;
+    private UUID id;
+    private UUID cartId;
+    private LocalDateTime creationDate;
+
+    private BigDecimal totalPrice;
+    private Double countryTax;
+    private Double paymentMethod;
+    private List<UUID> offers;
+
+    private List<OrderLine> orderLines;
 
 }

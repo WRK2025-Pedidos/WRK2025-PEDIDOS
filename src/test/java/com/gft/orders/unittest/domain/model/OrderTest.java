@@ -1,4 +1,4 @@
-package com.gft.orders.model.entity;
+package com.gft.orders.unittest.domain.model;
 
 import com.gft.orders.domain.model.entity.Order;
 import com.gft.orders.domain.model.valueObject.OrderLine;
@@ -129,9 +129,9 @@ class OrderTest {
         order.setCartId(cartId);
 
         Order order2 = Order.builder()
-                        .id(id)
-                        .cartId(cartId)
-                        .build();
+                .id(id)
+                .cartId(cartId)
+                .build();
 
         assertEquals(order, order2);
     }
@@ -143,4 +143,3 @@ class OrderTest {
 
     }
 }
-
