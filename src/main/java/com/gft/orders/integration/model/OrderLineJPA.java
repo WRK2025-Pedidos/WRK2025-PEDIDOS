@@ -1,12 +1,12 @@
-package com.gft.orders.infraestructure.persistence;
+package com.gft.orders.integration.model;
 
-import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+import com.gft.orders.infraestructure.persistence.OrderJPAEntity;
+import com.gft.orders.infraestructure.persistence.OrderReturnJPAEntity;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.Generated;
 import lombok.NoArgsConstructor;
-import org.hibernate.annotations.GenericGenerator;
 
 import java.math.BigDecimal;
 import java.util.UUID;

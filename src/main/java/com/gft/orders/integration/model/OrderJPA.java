@@ -1,7 +1,12 @@
-package com.gft.orders.infraestructure.persistence;
+package com.gft.orders.integration.model;
 
+import com.gft.orders.infraestructure.persistence.OrderLineJPAEntity;
+import com.gft.orders.infraestructure.persistence.OrderOfferJPAEntity;
+import com.gft.orders.infraestructure.persistence.OrderReturnJPAEntity;
 import jakarta.persistence.*;
-import lombok.*;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.Generated;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
