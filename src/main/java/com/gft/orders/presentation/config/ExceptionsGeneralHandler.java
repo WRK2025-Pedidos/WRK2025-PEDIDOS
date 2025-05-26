@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
-@ControllerAdvice(basePackages = "com.gft.orders.application.controller")
+@ControllerAdvice(basePackages = "com.gft.orders.presentation.controllers")
 public class ExceptionsGeneralHandler extends ResponseEntityExceptionHandler {
 
     private static final Logger logger = LoggerFactory.getLogger(ExceptionsGeneralHandler.class);
@@ -30,6 +30,15 @@ public class ExceptionsGeneralHandler extends ResponseEntityExceptionHandler {
         logger.error("Business error: {}", ex.getMessage(), ex);
 
         return ResponseEntity.internalServerError().body(new ErrorResponse(ex.getMessage()));
+    }
+
+    @ExceptionHandler(NoSuchFieldException.class)
+    public ResponseEntity<Object> handleNoSuchFieldException(NoSuchFieldException ex) {
+        logger.warn("Resource not found: {}", ex.getMessage());
+
+        ErrorResponse errorResponse = new ErrorResponse(ex.getMessage());
+
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(errorResponse);
     }
 
     // **********************************************************************************************

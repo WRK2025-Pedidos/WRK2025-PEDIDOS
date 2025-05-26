@@ -1,7 +1,7 @@
 package com.gft.orders.integrationtest;
 
 import com.gft.orders.business.model.Order;
-import com.gft.orders.domain.model.valueObject.OrderLine;
+import com.gft.orders.business.model.OrderLine;
 import org.instancio.Instancio;
 import org.instancio.Select;
 import org.junit.jupiter.api.Test;

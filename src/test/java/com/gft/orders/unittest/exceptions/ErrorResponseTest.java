@@ -1,6 +1,6 @@
 package com.gft.orders.unittest.exceptions;
 
-import com.gft.orders.domain.exceptions.ErrorResponse;
+import com.gft.orders.presentation.config.ErrorResponse;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
