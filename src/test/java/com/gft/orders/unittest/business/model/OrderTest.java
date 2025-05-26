@@ -34,7 +34,6 @@ class OrderTest {
         assertNull(orderConstructor.getPaymentMethod());
         assertNull(orderConstructor.getCreationDate());
         assertNull(orderConstructor.getOrderLines());
-        assertNull(orderConstructor.getOffers());
     }
 
     @Test
@@ -106,19 +105,6 @@ class OrderTest {
 
         assertEquals(orderLines, order.getOrderLines());
     }
-
-    @Test
-    void setAndGetOffers_Test() {
-
-        UUID offer1 = UUID.randomUUID();
-        UUID offer2 = UUID.randomUUID();
-        List<UUID> offers = List.of(offer1, offer2);
-
-        order.setOffers(offers);
-
-        assertEquals(offers, order.getOffers());
-    }
-
 
     @Test
     void equals_Test() {

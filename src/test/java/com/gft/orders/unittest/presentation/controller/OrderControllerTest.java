@@ -57,7 +57,7 @@ class OrderControllerTest extends AbstractControllerTest {
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(order)))
                 .andExpect(status().isOk())
-                .andExpect(content().string("\"" + orderId.toString() + "\""));
+                .andExpect(content().string("\"" + orderId + "\""));
     }
 
     @Test
@@ -91,7 +91,7 @@ class OrderControllerTest extends AbstractControllerTest {
 
         when(orderServices.findOrderById(orderId)).thenReturn(Optional.empty());
 
-        mockMvc.perform(get("/orders/" + orderId.toString())
+        mockMvc.perform(get("/orders/" + orderId)
                         .accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isNotFound())
                 .andExpect(content().string(containsString("Order ID not found")));

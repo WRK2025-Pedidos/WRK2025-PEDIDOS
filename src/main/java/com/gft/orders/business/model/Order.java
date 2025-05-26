@@ -19,7 +19,6 @@ public class Order {
     private BigDecimal totalPrice;
     private Double countryTax;
     private Double paymentMethod;
-    private List<UUID> offers;
 
     private List<OrderLine> orderLines;
 
