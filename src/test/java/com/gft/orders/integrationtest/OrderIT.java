@@ -1,6 +1,6 @@
 package com.gft.orders.integrationtest;
 
-import com.gft.orders.domain.model.Order;
+import com.gft.orders.business.model.Order;
 import com.gft.orders.domain.model.valueObject.OrderLine;
 import org.instancio.Instancio;
 import org.instancio.Select;

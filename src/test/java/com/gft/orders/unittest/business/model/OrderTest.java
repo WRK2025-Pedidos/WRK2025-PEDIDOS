@@ -1,7 +1,7 @@
-package com.gft.orders.unittest.domain.model;
+package com.gft.orders.unittest.business.model;
 
-import com.gft.orders.domain.model.Order;
-import com.gft.orders.domain.model.valueObject.OrderLine;
+import com.gft.orders.business.model.Order;
+import com.gft.orders.business.model.OrderLine;
 import org.instancio.Instancio;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

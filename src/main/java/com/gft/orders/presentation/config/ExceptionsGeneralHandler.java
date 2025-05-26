@@ -1,5 +1,6 @@
-package com.gft.orders.domain.exceptions;
+package com.gft.orders.presentation.config;
 
+import com.gft.orders.business.config.BusinessExceptions;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.TypeMismatchException;

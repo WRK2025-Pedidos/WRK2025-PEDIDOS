@@ -1,8 +1,5 @@
 package com.gft.orders.integration.model;
 
-import com.gft.orders.infraestructure.persistence.OrderLineJPAEntity;
-import com.gft.orders.infraestructure.persistence.OrderOfferJPAEntity;
-import com.gft.orders.infraestructure.persistence.OrderReturnJPAEntity;
 import jakarta.persistence.*;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -10,7 +7,6 @@ import lombok.Generated;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
@@ -19,7 +15,7 @@ import java.util.UUID;
 @Table(name = "orders")
 @Data
 @EqualsAndHashCode(of = "id")
-public class OrderJPAEntity {
+public class OrderJPA {
 
     @Id
     private UUID id;
@@ -31,17 +27,8 @@ public class OrderJPAEntity {
     private LocalDateTime creationDate;
   
     @OneToMany(mappedBy = "order", cascade = CascadeType.ALL, orphanRemoval = true)
-    List<OrderLineJPAEntity> orderLines;
+    List<OrderLineJPA> orderLines;
 
-    @OneToMany(mappedBy = "order", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
-    List<OrderOfferJPAEntity> offers;
+    List<UUID> offers;
 
-    @OneToMany(mappedBy = "order", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<OrderReturnJPAEntity> returns = new ArrayList<>();
-
-    public void addOrderLine(OrderLineJPAEntity orderLine) {
-
-        orderLine.setOrder(this);
-        this.orderLines.add(orderLine);
-    }
 }

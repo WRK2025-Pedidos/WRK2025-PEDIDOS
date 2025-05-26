@@ -1,15 +1,12 @@
-package com.gft.orders.application.controller;
+package com.gft.orders.presentation.controllers;
 
-import com.gft.orders.application.dto.OrderDTO;
-import com.gft.orders.application.service.OrderServices;
-import com.gft.orders.domain.model.Order;
+import com.gft.orders.business.service.OrderServices;
+import com.gft.orders.business.model.Order;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.util.UriComponentsBuilder;
 
-import java.net.URI;
+import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -26,35 +23,30 @@ public class OrderController {
 
     @GetMapping
     @Operation(summary = "Get all orders", description = "Returns a list of orders. Can be filtered using the view parameter.")
-    public ResponseEntity<?> getAllOrders(@RequestParam(required = false, defaultValue = "ALL") String view) {
+    public List<Order> getAllOrders() {
 
-        view = view.toUpperCase();
-        if ("ALL".equals(view)) {
-            return ResponseEntity.ok(orderServices.findAllOrders());
-        }
-
-        return ResponseEntity.badRequest().body("Unsupported view parameter: " + view);
+        return orderServices.findAllOrders();
     }
 
     @GetMapping("/{id}")
     @Operation(summary = "Get orders by ID", description = "Returns a single order by its unique identifier")
-    public ResponseEntity<?> getOrderById(@PathVariable UUID id) {
+    public Order getOrderById(@PathVariable UUID id) throws NoSuchFieldException {
+
         Optional<Order> optional = orderServices.findOrderById(id);
 
         if (optional.isPresent()) {
-            return ResponseEntity.ok(optional.get());
+            return optional.get();
         }
 
-        return ResponseEntity.notFound().build();
+        throw new NoSuchFieldException("Order ID not found");
     }
 
     @PostMapping
     @Operation(summary = "Create a order", description = "Creates a new order and returns the location of the new resource")
-    public ResponseEntity<?> createOrder(@RequestBody OrderDTO orderDTO, UriComponentsBuilder ucb) {
-        UUID id = orderServices.createOrder(orderDTO);
+    public UUID createOrder(@RequestBody Order order) {
 
-        URI uri = ucb.path("/orders/{id}").buildAndExpand(id).toUri();
-        return ResponseEntity.created(uri).build();
+        return orderServices.createOrder(order);
+
     }
 
 }

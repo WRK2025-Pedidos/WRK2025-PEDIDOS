@@ -1,6 +1,5 @@
-package com.gft.orders.domain.model;
+package com.gft.orders.business.model;
 
-import com.gft.orders.domain.model.valueObject.OrderLine;
 import lombok.*;
 
 import java.math.BigDecimal;

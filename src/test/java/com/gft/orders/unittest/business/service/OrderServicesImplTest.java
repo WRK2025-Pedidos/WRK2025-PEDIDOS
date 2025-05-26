@@ -1,10 +1,9 @@
-package com.gft.orders.unittest.application.service;
+package com.gft.orders.unittest.business.service;
 
-import com.gft.orders.application.dto.OrderDTO;
-import com.gft.orders.application.service.impl.OrderServicesImpl;
-import com.gft.orders.domain.model.Order;
-import com.gft.orders.domain.repository.OrderRepository;
-import com.gft.orders.infraestructure.persistence.OrderJPAEntity;
+import com.gft.orders.business.model.Order;
+import com.gft.orders.business.service.impl.OrderServiceImpl;
+import com.gft.orders.integration.model.OrderJPA;
+import com.gft.orders.integration.repositories.OrderRepository;
 import org.dozer.DozerBeanMapper;
 import org.instancio.Instancio;
 import org.junit.jupiter.api.BeforeEach;
@@ -33,13 +32,12 @@ public class OrderServicesImplTest {
     private OrderRepository orderRepository;
 
     @InjectMocks
-    private OrderServicesImpl orderServicesImpl;
+    private OrderServiceImpl orderServicesImpl;
 
     private Order order1;
     private Order order2;
-    private OrderDTO orderDTO;
-    private OrderJPAEntity orderJPAEntity1;
-    private OrderJPAEntity orderJPAEntity2;
+    private OrderJPA orderJPA1;
+    private OrderJPA orderJPA2;
 
     @BeforeEach
     public void setUp() {
@@ -51,14 +49,14 @@ public class OrderServicesImplTest {
 
         UUID uuid = UUID.randomUUID();
 
-        when(mapper.map(orderDTO, OrderJPAEntity.class)).thenReturn(orderJPAEntity1);
+        when(mapper.map(order1, OrderJPA.class)).thenReturn(orderJPA1);
 
-        OrderJPAEntity savedEntity = new OrderJPAEntity();
+        OrderJPA savedEntity = new OrderJPA();
         savedEntity.setId(uuid);
 
-        when(orderRepository.save(orderJPAEntity1)).thenReturn(savedEntity);
+        when(orderRepository.save(orderJPA1)).thenReturn(savedEntity);
 
-        UUID result = orderServicesImpl.createOrder(orderDTO);
+        UUID result = orderServicesImpl.createOrder(order1);
 
         assertEquals(uuid, result);
     }
@@ -68,8 +66,8 @@ public class OrderServicesImplTest {
 
         UUID uuid = UUID.randomUUID();
 
-        when(orderRepository.findById(uuid)).thenReturn(Optional.of(orderJPAEntity1));
-        when(mapper.map(orderJPAEntity1, Order.class)).thenReturn(order1);
+        when(orderRepository.findById(uuid)).thenReturn(Optional.of(orderJPA1));
+        when(mapper.map(orderJPA1, Order.class)).thenReturn(order1);
 
         Optional<Order> optional = orderServicesImpl.findOrderById(uuid);
 
@@ -94,9 +92,9 @@ public class OrderServicesImplTest {
 
         List<Order> ordersExpected = Arrays.asList(order1, order2);
 
-        when(orderRepository.findAll()).thenReturn(Arrays.asList(orderJPAEntity1, orderJPAEntity2));
-        when(mapper.map(orderJPAEntity1, Order.class)).thenReturn(order1);
-        when(mapper.map(orderJPAEntity2, Order.class)).thenReturn(order2);
+        when(orderRepository.findAll()).thenReturn(Arrays.asList(orderJPA1, orderJPA2));
+        when(mapper.map(orderJPA1, Order.class)).thenReturn(order1);
+        when(mapper.map(orderJPA2, Order.class)).thenReturn(order2);
 
         List<Order> result = orderServicesImpl.findAllOrders();
 
@@ -109,8 +107,7 @@ public class OrderServicesImplTest {
 
         order1 = Instancio.create(Order.class);
         order2 = Instancio.create(Order.class);
-        orderDTO = Instancio.create(OrderDTO.class);
-        orderJPAEntity1 = Instancio.create(OrderJPAEntity.class);
-        orderJPAEntity2 = Instancio.create(OrderJPAEntity.class);
+        orderJPA1 = Instancio.create(OrderJPA.class);
+        orderJPA2 = Instancio.create(OrderJPA.class);
     }
 }

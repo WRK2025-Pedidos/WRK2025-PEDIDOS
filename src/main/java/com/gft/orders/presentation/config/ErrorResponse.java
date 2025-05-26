@@ -1,4 +1,4 @@
-package com.gft.orders.domain.exceptions;
+package com.gft.orders.presentation.config;
 
 import lombok.Getter;
 

@@ -1,7 +1,5 @@
 package com.gft.orders.integration.model;
 
-import com.gft.orders.infraestructure.persistence.OrderJPAEntity;
-import com.gft.orders.infraestructure.persistence.OrderReturnJPAEntity;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -17,20 +15,16 @@ import java.util.UUID;
 @NoArgsConstructor
 @Entity
 @Table(name = "order_lines")
-public class OrderLineJPAEntity {
+public class OrderLineJPA {
 
     @Id
     @GeneratedValue
-    @Column(name = "id", nullable = false, updatable = false)
+    @Column(name = "id", nullable = false)
     private UUID id;
 
     @ManyToOne
     @JoinColumn(name = "order_id")
-    private OrderJPAEntity order;
-
-    @ManyToOne
-    @JoinColumn(name = "order_return_id")
-    private OrderReturnJPAEntity orderReturn;
+    private OrderJPA order;
 
     private UUID product;
     private int quantity;

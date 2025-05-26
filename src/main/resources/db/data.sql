@@ -1,6 +1,5 @@
 DELETE FROM order_offers;
 DELETE FROM order_lines;
-DELETE FROM order_returns;
 DELETE FROM orders;
 
 INSERT INTO orders (id, cart_id, creation_date, total_price, country_tax, payment_method)

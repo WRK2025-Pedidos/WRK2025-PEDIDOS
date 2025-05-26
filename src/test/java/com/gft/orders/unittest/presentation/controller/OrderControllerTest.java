@@ -1,9 +1,9 @@
-package com.gft.orders.unittest.infrastructure.web;
+package com.gft.orders.unittest.presentation.controller;
 
-import com.gft.orders.application.controller.OrderController;
-import com.gft.orders.application.dto.OrderDTO;
-import com.gft.orders.application.service.OrderServices;
-import com.gft.orders.domain.model.Order;
+import com.gft.orders.presentation.controllers.OrderController;
+import com.gft.orders.business.model.dto.OrderDTO;
+import com.gft.orders.business.service.OrderServices;
+import com.gft.orders.business.model.Order;
 import org.instancio.Instancio;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

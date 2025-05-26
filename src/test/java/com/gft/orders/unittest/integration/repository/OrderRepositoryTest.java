@@ -1,8 +1,8 @@
-package com.gft.orders.unittest.infrastructure.persistence.repository;
+package com.gft.orders.unittest.integration.repository;
 
-import com.gft.orders.domain.repository.OrderRepository;
-import com.gft.orders.infraestructure.persistence.OrderJPAEntity;
-import com.gft.orders.infraestructure.persistence.OrderLineJPAEntity;
+import com.gft.orders.integration.model.OrderJPA;
+import com.gft.orders.integration.model.OrderLineJPA;
+import com.gft.orders.integration.repositories.OrderRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,39 +35,39 @@ public class OrderRepositoryTest {
 
     @Test
     public void create_Test() {
-        OrderJPAEntity order = createTestOrder();
-        OrderJPAEntity saved = orderRepository.save(order);
+        OrderJPA order = createTestOrder();
+        OrderJPA saved = orderRepository.save(order);
         assertNotNull(saved.getId());
     }
 
     @Test
     public void findById_Test() {
-        OrderJPAEntity order = createTestOrder();
+        OrderJPA order = createTestOrder();
         orderRepository.save(order);
-        Optional<OrderJPAEntity> result = orderRepository.findById(order.getId());
+        Optional<OrderJPA> result = orderRepository.findById(order.getId());
         assertTrue(result.isPresent());
         assertEquals(order.getId(), result.get().getId());
     }
 
     @Test
     public void update_Test() {
-        OrderJPAEntity order = createTestOrder();
+        OrderJPA order = createTestOrder();
         order.setTotalPrice(BigDecimal.valueOf(990.00));
         orderRepository.save(order);
 
         order.setTotalPrice(BigDecimal.valueOf(888.00));
-        OrderJPAEntity updated = orderRepository.save(order);
+        OrderJPA updated = orderRepository.save(order);
         assertEquals(BigDecimal.valueOf(888.00), updated.getTotalPrice());
     }
 
     /***********PRIVATE METHODS***********/
 
-    private OrderJPAEntity createTestOrder() {
-        OrderJPAEntity order = new OrderJPAEntity();
+    private OrderJPA createTestOrder() {
+        OrderJPA order = new OrderJPA();
         order.setId(UUID.randomUUID());
         order.setCartId(UUID.randomUUID());
 
-        OrderLineJPAEntity line = new OrderLineJPAEntity();
+        OrderLineJPA line = new OrderLineJPA();
         line.setProduct(UUID.randomUUID());
         line.setQuantity(1);
         line.setLineWeight(0.5);
