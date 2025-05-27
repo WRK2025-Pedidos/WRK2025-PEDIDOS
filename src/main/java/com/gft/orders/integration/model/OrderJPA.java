@@ -29,6 +29,4 @@ public class OrderJPA {
     @OneToMany(mappedBy = "order", cascade = CascadeType.ALL, orphanRemoval = true)
     List<OrderLineJPA> orderLines;
 
-    List<UUID> offers;
-
 }

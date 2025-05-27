@@ -1,11 +1,11 @@
 package com.gft.orders.business.service.impl;
 
+import com.gft.orders.business.mapper.OrderMapper;
 import com.gft.orders.business.model.Order;
 import com.gft.orders.business.service.OrderServices;
 import com.gft.orders.integration.model.OrderJPA;
 import com.gft.orders.integration.repositories.OrderRepository;
 import jakarta.transaction.Transactional;
-import org.dozer.DozerBeanMapper;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -16,54 +16,30 @@ import java.util.UUID;
 public class OrderServiceImpl implements OrderServices {
 
     private final OrderRepository orderRepository;
-    private final DozerBeanMapper mapper;
+    private final OrderMapper orderMapper;
 
-    public OrderServiceImpl(OrderRepository orderRepository, DozerBeanMapper mapper) {
+    public OrderServiceImpl(OrderRepository orderRepository, OrderMapper orderMapper) {
         this.orderRepository = orderRepository;
-        this.mapper = mapper;
+        this.orderMapper = orderMapper;
     }
 
-    /**
-     * @param order
-     * @return
-     */
     @Override
     @Transactional
     public UUID createOrder(Order order) {
-
-        OrderJPA orderJPA = mapper.map(order, OrderJPA.class);
-
+        OrderJPA orderJPA = orderMapper.toOrderJPA(order);
         return orderRepository.save(orderJPA).getId();
     }
 
-    /**
-     * @param id
-     * @return
-     */
     @Override
     public Optional<Order> findOrderById(UUID id) {
-
-        return orderRepository.findById(id).stream()
-                .map(x -> mapper.map(x, Order.class))
-                .findAny();
+        return orderRepository.findById(id)
+                .map(orderMapper::toOrderModel);
     }
 
-    /**
-     * @return
-     */
     @Override
     public List<Order> findAllOrders() {
-
-        return convertList(orderRepository.findAll());
-    }
-
-
-    /********PRIVATE METHODS*******/
-
-    private List<Order> convertList(List<OrderJPA> orderEntities) {
-
-        return orderEntities.stream()
-                .map(x -> mapper.map(x, Order.class))
+        return orderRepository.findAll().stream()
+                .map(orderMapper::toOrderModel)
                 .toList();
     }
 

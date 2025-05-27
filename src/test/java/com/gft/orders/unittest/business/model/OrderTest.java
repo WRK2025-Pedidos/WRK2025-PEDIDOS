@@ -25,7 +25,7 @@ class OrderTest {
     @Test
     void constructor_Test() {
 
-        Order orderConstructor = Order.builder().build();
+        Order orderConstructor = new Order();
 
         assertNull(orderConstructor.getId());
         assertNull(orderConstructor.getCartId());
@@ -114,10 +114,9 @@ class OrderTest {
         order.setId(id);
         order.setCartId(cartId);
 
-        Order order2 = Order.builder()
-                .id(id)
-                .cartId(cartId)
-                .build();
+        Order order2 = new Order();
+        order2.setId(id);
+        order2.setCartId(cartId);
 
         assertEquals(order, order2);
     }

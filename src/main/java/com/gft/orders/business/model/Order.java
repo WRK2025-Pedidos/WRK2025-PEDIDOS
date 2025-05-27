@@ -1,6 +1,8 @@
 package com.gft.orders.business.model;
 
 import lombok.*;
+import org.dozer.Mapping;
+import org.dozer.classmap.RelationshipType;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
@@ -8,7 +10,8 @@ import java.util.*;
 
 @Getter
 @Setter
-@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 @EqualsAndHashCode(of="id")
 public class Order {
 

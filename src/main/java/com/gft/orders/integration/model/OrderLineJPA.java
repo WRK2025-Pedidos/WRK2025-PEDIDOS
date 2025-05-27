@@ -5,6 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.Generated;
 import lombok.NoArgsConstructor;
+import org.dozer.Mapping;
 
 import java.math.BigDecimal;
 import java.util.UUID;
@@ -17,20 +18,19 @@ import java.util.UUID;
 @Table(name = "order_lines")
 public class OrderLineJPA {
 
-    @Id
-    @GeneratedValue
-    @Column(name = "id", nullable = false)
-    private UUID id;
-
     @ManyToOne
     @JoinColumn(name = "order_id")
     private OrderJPA order;
+
+    @Id
+    @GeneratedValue(generator = "UUID")
+    @Column(name = "id", nullable = false)
+    private UUID id;
 
     private UUID product;
     private int quantity;
     private Double lineWeight;
     private BigDecimal productPrice;
     private BigDecimal linePrice;
-
 
 }
