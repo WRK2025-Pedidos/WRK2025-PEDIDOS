@@ -25,12 +25,10 @@ public class OrderMapper {
         order.setCountryTax(orderJPA.getCountryTax());
         order.setPaymentMethod(orderJPA.getPaymentMethod());
 
-        if (orderJPA.getOrderLines() != null) {
             List<OrderLine> lines = orderJPA.getOrderLines().stream()
-                    .map(this::toOrderModel)
+                    .map(this::toOrderLineModel)
                     .collect(Collectors.toList());
             order.setOrderLines(lines);
-        }
 
         return order;
     }
@@ -48,25 +46,24 @@ public class OrderMapper {
         orderJPA.setCountryTax(order.getCountryTax());
         orderJPA.setPaymentMethod(order.getPaymentMethod());
 
-        List<OrderLineJPA> lines = order.getOrderLines().stream()
-                .map(line -> {
-                    OrderLineJPA lineJPA = new OrderLineJPA();
-                    lineJPA.setProduct(line.getProduct());
-                    lineJPA.setQuantity(line.getQuantity());
-                    lineJPA.setLineWeight(line.getLineWeight());
-                    lineJPA.setProductPrice(line.getProductPrice());
-                    lineJPA.setLinePrice(line.getLinePrice());
-                    lineJPA.setOrder(orderJPA);
-                    return lineJPA;
-                }).toList();
+            List<OrderLineJPA> lines = order.getOrderLines().stream()
+                    .map(line -> {
+                        OrderLineJPA lineJPA = new OrderLineJPA();
+                        lineJPA.setProduct(line.getProduct());
+                        lineJPA.setQuantity(line.getQuantity());
+                        lineJPA.setLineWeight(line.getLineWeight());
+                        lineJPA.setProductPrice(line.getProductPrice());
+                        lineJPA.setLinePrice(line.getLinePrice());
+                        lineJPA.setOrder(orderJPA);
+                        return lineJPA;
+                    }).toList();
 
-        orderJPA.setOrderLines(lines);
-
+            orderJPA.setOrderLines(lines);
 
         return orderJPA;
     }
 
-    public OrderLine toOrderModel(OrderLineJPA orderLineJPA) {
+    public OrderLine toOrderLineModel(OrderLineJPA orderLineJPA) {
         if (orderLineJPA == null) {
             return null;
         }
@@ -80,7 +77,7 @@ public class OrderMapper {
                 .build();
     }
 
-    public OrderLineJPA toOrderJPA(OrderLine orderLine) {
+    public OrderLineJPA toOrderLineJPA(OrderLine orderLine) {
         if (orderLine == null) {
             return null;
         }

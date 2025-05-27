@@ -1,10 +1,10 @@
 package com.gft.orders.unittest.business.service;
 
+import com.gft.orders.business.mapper.OrderMapper;
 import com.gft.orders.business.model.Order;
 import com.gft.orders.business.service.impl.OrderServiceImpl;
 import com.gft.orders.integration.model.OrderJPA;
 import com.gft.orders.integration.repositories.OrderRepository;
-import org.dozer.DozerBeanMapper;
 import org.instancio.Instancio;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -26,7 +26,7 @@ import static org.mockito.Mockito.when;
 public class OrderServicesImplTest {
 
     @Mock
-    private DozerBeanMapper mapper;
+    private OrderMapper mapper;
 
     @Mock
     private OrderRepository orderRepository;
@@ -49,7 +49,7 @@ public class OrderServicesImplTest {
 
         UUID uuid = UUID.randomUUID();
 
-        when(mapper.map(order1, OrderJPA.class)).thenReturn(orderJPA1);
+        when(mapper.toOrderJPA(order1)).thenReturn(orderJPA1);
 
         OrderJPA savedEntity = new OrderJPA();
         savedEntity.setId(uuid);
@@ -67,7 +67,7 @@ public class OrderServicesImplTest {
         UUID uuid = UUID.randomUUID();
 
         when(orderRepository.findById(uuid)).thenReturn(Optional.of(orderJPA1));
-        when(mapper.map(orderJPA1, Order.class)).thenReturn(order1);
+        when(mapper.toOrderModel(orderJPA1)).thenReturn(order1);
 
         Optional<Order> optional = orderServicesImpl.findOrderById(uuid);
 
@@ -93,8 +93,8 @@ public class OrderServicesImplTest {
         List<Order> ordersExpected = Arrays.asList(order1, order2);
 
         when(orderRepository.findAll()).thenReturn(Arrays.asList(orderJPA1, orderJPA2));
-        when(mapper.map(orderJPA1, Order.class)).thenReturn(order1);
-        when(mapper.map(orderJPA2, Order.class)).thenReturn(order2);
+        when(mapper.toOrderModel(orderJPA1)).thenReturn(order1);
+        when(mapper.toOrderModel(orderJPA2)).thenReturn(order2);
 
         List<Order> result = orderServicesImpl.findAllOrders();
 
