@@ -1,14 +1,11 @@
 spring:
   application:
     name: orders
-
   datasource:
     url: jdbc:postgresql://localhost:5432/springdb
-    # o esta opcion - url: jdbc:postgresql://spring-postgres:5432/springdb
     username: springuser
     password: springpass
     driver-class-name: org.postgresql.Driver
-
   jpa:
     hibernate:
       ddl-auto: none
@@ -16,27 +13,8 @@ spring:
     properties:
       hibernate:
         format_sql: true
-    defer-datasource-initialization: true
-
   sql:
     init:
       mode: always
       schema-locations: classpath:/db/schema.sql
-
-springdoc:
-  api-docs:
-    enabled: true
-    path: /v3/api-docs
-  swagger-ui:
-    enabled: true
-    path: /swagger-ui.html
-
-logging:
-  level:
-    org:
-      springdoc: DEBUG
-      springframework:
-        web: DEBUG
-        jpa: DEBUG
-      hibernate: DEBUG
-
+      data-locations: classpath:/db/data.sql
