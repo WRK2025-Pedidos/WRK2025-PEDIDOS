@@ -13,9 +13,6 @@ import java.util.stream.Collectors;
 public class OrderMapper {
 
     public Order toOrderModel(OrderJPA orderJPA) {
-        if (orderJPA == null) {
-            return null;
-        }
 
         Order order = new Order();
         order.setId(orderJPA.getId());
@@ -34,9 +31,6 @@ public class OrderMapper {
     }
 
     public OrderJPA toOrderJPA(Order order) {
-        if (order == null) {
-            return null;
-        }
 
         OrderJPA orderJPA = new OrderJPA();
         orderJPA.setId(order.getId());
@@ -64,9 +58,6 @@ public class OrderMapper {
     }
 
     public OrderLine toOrderLineModel(OrderLineJPA orderLineJPA) {
-        if (orderLineJPA == null) {
-            return null;
-        }
 
         return OrderLine.builder()
                 .product(orderLineJPA.getProduct())
@@ -78,9 +69,6 @@ public class OrderMapper {
     }
 
     public OrderLineJPA toOrderLineJPA(OrderLine orderLine) {
-        if (orderLine == null) {
-            return null;
-        }
 
         OrderLineJPA lineJPA = new OrderLineJPA();
 
