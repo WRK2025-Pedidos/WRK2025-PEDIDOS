@@ -18,16 +18,22 @@ Represents a complete user entity with all related fields.
     "uuid": "string"
   },
   "creationDate": {
-    "value": "string"     
+    "value": "string (date-time)"     
   },
   "totalPrice": {
     "value": "number"      
   },
   "countryTax": {
-    "value": "number"      
+    "value": "number (double)"      
   },
   "paymentMethod": {
-    "value": "number"    
+    "value": "number (double)"    
+  },
+  "orderReturn": {
+    "value": "boolean"
+  },
+  "parentOrderId": {
+    "value": "string"
   },
   "offers": [
     {
@@ -43,7 +49,7 @@ Represents a complete user entity with all related fields.
         "value": "integer"   
       },
       "lineWeight": {
-        "value": "number"
+        "value": "number (double)"
       },
       "productPrice": {
         "value": "number"
@@ -56,31 +62,4 @@ Represents a complete user entity with all related fields.
 }
 
 ```
-
----
-
-## · UserId
-
-Represents the UUID identifier of a user.
-
-```json
-{
-  "uuid": "string"
-}
-```
-
----
-
-## · NotificationDto
-
-Used to deliver a notification to the user.
-
-```json
-{
-  "message": "string",
-  "createdAt": "2025-05-22T13:45:00Z",
-  "important": true
-}
-```
-
 ---

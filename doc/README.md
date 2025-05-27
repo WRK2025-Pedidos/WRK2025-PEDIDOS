@@ -1,4 +1,4 @@
-# WRK2025-USUARIOS API Endpoints
+# WRK2025-ORDERS API Endpoints
 
 This service provides RESTful endpoints for managing users, their favorite products, and notifications.  
 It follows a Domain-Driven Design (DDD) architecture.
