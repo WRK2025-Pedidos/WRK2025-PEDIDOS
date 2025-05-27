@@ -1,6 +1,7 @@
 package com.gft.orders.business.service.impl;
 
 import com.gft.orders.business.mapper.OrderMapper;
+import com.gft.orders.business.model.DTO.ReturnLineDTO;
 import com.gft.orders.business.model.Order;
 import com.gft.orders.business.service.OrderServices;
 import com.gft.orders.integration.model.OrderJPA;
@@ -9,6 +10,7 @@ import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -41,6 +43,16 @@ public class OrderServiceImpl implements OrderServices {
         return orderRepository.findAll().stream()
                 .map(orderMapper::toOrderModel)
                 .toList();
+    }
+
+    /**
+     * @param orderId
+     * @param orderReturnLines
+     * @return
+     */
+    @Override
+    public UUID createOrderReturn(UUID orderId, Map<UUID, ReturnLineDTO> orderReturnLines) {
+        return null;
     }
 
 }
