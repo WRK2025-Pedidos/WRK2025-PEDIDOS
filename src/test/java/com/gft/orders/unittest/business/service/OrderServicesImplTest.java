@@ -13,13 +13,17 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
+import java.math.BigDecimal;
+import java.time.LocalDateTime;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.eq;
+import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
@@ -38,6 +42,8 @@ public class OrderServicesImplTest {
     private Order order2;
     private OrderJPA orderJPA1;
     private OrderJPA orderJPA2;
+    private OrderJPA originalOrder;
+    private UUID orderId;
 
     @BeforeEach
     public void setUp() {
@@ -102,6 +108,26 @@ public class OrderServicesImplTest {
         assertTrue(result.containsAll(ordersExpected));
     }
 
+    @Test
+    void createOrderReturn_success() {
+
+        when(orderJPARepository.findById(orderId)).thenReturn(Optional.of(originalOrder));
+
+        when(orderJPARepository.idDateBeforeThirtyDays(eq(orderId), any(LocalDateTime.class))).thenReturn(false);
+
+        when(orderJPARepository.save(any(OrderJPA.class))).thenReturn(originalOrder);
+
+        BigDecimal result = orderServicesImpl.createOrderReturn(orderId);
+
+        assertTrue(originalOrder.getOrderReturn());
+        assertEquals(new BigDecimal("-100.00"), result);
+
+        verify(orderJPARepository).findById(orderId);
+        verify(orderJPARepository).save(originalOrder);
+        verify(orderJPARepository).idDateBeforeThirtyDays(eq(orderId), any(LocalDateTime.class));
+    }
+
+
     /***************PRIVATE METHODS***********/
     private void initObjects() {
 
@@ -109,5 +135,11 @@ public class OrderServicesImplTest {
         order2 = Instancio.create(Order.class);
         orderJPA1 = Instancio.create(OrderJPA.class);
         orderJPA2 = Instancio.create(OrderJPA.class);
+
+        orderId = UUID.randomUUID();
+        originalOrder = new OrderJPA();
+        originalOrder.setId(orderId);
+        originalOrder.setTotalPrice(new BigDecimal("100.00"));
+        originalOrder.setOrderReturn(false);
     }
 }
