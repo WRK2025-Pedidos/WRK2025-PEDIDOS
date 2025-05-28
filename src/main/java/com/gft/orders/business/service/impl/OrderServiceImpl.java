@@ -74,7 +74,7 @@ public class OrderServiceImpl implements OrderServices {
 
         List<OrderLine> returnLines = new ArrayList<>();
 
-        for(Map.Entry<UUID, ReturnLineDTO> entry : orderReturnLines.entrySet()) {
+        for (Map.Entry<UUID, ReturnLineDTO> entry : orderReturnLines.entrySet()) {
 
             UUID orderLineId = entry.getKey();
             Integer quantityToReturn = entry.getValue().returnLines().get(orderLineId);
