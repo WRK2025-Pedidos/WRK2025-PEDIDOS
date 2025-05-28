@@ -4,17 +4,16 @@ import com.gft.orders.integration.model.OrderJPA;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
-import java.util.List;
+import java.time.LocalDateTime;
 import java.util.UUID;
 
 public interface OrderJPARepository extends JpaRepository<OrderJPA, UUID> {
 
     @Query("""
-
-            SELECT o
-             FROM OrderJPA o
+            SELECT CASE WHEN COUNT(o) > 0 THEN true ELSE false END
+            FROM OrderJPA o
             WHERE o.id = :orderId
-              AND o.creationDate > (CURRENT TIMESTAMP - 30)
+            AND o.creationDate > :dateLimit
            """)
-    boolean idDateBeforeThirtyDays(UUID orderId);
+    boolean idDateBeforeThirtyDays(UUID orderId, LocalDateTime dateLimit);
 }

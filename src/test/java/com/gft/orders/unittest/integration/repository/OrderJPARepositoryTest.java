@@ -80,7 +80,6 @@ public class OrderJPARepositoryTest {
         order.setPaymentMethod(0.3);
         order.setTotalPrice(BigDecimal.TEN);
         order.setOrderReturn(false);
-        order.setParentOrderId(null);
 
         return order;
     }

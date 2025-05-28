@@ -11,7 +11,7 @@ CREATE TABLE IF NOT EXISTS orders(
                                      total_price         DECIMAL(10, 3)      NOT NULL,
                                      country_tax         DOUBLE PRECISION    NOT NULL,
                                      payment_method      DOUBLE PRECISION    NOT NULL,
-                                     orderReturn         BOOLEAN             NOT NULL,
+                                     order_return         BOOLEAN             NOT NULL,
                                      PRIMARY KEY (id)
 );
 

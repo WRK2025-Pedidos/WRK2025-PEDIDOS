@@ -27,7 +27,6 @@ public class OrderMapper {
                     .collect(Collectors.toList());
             order.setOrderLines(lines);
 
-        order.setParentOrderId(orderJPA.getParentOrderId());
         order.setOrderReturn(orderJPA.getOrderReturn());
 
         return order;
@@ -57,7 +56,6 @@ public class OrderMapper {
 
             orderJPA.setOrderLines(lines);
 
-            orderJPA.setParentOrderId(order.getParentOrderId());
             orderJPA.setOrderReturn(order.getOrderReturn());
 
         return orderJPA;
