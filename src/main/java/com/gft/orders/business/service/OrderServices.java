@@ -25,4 +25,6 @@ public interface OrderServices {
     BigDecimal calculateLinesTotal(List<OrderLine> orderLines);
 
     boolean enoughProductQuantity(UUID orderLine, BigDecimal quantity);
+
+    BigDecimal calculateReturnTotal(BigDecimal totalOrderLines, double countryTax, double paymentTax);
 }

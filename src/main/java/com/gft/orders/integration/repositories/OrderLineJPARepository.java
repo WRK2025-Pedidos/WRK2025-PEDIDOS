@@ -7,6 +7,7 @@ import org.springframework.data.jpa.repository.Query;
 import java.util.UUID;
 
 public interface OrderLineJPARepository extends JpaRepository<OrderLineJPA, UUID> {
+
     @Query("""
            SELECT oL
              FROM OrderLineJPA oL
