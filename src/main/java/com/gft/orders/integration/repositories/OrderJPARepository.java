@@ -23,7 +23,7 @@ public interface OrderJPARepository extends JpaRepository<OrderJPA, UUID> {
             WHERE o.id = :orderId
               AND o.creationDate > (CURRENT TIMESTAMP - 30)
            """)
-    Object[] dateBeforeThirtyDays(UUID orderId);
+    boolean idDateBeforeThirtyDays(UUID orderId);
 
     @Query("""
            SELECT o
@@ -33,5 +33,5 @@ public interface OrderJPARepository extends JpaRepository<OrderJPA, UUID> {
          ORDER BY o.creationDate desc
             LIMIT 1
          """)
-    Object[] findLastReturn(UUID orderId);
+    OrderJPA findLastReturn(UUID orderId);
 }
