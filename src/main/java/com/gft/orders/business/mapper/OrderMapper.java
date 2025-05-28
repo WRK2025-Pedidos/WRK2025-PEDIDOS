@@ -2,8 +2,10 @@ package com.gft.orders.business.mapper;
 
 import com.gft.orders.business.model.Order;
 import com.gft.orders.business.model.OrderLine;
+import com.gft.orders.business.model.OrderOffer;
 import com.gft.orders.integration.model.OrderJPA;
 import com.gft.orders.integration.model.OrderLineJPA;
+import com.gft.orders.integration.model.OrderOfferJPA;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
@@ -85,5 +87,22 @@ public class OrderMapper {
         lineJPA.setLinePrice(orderLine.getLinePrice());
 
         return lineJPA;
+    }
+
+    public OrderOfferJPA toOrderOfferJPA(OrderOffer orderOffer) {
+
+        OrderOfferJPA orderOfferJPA = new OrderOfferJPA();
+        orderOfferJPA.setOrderId(orderOffer.getOrderId());
+        orderOfferJPA.setOfferId(orderOffer.getOfferId());
+
+        return orderOfferJPA;
+    }
+
+    public OrderOffer toOrderOffer(OrderOfferJPA jpa) {
+
+        return OrderOffer.builder()
+                .orderId(jpa.getOrderId())
+                .offerId(jpa.getOfferId())
+                .build();
     }
 }

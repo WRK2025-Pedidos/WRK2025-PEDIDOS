@@ -5,7 +5,6 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.Generated;
 import lombok.NoArgsConstructor;
-import org.dozer.Mapping;
 
 import java.math.BigDecimal;
 import java.util.UUID;

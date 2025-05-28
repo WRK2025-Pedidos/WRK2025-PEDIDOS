@@ -7,14 +7,19 @@ import java.util.UUID;
 
 @Generated
 @Entity
-@Table(name = "order_offers")
 @Data
-@Setter(AccessLevel.NONE)
-public class OrderOfferJPAEntity {
+@AllArgsConstructor
+@NoArgsConstructor
+@Table(name = "order_offers")
+public class OrderOfferJPA {
 
-    @Column(name = "order_id")
+    @Id
+    @GeneratedValue(generator = "UUID")
+    @Column(name = "id", nullable = false)
     private UUID orderId;
 
     @Column(name = "offer_id")
     private UUID offerId;
+
+
 }

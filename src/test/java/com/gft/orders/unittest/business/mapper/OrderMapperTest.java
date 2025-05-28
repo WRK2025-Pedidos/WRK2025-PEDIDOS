@@ -3,8 +3,10 @@ package com.gft.orders.unittest.business.mapper;
 import com.gft.orders.business.mapper.OrderMapper;
 import com.gft.orders.business.model.Order;
 import com.gft.orders.business.model.OrderLine;
+import com.gft.orders.business.model.OrderOffer;
 import com.gft.orders.integration.model.OrderJPA;
 import com.gft.orders.integration.model.OrderLineJPA;
+import com.gft.orders.integration.model.OrderOfferJPA;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -23,6 +25,8 @@ public class OrderMapperTest {
     private OrderLine line1;
     private OrderJPA orderJPA;
     private OrderLineJPA line1JPA;
+    private OrderOfferJPA offerJPA;
+    private OrderOffer orderOffer;
 
     @BeforeEach
     void setup() {
@@ -99,6 +103,16 @@ public class OrderMapperTest {
         assertEquals(line1.getLineWeight(), result.getLineWeight());
         assertEquals(line1.getQuantity(), result.getQuantity());
         assertEquals(line1.getProductPrice(), result.getProductPrice());
+    }
+
+    @Test
+    void toOrderOfferJPA_shouldMap_Test() {
+
+        OrderOfferJPA result = orderMapper.toOrderOfferJPA(orderOffer);
+
+        assertNotNull(result);
+        assertEquals(orderOffer.getOfferId(), result.getOfferId());
+        assertEquals(orderOffer.getOrderId(), result.getOrderId());
     }
 
 
