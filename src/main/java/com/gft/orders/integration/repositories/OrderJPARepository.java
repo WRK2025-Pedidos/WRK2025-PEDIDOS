@@ -34,5 +34,4 @@ public interface OrderJPARepository extends JpaRepository<OrderJPA, UUID> {
             LIMIT 1
          """)
     Object[] findLastReturn(UUID orderId);
-
 }

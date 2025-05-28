@@ -3,12 +3,14 @@ package com.gft.orders.business.service.impl;
 import com.gft.orders.business.mapper.OrderMapper;
 import com.gft.orders.business.model.DTO.ReturnLineDTO;
 import com.gft.orders.business.model.Order;
+import com.gft.orders.business.model.OrderLine;
 import com.gft.orders.business.service.OrderServices;
 import com.gft.orders.integration.model.OrderJPA;
 import com.gft.orders.integration.repositories.OrderJPARepository;
 import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -52,7 +54,28 @@ public class OrderServiceImpl implements OrderServices {
      */
     @Override
     public UUID createOrderReturn(UUID orderId, Map<UUID, ReturnLineDTO> orderReturnLines) {
+        return null;
+    }
 
+    /**
+     * @param orderLine
+     * @return
+     */
+    @Override
+    public BigDecimal calculateLineTotal(OrderLine orderLine) {
+        return orderLine.getProductPrice().multiply(BigDecimal.valueOf(orderLine.getQuantity()));
+    }
+
+    /**
+     * @param orderLines
+     * @return
+     */
+    @Override
+    public BigDecimal calculateLinesTotal(List<OrderLine> orderLines) {
+
+        return orderLines.stream()
+                  .map((this::calculateLineTotal))
+                   .reduce(BigDecimal.ZERO, BigDecimal::add);
     }
 
 }
