@@ -10,28 +10,11 @@ import java.util.UUID;
 public interface OrderJPARepository extends JpaRepository<OrderJPA, UUID> {
 
     @Query("""
-           SELECT o
-             FROM OrderJPA o
-            WHERE o.orderReturn = true
-              AND o.parentOrderId = :orderId
-           """)
-    boolean isFirstReturn(UUID orderId);
 
-    @Query("""
-           SELECT o
+            SELECT o
              FROM OrderJPA o
             WHERE o.id = :orderId
               AND o.creationDate > (CURRENT TIMESTAMP - 30)
            """)
     boolean idDateBeforeThirtyDays(UUID orderId);
-
-    @Query("""
-           SELECT o
-             FROM OrderJPA o
-            WHERE o.orderReturn = true
-              AND o.parentOrderId = :orderId
-         ORDER BY o.creationDate desc
-            LIMIT 1
-         """)
-    OrderJPA findLastReturn(UUID orderId);
 }

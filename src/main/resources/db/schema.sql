@@ -11,10 +11,8 @@ CREATE TABLE IF NOT EXISTS orders(
                                      total_price         DECIMAL(10, 3)      NOT NULL,
                                      country_tax         DOUBLE PRECISION    NOT NULL,
                                      payment_method      DOUBLE PRECISION    NOT NULL,
-                                     order_return        BOOLEAN             NOT NULL,
-                                     parent_order_id     UUID                NULL,
-                                     PRIMARY KEY (id),
-                                     FOREIGN KEY (parent_order_id) REFERENCES orders(id)
+                                     orderReturn         BOOLEAN             NOT NULL,
+                                     PRIMARY KEY (id)
 );
 
 CREATE TABLE IF NOT EXISTS order_lines (
