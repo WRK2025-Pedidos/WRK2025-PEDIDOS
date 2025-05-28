@@ -29,4 +29,7 @@ public class OrderJPA {
     @OneToMany(mappedBy = "order", cascade = CascadeType.ALL, orphanRemoval = true)
     List<OrderLineJPA> orderLines;
 
+    private Boolean orderReturn;
+    private UUID parentOrderId;
+
 }

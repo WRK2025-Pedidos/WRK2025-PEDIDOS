@@ -11,12 +11,15 @@ CREATE TABLE IF NOT EXISTS orders(
                                      total_price         DECIMAL(10, 3)      NOT NULL,
                                      country_tax         DOUBLE PRECISION    NOT NULL,
                                      payment_method      DOUBLE PRECISION    NOT NULL,
-                                     PRIMARY KEY (id)
+                                     order_return        BOOLEAN             NOT NULL,
+                                     parent_order_id     UUID                NULL,
+                                     PRIMARY KEY (id),
+                                     FOREIGN KEY (parent_order_id) REFERENCES orders(id)
 );
 
 CREATE TABLE IF NOT EXISTS order_lines (
-                                           id                  UUID                ,
-                                           order_id            UUID                ,
+                                           id                  UUID                NOT NULL,
+                                           order_id            UUID                NOT NULL,
                                            product             UUID                NOT NULL,
                                            quantity            INT                 NOT NULL,
                                            line_weight         DOUBLE PRECISION    NOT NULL,

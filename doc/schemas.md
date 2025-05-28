@@ -1,13 +1,25 @@
 # · WRK2025-ORDERS – API Schemas
 
-This file documents the data models used in request and response bodies across the API.  
-Each schema defines the structure and types of JSON objects used by the endpoints.
+This file documents the data models used in request and response bodies across the Order Microservice.  
+Each schema defines the structure and types of JSON objects handled by the /orders endpoints.
 
+---
+
+## · OrderId
+
+Represents the UUID of a specific order.
+
+```json
+{
+  "uuid": "string"
+}
+
+```
 ---
 
 ## · Order
 
-Represents a complete user entity with all related fields.
+Represents a complete order.
 
 ```json
 {
@@ -18,32 +30,27 @@ Represents a complete user entity with all related fields.
     "uuid": "string"
   },
   "creationDate": {
-    "value": "string"     
+    "value": "string (date-time)"     
   },
   "totalPrice": {
     "value": "number"      
   },
   "countryTax": {
-    "value": "number"      
+    "value": "number (double)"      
   },
   "paymentMethod": {
-    "value": "number"    
+    "value": "number (double)"    
   },
-  "offers": [
-    {
-      "uuid": "string"     
-    }
-  ],
   "orderLines": [
     {
       "product": {
         "uuid": "string"
       },
       "quantity": {
-        "value": "integer"   
+        "value": "integer"
       },
       "lineWeight": {
-        "value": "number"
+        "value": "number (double)"
       },
       "productPrice": {
         "value": "number"
@@ -52,35 +59,47 @@ Represents a complete user entity with all related fields.
         "value": "number"
       }
     }
+  ],
+  "orderReturn": {
+    "value": "boolean"
+  },
+  "parentOrderId": {
+    "value": "string"
+  },
+  "offers": [
+    {
+      "uuid": "string"     
+    }
   ]
 }
 
 ```
-
 ---
 
-## · UserId
+## · OrderLine
 
-Represents the UUID identifier of a user.
+Describes a single line in an order (i.e., a product and its quantity).
 
 ```json
 {
-  "uuid": "string"
+  "product": {
+    "uuid": "string"
+  },
+  "quantity": {
+    "value": "integer"
+  },
+  "lineWeight": {
+    "value": "number (double)"
+  },
+  "productPrice": {
+    "value": "number"
+  },
+  "linePrice": {
+    "value": "number"
+  }
 }
-```
 
----
 
-## · NotificationDto
-
-Used to deliver a notification to the user.
-
-```json
-{
-  "message": "string",
-  "createdAt": "2025-05-22T13:45:00Z",
-  "important": true
-}
 ```
 
 ---

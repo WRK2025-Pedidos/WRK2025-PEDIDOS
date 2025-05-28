@@ -1,51 +1,39 @@
-# WRK2025-USUARIOS API Endpoints
+# WRK2025-ORDERS API Endpoints
 
-This service provides RESTful endpoints for managing users, their favorite products, and notifications.  
-It follows a Domain-Driven Design (DDD) architecture.
-## Base URL http://localhost:8080/api/v1
+This service provides RESTful endpoints for managing orders.  
+It follows a layered software architecture that separates concerns across presentation, business and presentation.
 
----
-
-## · Users
-
-| Method | Endpoint                         | Description                      |
-|--------|----------------------------------|----------------------------------|
-| POST   | `/users`                         | Register a new user              |
-| GET    | `/users/{id}`                    | Get user by ID                   |
-| DELETE | `/users/{id}`                    | Delete a user                    |
-| PUT    | `/users/{id}/change-name`        | Change user’s name               |
-| PUT    | `/users/{id}/change-email`       | Change user’s email              |
-| PUT    | `/users/{id}/change-password`    | Change user’s password           |
-| PUT    | `/users/{id}/change-address`     | Change user’s address            |
-| GET    | `/users/{id}/loyalty-points`     | Get user’s loyalty points        |
+## Base URL http://localhost:8080/v3/api-docs
 
 ---
 
-## · Favorites
+## · Orders
 
-| Method | Endpoint                                      | Description                              |
-|--------|-----------------------------------------------|------------------------------------------|
-| GET    | `/users/{id}/favorite-products`               | Get user's favorite product IDs          |
-| PUT    | `/users/{id}/favorite-products/add`           | Add a product to user's favorites        |
-| PUT    | `/users/{id}/favorite-products/remove`        | Remove a product from user's favorites   |
-| GET    | `/users/favorite-product/{productId}`         | Get all user IDs who favorited a product |
+| Method | Endpoint              | Description                 |
+|--------|-----------------------|-----------------------------|
+| POST   | `/orders`             | Register a new order        |
+| GET    | `/orders`             | Get all orders              |
+| GET    | `/orders/{id}`        | Get orders by ID            |
+| POST   | `/orders/{id}/return` | Get orders by ID to handle returns |
 
 ---
 
-## · Notifications
+## Database diagram
 
-| Method | Endpoint                                           | Description                            |
-|--------|----------------------------------------------------|----------------------------------------|
-| GET    | `/users/{id}/notifications`                        | Get all notifications for a user       |
-| PATCH  | `/notifications/{notificationId}`                  | Update importance of a notification    |
-| DELETE | `/notifications/{notificationId}`                  | Delete a notification by ID            |
+![DB Diagram](./diagrams/OrderDiagram.png)
+
+---
+
+## Simple Diagram explanation
+
+![CL Diagram](./diagrams/OrderSimpleDG.png)
 
 ---
 
 ## · Event-Driven Features
 
-- Publishes domain events (e.g. `UserDisabledEvent`) via RabbitMQ.
-- Consumes events (e.g. product updates) to generate user notifications.
+- Publishes domain events via RabbitMQ.
+- Consumes events alert administrators when a product’s stock falls below a specified threshold.
 
 ---
 ## · Swagger UI
