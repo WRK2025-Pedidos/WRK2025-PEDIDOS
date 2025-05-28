@@ -4,7 +4,7 @@ import com.gft.orders.business.mapper.OrderMapper;
 import com.gft.orders.business.model.Order;
 import com.gft.orders.business.service.impl.OrderServiceImpl;
 import com.gft.orders.integration.model.OrderJPA;
-import com.gft.orders.integration.repositories.OrderRepository;
+import com.gft.orders.integration.repositories.OrderJPARepository;
 import org.instancio.Instancio;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -29,7 +29,7 @@ public class OrderServicesImplTest {
     private OrderMapper mapper;
 
     @Mock
-    private OrderRepository orderRepository;
+    private OrderJPARepository orderJPARepository;
 
     @InjectMocks
     private OrderServiceImpl orderServicesImpl;
@@ -54,7 +54,7 @@ public class OrderServicesImplTest {
         OrderJPA savedEntity = new OrderJPA();
         savedEntity.setId(uuid);
 
-        when(orderRepository.save(orderJPA1)).thenReturn(savedEntity);
+        when(orderJPARepository.save(orderJPA1)).thenReturn(savedEntity);
 
         UUID result = orderServicesImpl.createOrder(order1);
 
@@ -66,7 +66,7 @@ public class OrderServicesImplTest {
 
         UUID uuid = UUID.randomUUID();
 
-        when(orderRepository.findById(uuid)).thenReturn(Optional.of(orderJPA1));
+        when(orderJPARepository.findById(uuid)).thenReturn(Optional.of(orderJPA1));
         when(mapper.toOrderModel(orderJPA1)).thenReturn(order1);
 
         Optional<Order> optional = orderServicesImpl.findOrderById(uuid);
@@ -80,7 +80,7 @@ public class OrderServicesImplTest {
 
         UUID uuid = UUID.randomUUID();
 
-        when(orderRepository.findById(uuid)).thenReturn(Optional.empty());
+        when(orderJPARepository.findById(uuid)).thenReturn(Optional.empty());
 
         Optional<Order> optional = orderServicesImpl.findOrderById(uuid);
 
@@ -92,7 +92,7 @@ public class OrderServicesImplTest {
 
         List<Order> ordersExpected = Arrays.asList(order1, order2);
 
-        when(orderRepository.findAll()).thenReturn(Arrays.asList(orderJPA1, orderJPA2));
+        when(orderJPARepository.findAll()).thenReturn(Arrays.asList(orderJPA1, orderJPA2));
         when(mapper.toOrderModel(orderJPA1)).thenReturn(order1);
         when(mapper.toOrderModel(orderJPA2)).thenReturn(order2);
 

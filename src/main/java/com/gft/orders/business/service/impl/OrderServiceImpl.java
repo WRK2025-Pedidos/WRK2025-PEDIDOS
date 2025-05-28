@@ -5,7 +5,7 @@ import com.gft.orders.business.model.DTO.ReturnLineDTO;
 import com.gft.orders.business.model.Order;
 import com.gft.orders.business.service.OrderServices;
 import com.gft.orders.integration.model.OrderJPA;
-import com.gft.orders.integration.repositories.OrderRepository;
+import com.gft.orders.integration.repositories.OrderJPARepository;
 import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
 
@@ -17,11 +17,11 @@ import java.util.UUID;
 @Service
 public class OrderServiceImpl implements OrderServices {
 
-    private final OrderRepository orderRepository;
+    private final OrderJPARepository orderJPARepository;
     private final OrderMapper orderMapper;
 
-    public OrderServiceImpl(OrderRepository orderRepository, OrderMapper orderMapper) {
-        this.orderRepository = orderRepository;
+    public OrderServiceImpl(OrderJPARepository orderJPARepository, OrderMapper orderMapper) {
+        this.orderJPARepository = orderJPARepository;
         this.orderMapper = orderMapper;
     }
 
@@ -29,18 +29,18 @@ public class OrderServiceImpl implements OrderServices {
     @Transactional
     public UUID createOrder(Order order) {
         OrderJPA orderJPA = orderMapper.toOrderJPA(order);
-        return orderRepository.save(orderJPA).getId();
+        return orderJPARepository.save(orderJPA).getId();
     }
 
     @Override
     public Optional<Order> findOrderById(UUID id) {
-        return orderRepository.findById(id)
+        return orderJPARepository.findById(id)
                 .map(orderMapper::toOrderModel);
     }
 
     @Override
     public List<Order> findAllOrders() {
-        return orderRepository.findAll().stream()
+        return orderJPARepository.findAll().stream()
                 .map(orderMapper::toOrderModel)
                 .toList();
     }
@@ -52,7 +52,7 @@ public class OrderServiceImpl implements OrderServices {
      */
     @Override
     public UUID createOrderReturn(UUID orderId, Map<UUID, ReturnLineDTO> orderReturnLines) {
-        return null;
+
     }
 
 }
