@@ -3,8 +3,10 @@ package com.gft.orders.unittest.business.mapper;
 import com.gft.orders.business.mapper.OrderMapper;
 import com.gft.orders.business.model.Order;
 import com.gft.orders.business.model.OrderLine;
+import com.gft.orders.business.model.OrderOffer;
 import com.gft.orders.integration.model.OrderJPA;
 import com.gft.orders.integration.model.OrderLineJPA;
+import com.gft.orders.integration.model.OrderOfferJPA;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -23,6 +25,8 @@ public class OrderMapperTest {
     private OrderLine line1;
     private OrderJPA orderJPA;
     private OrderLineJPA line1JPA;
+    private OrderOffer orderOffer;
+    private OrderOfferJPA orderOfferJPA;
 
     @BeforeEach
     void setup() {
@@ -101,6 +105,24 @@ public class OrderMapperTest {
         assertEquals(line1.getProductPrice(), result.getProductPrice());
     }
 
+    @Test
+    void toOrderOfferJPA_shouldMap_Test() {
+        OrderOfferJPA result = orderMapper.toOrderOfferJPA(orderOffer);
+
+        assertNotNull(result);
+        assertEquals(orderOffer.getOrderId(), result.getOrderId());
+        assertEquals(orderOffer.getOfferId(), result.getOfferId());
+    }
+
+    @Test
+    void toOrderOffer_shouldMap_Test() {
+        OrderOffer result = orderMapper.toOrderOffer(orderOfferJPA);
+
+        assertNotNull(result);
+        assertEquals(orderOfferJPA.getOrderId(), result.getOrderId());
+        assertEquals(orderOfferJPA.getOfferId(), result.getOfferId());
+    }
+
 
     /***********PRIVATE METHODS**********/
 
@@ -140,5 +162,14 @@ public class OrderMapperTest {
                 .build();
 
         order.setOrderLines(List.of(line1));
+
+        orderOffer = OrderOffer.builder()
+                .orderId(UUID.randomUUID())
+                .offerId(UUID.randomUUID())
+                .build();
+
+        orderOfferJPA = new OrderOfferJPA();
+        orderOfferJPA.setOrderId(orderOffer.getOrderId());
+        orderOfferJPA.setOfferId(orderOffer.getOfferId());
     }
 }

@@ -30,6 +30,5 @@ public class OrderJPA {
     List<OrderLineJPA> orderLines;
 
     private Boolean orderReturn;
-    private UUID parentOrderId;
 
 }

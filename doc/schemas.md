@@ -60,12 +60,6 @@ Represents a complete order.
       }
     }
   ],
-  "orderReturn": {
-    "value": "boolean"
-  },
-  "parentOrderId": {
-    "value": "string"
-  },
   "offers": [
     {
       "uuid": "string"     

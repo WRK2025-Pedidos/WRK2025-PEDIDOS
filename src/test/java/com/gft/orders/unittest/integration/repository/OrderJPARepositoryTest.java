@@ -2,7 +2,7 @@ package com.gft.orders.unittest.integration.repository;
 
 import com.gft.orders.integration.model.OrderJPA;
 import com.gft.orders.integration.model.OrderLineJPA;
-import com.gft.orders.integration.repositories.OrderRepository;
+import com.gft.orders.integration.repositories.OrderJPARepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,28 +23,28 @@ import static org.junit.jupiter.api.Assertions.*;
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
 @ActiveProfiles("test")
 @Sql(scripts= {"/db/schema.sql"})
-public class OrderRepositoryTest {
+public class OrderJPARepositoryTest {
 
     @Autowired
-    private OrderRepository orderRepository;
+    private OrderJPARepository orderJPARepository;
 
     @BeforeEach
     public void setUp() {
-        orderRepository.deleteAll();
+        orderJPARepository.deleteAll();
     }
 
     @Test
     public void create_Test() {
         OrderJPA order = createTestOrder();
-        OrderJPA saved = orderRepository.save(order);
+        OrderJPA saved = orderJPARepository.save(order);
         assertNotNull(saved.getId());
     }
 
     @Test
     public void findById_Test() {
         OrderJPA order = createTestOrder();
-        orderRepository.save(order);
-        Optional<OrderJPA> result = orderRepository.findById(order.getId());
+        orderJPARepository.save(order);
+        Optional<OrderJPA> result = orderJPARepository.findById(order.getId());
         assertTrue(result.isPresent());
         assertEquals(order.getId(), result.get().getId());
     }
@@ -53,10 +53,10 @@ public class OrderRepositoryTest {
     public void update_Test() {
         OrderJPA order = createTestOrder();
         order.setTotalPrice(BigDecimal.valueOf(990.00));
-        orderRepository.save(order);
+        orderJPARepository.save(order);
 
         order.setTotalPrice(BigDecimal.valueOf(888.00));
-        OrderJPA updated = orderRepository.save(order);
+        OrderJPA updated = orderJPARepository.save(order);
         assertEquals(BigDecimal.valueOf(888.00), updated.getTotalPrice());
     }
 
@@ -80,7 +80,6 @@ public class OrderRepositoryTest {
         order.setPaymentMethod(0.3);
         order.setTotalPrice(BigDecimal.TEN);
         order.setOrderReturn(false);
-        order.setParentOrderId(null);
 
         return order;
     }

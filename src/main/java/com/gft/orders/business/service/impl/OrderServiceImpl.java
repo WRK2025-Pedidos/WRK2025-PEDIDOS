@@ -4,22 +4,22 @@ import com.gft.orders.business.mapper.OrderMapper;
 import com.gft.orders.business.model.Order;
 import com.gft.orders.business.service.OrderServices;
 import com.gft.orders.integration.model.OrderJPA;
-import com.gft.orders.integration.repositories.OrderRepository;
+import com.gft.orders.integration.repositories.OrderJPARepository;
 import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
-import java.util.Optional;
-import java.util.UUID;
+import java.math.BigDecimal;
+import java.time.LocalDateTime;
+import java.util.*;
 
 @Service
 public class OrderServiceImpl implements OrderServices {
 
-    private final OrderRepository orderRepository;
+    private final OrderJPARepository orderJPARepository;
     private final OrderMapper orderMapper;
 
-    public OrderServiceImpl(OrderRepository orderRepository, OrderMapper orderMapper) {
-        this.orderRepository = orderRepository;
+    public OrderServiceImpl(OrderJPARepository orderJPARepository, OrderMapper orderMapper) {
+        this.orderJPARepository = orderJPARepository;
         this.orderMapper = orderMapper;
     }
 
@@ -27,20 +27,37 @@ public class OrderServiceImpl implements OrderServices {
     @Transactional
     public UUID createOrder(Order order) {
         OrderJPA orderJPA = orderMapper.toOrderJPA(order);
-        return orderRepository.save(orderJPA).getId();
+        return orderJPARepository.save(orderJPA).getId();
     }
 
     @Override
     public Optional<Order> findOrderById(UUID id) {
-        return orderRepository.findById(id)
+        return orderJPARepository.findById(id)
                 .map(orderMapper::toOrderModel);
     }
 
     @Override
     public List<Order> findAllOrders() {
-        return orderRepository.findAll().stream()
+        return orderJPARepository.findAll().stream()
                 .map(orderMapper::toOrderModel)
                 .toList();
     }
 
+    @Override
+    @Transactional
+    public BigDecimal createOrderReturn(UUID orderId) {
+
+        OrderJPA originalOrder = orderJPARepository.findById(orderId)
+                                                    .orElseThrow(() -> new RuntimeException("Original order not found"));
+
+        if(orderJPARepository.idDateBeforeThirtyDays(orderId, LocalDateTime.now())) {
+            throw new RuntimeException("Return period exceeded");
+        }
+
+        originalOrder.setOrderReturn(true);
+
+        orderJPARepository.save(originalOrder);
+
+        return originalOrder.getTotalPrice().negate();
+    }
 }
