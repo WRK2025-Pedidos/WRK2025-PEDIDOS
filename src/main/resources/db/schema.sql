@@ -25,3 +25,10 @@ CREATE TABLE IF NOT EXISTS order_lines (
                                        line_price          DECIMAL(10,3)       NOT NULL,
                                        FOREIGN KEY (order_id) REFERENCES orders(id)
                                        );
+
+CREATE TABLE IF NOT EXISTS order_offers (
+                                            order_id UUID NOT NULL,
+                                            offer_id UUID NOT NULL,
+                                            PRIMARY KEY (order_id, offer_id),
+                                            FOREIGN KEY (order_id) REFERENCES orders(id)
+);
