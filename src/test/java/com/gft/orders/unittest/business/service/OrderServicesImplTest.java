@@ -127,7 +127,27 @@ public class OrderServicesImplTest {
         verify(orderJPARepository).idDateBeforeThirtyDays(eq(orderId), any(LocalDateTime.class));
     }
 
+    @Test
+    void createOrderReturn_failure() {
 
+        when(orderJPARepository.findById(orderId)).thenReturn(Optional.empty());
+
+        RuntimeException exception = assertThrows(RuntimeException.class, () -> orderServicesImpl.createOrderReturn(orderId));
+
+        assertEquals("Original order not found", exception.getMessage());
+    }
+
+    @Test
+    void createOrderReturn_ReturnPeriodExceeded(){
+
+        when(orderJPARepository.findById(orderId)).thenReturn(Optional.of(originalOrder));
+
+        when(orderJPARepository.idDateBeforeThirtyDays(eq(orderId), any(LocalDateTime.class))).thenReturn(true);
+
+        RuntimeException exception = assertThrows(RuntimeException.class, () -> orderServicesImpl.createOrderReturn(orderId));
+
+        assertEquals("Return period exceeded", exception.getMessage());
+    }
     /***************PRIVATE METHODS***********/
     private void initObjects() {
 
