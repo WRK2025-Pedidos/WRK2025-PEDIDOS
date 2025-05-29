@@ -25,8 +25,8 @@ public class OrderMapperTest {
     private OrderLine line1;
     private OrderJPA orderJPA;
     private OrderLineJPA line1JPA;
-    private OrderOfferJPA offerJPA;
     private OrderOffer orderOffer;
+    private OrderOfferJPA orderOfferJPA;
 
     @BeforeEach
     void setup() {
@@ -107,12 +107,20 @@ public class OrderMapperTest {
 
     @Test
     void toOrderOfferJPA_shouldMap_Test() {
-
         OrderOfferJPA result = orderMapper.toOrderOfferJPA(orderOffer);
 
         assertNotNull(result);
-        assertEquals(orderOffer.getOfferId(), result.getOfferId());
         assertEquals(orderOffer.getOrderId(), result.getOrderId());
+        assertEquals(orderOffer.getOfferId(), result.getOfferId());
+    }
+
+    @Test
+    void toOrderOffer_shouldMap_Test() {
+        OrderOffer result = orderMapper.toOrderOffer(orderOfferJPA);
+
+        assertNotNull(result);
+        assertEquals(orderOfferJPA.getOrderId(), result.getOrderId());
+        assertEquals(orderOfferJPA.getOfferId(), result.getOfferId());
     }
 
 
@@ -154,5 +162,14 @@ public class OrderMapperTest {
                 .build();
 
         order.setOrderLines(List.of(line1));
+
+        orderOffer = OrderOffer.builder()
+                .orderId(UUID.randomUUID())
+                .offerId(UUID.randomUUID())
+                .build();
+
+        orderOfferJPA = new OrderOfferJPA();
+        orderOfferJPA.setOrderId(orderOffer.getOrderId());
+        orderOfferJPA.setOfferId(orderOffer.getOfferId());
     }
 }
