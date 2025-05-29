@@ -18,7 +18,7 @@ CREATE TABLE IF NOT EXISTS orders(
 CREATE TABLE IF NOT EXISTS order_lines (
                                        id                  UUID                NOT NULL,
                                        order_id            UUID                NOT NULL,
-                                       product             UUID                NOT NULL,
+                                       product             BIGINT              NOT NULL,
                                        quantity            INT                 NOT NULL,
                                        line_weight         DOUBLE PRECISION    NOT NULL,
                                        product_price       DECIMAL(10,3)       NOT NULL,

@@ -1,5 +1,7 @@
 package com.gft.orders.business.service.impl;
 
+import com.gft.orders.business.config.OrderNotFoundException;
+import com.gft.orders.business.config.ReturnPeriodExceededException;
 import com.gft.orders.business.mapper.OrderMapper;
 import com.gft.orders.business.model.Order;
 import com.gft.orders.business.service.OrderServices;
@@ -48,10 +50,10 @@ public class OrderServiceImpl implements OrderServices {
     public BigDecimal createOrderReturn(UUID orderId) {
 
         OrderJPA originalOrder = orderJPARepository.findById(orderId)
-                                                    .orElseThrow(() -> new RuntimeException("Original order not found"));
+                                                    .orElseThrow(() -> new OrderNotFoundException("Original order not found"));
 
         if(orderJPARepository.idDateBeforeThirtyDays(orderId, LocalDateTime.now())) {
-            throw new RuntimeException("Return period exceeded");
+            throw new ReturnPeriodExceededException("Return period exceeded");
         }
 
         originalOrder.setOrderReturn(true);

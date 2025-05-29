@@ -1,4 +1,4 @@
-package com.gft.orders.integrationtest;
+package com.gft.orders.integrationTest;
 
 import com.gft.orders.business.model.Order;
 import com.gft.orders.business.model.OrderLine;

@@ -1,6 +1,8 @@
 package com.gft.orders.presentation.config;
 
 import com.gft.orders.business.config.BusinessExceptions;
+import com.gft.orders.business.config.OrderNotFoundException;
+import com.gft.orders.business.config.ReturnPeriodExceededException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.TypeMismatchException;
@@ -41,6 +43,17 @@ public class ExceptionsGeneralHandler extends ResponseEntityExceptionHandler {
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(errorResponse);
     }
 
+    @ExceptionHandler(ReturnPeriodExceededException.class)
+    public ResponseEntity<Object> handleReturnPeriodExceeded(ReturnPeriodExceededException ex) {
+        logger.warn("Return period exceeded: {}", ex.getMessage());
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ErrorResponse(ex.getMessage()));
+    }
+
+    @ExceptionHandler(OrderNotFoundException.class)
+    public ResponseEntity<Object> handleOrderNotFound(OrderNotFoundException ex) {
+        logger.warn("Order not found: {}", ex.getMessage());
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new ErrorResponse(ex.getMessage()));
+    }
     // **********************************************************************************************
 
     @Override

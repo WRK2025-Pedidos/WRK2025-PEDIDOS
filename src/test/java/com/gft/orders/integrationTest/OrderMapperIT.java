@@ -1,4 +1,4 @@
-package com.gft.orders.integrationtest;
+package com.gft.orders.integrationTest;
 
 import com.gft.orders.business.mapper.OrderMapper;
 import com.gft.orders.business.model.Order;
@@ -71,7 +71,7 @@ public class OrderMapperIT {
         orderJPA.setPaymentMethod(1.0);
 
         line1JPA = new OrderLineJPA();
-        line1JPA.setProduct(UUID.randomUUID());
+        line1JPA.setProduct(2L);
         line1JPA.setQuantity(2);
         line1JPA.setLineWeight(1.5);
         line1JPA.setProductPrice(BigDecimal.valueOf(50.25));
@@ -89,7 +89,7 @@ public class OrderMapperIT {
         order.setPaymentMethod(2.0);
 
         line1 = OrderLine.builder()
-                .product(UUID.randomUUID())
+                .product(3L)
                 .quantity(3)
                 .lineWeight(2.0)
                 .productPrice(BigDecimal.valueOf(50.25))
