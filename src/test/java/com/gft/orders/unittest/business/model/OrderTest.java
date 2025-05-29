@@ -129,16 +129,6 @@ class OrderTest {
         assertTrue(order.getOrderReturn());
     }
 
-    @Test
-    void setAndGetParentOrderID_Test() {
-
-        UUID id = UUID.randomUUID();
-
-        order.setParentOrderId(id);
-
-        assertEquals(id, order.getParentOrderId());
-    }
-
     /***********PRIVATE METHODS***********/
     private void initData() {
 

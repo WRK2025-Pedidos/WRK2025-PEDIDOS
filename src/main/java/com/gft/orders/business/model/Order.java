@@ -26,6 +26,5 @@ public class Order {
     private List<OrderLine> orderLines;
 
     private Boolean orderReturn;
-    private UUID parentOrderId;
 
 }

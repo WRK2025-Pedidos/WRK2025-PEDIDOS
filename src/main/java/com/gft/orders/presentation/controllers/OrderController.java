@@ -4,8 +4,10 @@ import com.gft.orders.business.service.OrderServices;
 import com.gft.orders.business.model.Order;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -43,10 +45,17 @@ public class OrderController {
 
     @PostMapping
     @Operation(summary = "Create a order", description = "Creates a new order and returns the location of the new resource")
+    @ResponseStatus(HttpStatus.CREATED)
     public UUID createOrder(@RequestBody Order order) {
 
         return orderServices.createOrder(order);
 
+    }
+
+    @PostMapping("/{id}/return")
+    public BigDecimal returnOrder(@PathVariable UUID id) {
+
+        return orderServices.createOrderReturn(id);
     }
 
 }
