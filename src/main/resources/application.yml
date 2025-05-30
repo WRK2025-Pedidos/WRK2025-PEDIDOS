@@ -19,7 +19,7 @@ spring:
       schema-locations: classpath:/db/schema.sql
       data-locations: classpath:/db/data.sql
 
-      external:
-        api:
-          base:
-            url: https:https://workshop-7uvd.onrender.com/api/v1
+external:
+  api:
+    base:
+      url: https:https://workshop-7uvd.onrender.com/api/v1

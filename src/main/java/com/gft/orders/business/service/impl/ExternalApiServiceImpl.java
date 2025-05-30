@@ -1,6 +1,7 @@
 package com.gft.orders.business.service.impl;
 
 import com.gft.orders.business.service.ExternalApiService;
+import lombok.Generated;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
@@ -16,6 +17,7 @@ public class ExternalApiServiceImpl implements ExternalApiService {
         this.externalApiBaseUrl = externalApiBaseUrl;
     }
 
+    @Generated
     @Override
     public String getDataFromExternalApi() {
         return "Calling external API from: " + externalApiBaseUrl;
