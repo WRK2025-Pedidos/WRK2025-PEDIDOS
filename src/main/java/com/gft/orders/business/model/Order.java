@@ -24,6 +24,7 @@ public class Order {
     private Double paymentMethod;
 
     private List<OrderLine> orderLines;
+    private List<OrderOffer> orderOffers;
 
     private Boolean orderReturn;
 

@@ -1,6 +1,8 @@
 package com.gft.orders.business.model;
 
 import lombok.*;
+
+import java.io.Serializable;
 import java.util.UUID;
 
 @Generated
