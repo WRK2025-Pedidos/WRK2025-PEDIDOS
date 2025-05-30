@@ -137,7 +137,7 @@ public class OrderMapperTest {
         orderJPA.setPaymentMethod(1.0);
 
         line1JPA = new OrderLineJPA();
-        line1JPA.setProduct(UUID.randomUUID());
+        line1JPA.setProduct(5L);
         line1JPA.setQuantity(2);
         line1JPA.setLineWeight(1.5);
         line1JPA.setProductPrice(BigDecimal.valueOf(50.25));
@@ -155,7 +155,7 @@ public class OrderMapperTest {
         order.setPaymentMethod(2.0);
 
         line1 = OrderLine.builder()
-                .product(UUID.randomUUID())
+                .product(1L)
                 .quantity(3)
                 .lineWeight(2.0)
                 .productPrice(BigDecimal.valueOf(50.25))

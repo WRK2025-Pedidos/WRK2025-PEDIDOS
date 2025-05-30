@@ -68,7 +68,7 @@ public class OrderJPARepositoryTest {
         order.setCartId(UUID.randomUUID());
 
         OrderLineJPA line = new OrderLineJPA();
-        line.setProduct(UUID.randomUUID());
+        line.setProduct(5L);
         line.setQuantity(1);
         line.setLineWeight(0.5);
         line.setProductPrice(BigDecimal.TEN);

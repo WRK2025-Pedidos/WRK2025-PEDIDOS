@@ -12,7 +12,7 @@ import java.util.UUID;
 @AllArgsConstructor
 public class OrderLine {
 
-    private UUID product;
+    private Long product;
     private int quantity;
     private Double lineWeight;
     private BigDecimal productPrice;

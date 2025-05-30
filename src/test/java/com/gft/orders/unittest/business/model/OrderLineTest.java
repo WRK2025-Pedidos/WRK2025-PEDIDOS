@@ -31,10 +31,10 @@ public class OrderLineTest {
     @Test
     void setterProduct_Test() {
 
-        UUID uuid = UUID.randomUUID();
-        orderLine.setProduct(uuid);
+        Long id = 1L;
+        orderLine.setProduct(id);
 
-        assertEquals(uuid, orderLine.getProduct());
+        assertEquals(id, orderLine.getProduct());
     }
 
     @Test
@@ -74,14 +74,14 @@ public class OrderLineTest {
     @Test
     void equals_Test() {
 
-        UUID uuid = UUID.randomUUID();
+        Long id = 1L;
 
         OrderLine orderLine1 = new OrderLine();
-        orderLine1.setProduct(uuid);
+        orderLine1.setProduct(id);
         orderLine1.setQuantity(1);
 
         OrderLine orderLine2 = new OrderLine();
-        orderLine2.setProduct(uuid);
+        orderLine2.setProduct(id);
         orderLine2.setQuantity(1);
 
         assertEquals(orderLine1, orderLine2);
@@ -90,15 +90,15 @@ public class OrderLineTest {
     @Test
     void notEquals_Test() {
 
-        UUID uuid = UUID.randomUUID();
+        Long id = 1L;
 
         OrderLine orderLine1 = new OrderLine();
-        orderLine1.setProduct(uuid);
+        orderLine1.setProduct(id);
         orderLine1.setQuantity(1);
         orderLine1.setProductPrice(BigDecimal.valueOf(1.0));
 
         OrderLine orderLine2 = new OrderLine();
-        orderLine2.setProduct(uuid);
+        orderLine2.setProduct(id);
         orderLine2.setQuantity(1);
         orderLine2.setProductPrice(BigDecimal.valueOf(2.0));
 
