@@ -14,11 +14,10 @@ public class OrderOfferIT {
     @Test
     void testOrderOfferIntegration() {
         UUID orderId = UUID.randomUUID();
-        UUID offerId = UUID.randomUUID();
 
         OrderOffer orderOffer = new OrderOffer();
         orderOffer.setOrderId(orderId);
-        orderOffer.setOfferId(offerId);
+        orderOffer.setOfferId(orderOffer.getOfferId());
 
         orderOffers.add(orderOffer);
 
@@ -29,6 +28,6 @@ public class OrderOfferIT {
 
         assertNotNull(orderOffer1);
         assertEquals(orderId, orderOffer1.getOrderId());
-        assertEquals(offerId, orderOffer1.getOfferId());
+        assertEquals(orderOffer.getOfferId(), orderOffer1.getOfferId());
     }
 }

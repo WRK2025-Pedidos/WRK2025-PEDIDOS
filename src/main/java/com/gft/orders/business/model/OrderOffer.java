@@ -11,6 +11,6 @@ import java.util.UUID;
 public class OrderOffer {
 
     private UUID orderId;
-    private UUID offerId;
+    private Long offerId;
 
 }

@@ -19,7 +19,6 @@ public class OrderOfferJPA {
     private UUID orderId;
 
     @Column(name = "offer_id")
-    private UUID offerId;
-
+    private Long offerId;
 
 }

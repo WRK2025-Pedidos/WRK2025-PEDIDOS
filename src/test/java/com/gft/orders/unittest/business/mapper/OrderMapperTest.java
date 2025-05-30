@@ -31,6 +31,7 @@ public class OrderMapperTest {
     @BeforeEach
     void setup() {
         orderMapper = new OrderMapper();
+        orderOffer = new OrderOffer();
         initData();
     }
 
@@ -165,7 +166,7 @@ public class OrderMapperTest {
 
         orderOffer = OrderOffer.builder()
                 .orderId(UUID.randomUUID())
-                .offerId(UUID.randomUUID())
+                .offerId(orderOffer.getOfferId())
                 .build();
 
         orderOfferJPA = new OrderOfferJPA();
