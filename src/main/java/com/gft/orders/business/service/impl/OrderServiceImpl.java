@@ -1,8 +1,8 @@
 package com.gft.orders.business.service.impl;
 
-import com.gft.orders.business.config.InvalidOrderStatusTransitionException;
-import com.gft.orders.business.config.OrderNotFoundException;
-import com.gft.orders.business.config.ReturnPeriodExceededException;
+import com.gft.orders.business.config.exceptions.InvalidOrderStatusTransitionException;
+import com.gft.orders.business.config.exceptions.OrderNotFoundException;
+import com.gft.orders.business.config.exceptions.ReturnPeriodExceededException;
 import com.gft.orders.business.mapper.OrderMapper;
 import com.gft.orders.business.model.Order;
 import com.gft.orders.business.service.OrderServices;

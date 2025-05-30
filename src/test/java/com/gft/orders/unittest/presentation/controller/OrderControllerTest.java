@@ -1,8 +1,7 @@
 package com.gft.orders.unittest.presentation.controller;
 
-import com.gft.orders.business.config.OrderNotFoundException;
-import com.gft.orders.business.config.ReturnPeriodExceededException;
-import com.gft.orders.integration.model.OrderJPA;
+import com.gft.orders.business.config.exceptions.OrderNotFoundException;
+import com.gft.orders.business.config.exceptions.ReturnPeriodExceededException;
 import com.gft.orders.integration.repositories.OrderJPARepository;
 import com.gft.orders.presentation.config.ExceptionsGeneralHandler;
 import com.gft.orders.presentation.controllers.OrderController;
@@ -20,7 +19,6 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
 
 import java.math.BigDecimal;
-import java.time.LocalDateTime;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
