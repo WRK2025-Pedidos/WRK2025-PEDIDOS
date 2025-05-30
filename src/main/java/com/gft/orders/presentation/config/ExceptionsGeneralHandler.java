@@ -1,8 +1,8 @@
 package com.gft.orders.presentation.config;
 
-import com.gft.orders.business.config.BusinessExceptions;
-import com.gft.orders.business.config.OrderNotFoundException;
-import com.gft.orders.business.config.ReturnPeriodExceededException;
+import com.gft.orders.business.config.exceptions.BusinessExceptions;
+import com.gft.orders.business.config.exceptions.OrderNotFoundException;
+import com.gft.orders.business.config.exceptions.ReturnPeriodExceededException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.TypeMismatchException;
