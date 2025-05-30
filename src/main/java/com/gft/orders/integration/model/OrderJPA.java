@@ -32,7 +32,8 @@ public class OrderJPA {
     @OneToMany(mappedBy = "order", cascade = CascadeType.ALL, orphanRemoval = true)
     List<OrderLineJPA> orderLines;
 
-    private List<OrderOffer> orderOffers;
+    @OneToMany(mappedBy = "orderId", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<OrderOfferJPA> orderOffers;
 
     private Boolean orderReturn;
 
