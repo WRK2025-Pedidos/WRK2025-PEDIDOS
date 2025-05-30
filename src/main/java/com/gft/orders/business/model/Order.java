@@ -1,6 +1,5 @@
 package com.gft.orders.business.model;
 
-import com.gft.orders.business.config.InvalidOrderStatusTransitionException;
 import lombok.*;
 import org.dozer.Mapping;
 import org.dozer.classmap.RelationshipType;
@@ -28,12 +27,4 @@ public class Order {
 
     private Boolean orderReturn;
 
-    public void setOrderReturn(Boolean orderReturn) {
-
-        if(this.orderReturn==true && orderReturn==false){
-            throw new InvalidOrderStatusTransitionException("A returned order cannot be reactivated.");
-        }
-
-        this.orderReturn = orderReturn;
-    }
 }
