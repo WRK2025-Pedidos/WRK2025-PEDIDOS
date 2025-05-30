@@ -1,4 +1,4 @@
-package com.gft.orders.integrationTest.Controller;
+package com.gft.orders.integrationtest.Controller;
 
 import com.gft.orders.business.model.Order;
 import com.gft.orders.business.model.OrderLine;
@@ -19,9 +19,8 @@ import java.util.*;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.mockito.Mockito.*;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 
 @WebMvcTest(OrderController.class)
 public class OrderControllerIT extends AbstractControllerTest {
@@ -121,6 +120,7 @@ public class OrderControllerIT extends AbstractControllerTest {
                         21.0,
                         1.0,
                         List.of(testOrderLine),
+                        List.of(),
                         false
         );
     }

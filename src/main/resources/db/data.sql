@@ -1,3 +1,4 @@
+DELETE FROM order_offers;
 DELETE FROM order_lines;
 DELETE FROM orders;
 
@@ -8,3 +9,6 @@ VALUES
 INSERT INTO order_lines (id, order_id, product, quantity, line_weight, product_price, line_price)
 VALUES
     ('22222222-2222-2222-2222-222222222222','11111111-1111-1111-1111-111111111111',50, 2, 1.5, 20.00, 40.00);
+INSERT INTO order_offers (order_id, offer_id)
+VALUES
+    ('11111111-1111-1111-1111-111111111111', 66666);

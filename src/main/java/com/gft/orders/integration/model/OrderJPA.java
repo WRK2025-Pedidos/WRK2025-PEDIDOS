@@ -1,5 +1,6 @@
 package com.gft.orders.integration.model;
 
+import com.gft.orders.business.model.OrderOffer;
 import jakarta.persistence.*;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -30,6 +31,9 @@ public class OrderJPA {
   
     @OneToMany(mappedBy = "order", cascade = CascadeType.ALL, orphanRemoval = true)
     List<OrderLineJPA> orderLines;
+
+    @OneToMany(mappedBy = "orderId", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<OrderOfferJPA> orderOffers;
 
     private Boolean orderReturn;
 

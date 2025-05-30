@@ -2,6 +2,7 @@ package com.gft.orders.unittest.integration.repository;
 
 import com.gft.orders.integration.model.OrderJPA;
 import com.gft.orders.integration.model.OrderLineJPA;
+import com.gft.orders.integration.model.OrderOfferJPA;
 import com.gft.orders.integration.repositories.OrderJPARepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -80,6 +81,7 @@ public class OrderJPARepositoryTest {
         order.setPaymentMethod(0.3);
         order.setTotalPrice(BigDecimal.TEN);
         order.setOrderReturn(false);
+        order.setOrderOffers(List.of());
 
         return order;
     }
