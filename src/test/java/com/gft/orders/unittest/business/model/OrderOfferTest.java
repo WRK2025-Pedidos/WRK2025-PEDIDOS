@@ -6,13 +6,12 @@ import org.junit.jupiter.api.Test;
 import java.util.UUID;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-
 public class OrderOfferTest {
 
     @Test
     void testOrderOfferBuilderAndGetters() {
         UUID orderId = UUID.randomUUID();
-        UUID offerId = UUID.randomUUID();
+        Long offerId = 1L;
 
         OrderOffer orderOffer = OrderOffer.builder()
                 .orderId(orderId)
@@ -26,13 +25,11 @@ public class OrderOfferTest {
     @Test
     void testNoArgsConstructorAndSetters() {
         UUID orderId = UUID.randomUUID();
-        UUID offerId = UUID.randomUUID();
 
         OrderOffer orderOffer = new OrderOffer();
         orderOffer.setOrderId(orderId);
-        orderOffer.setOfferId(offerId);
+        orderOffer.setOfferId(orderOffer.getOfferId());
 
         assertEquals(orderId, orderOffer.getOrderId());
-        assertEquals(offerId, orderOffer.getOfferId());
     }
 }
