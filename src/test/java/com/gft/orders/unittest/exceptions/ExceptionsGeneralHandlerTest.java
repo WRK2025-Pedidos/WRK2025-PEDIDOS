@@ -1,6 +1,6 @@
 package com.gft.orders.unittest.exceptions;
 
-import com.gft.orders.business.config.BusinessExceptions;
+import com.gft.orders.business.config.exceptions.BusinessExceptions;
 import com.gft.orders.presentation.config.ErrorResponse;
 import com.gft.orders.presentation.config.ExceptionsGeneralHandler;
 import org.junit.jupiter.api.BeforeEach;
