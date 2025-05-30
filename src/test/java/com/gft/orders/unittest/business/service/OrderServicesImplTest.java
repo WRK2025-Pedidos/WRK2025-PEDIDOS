@@ -1,5 +1,6 @@
 package com.gft.orders.unittest.business.service;
 
+import com.gft.orders.business.config.exceptions.InvalidOrderStatusTransitionException;
 import com.gft.orders.business.mapper.OrderMapper;
 import com.gft.orders.business.model.Order;
 import com.gft.orders.business.service.impl.OrderServiceImpl;
@@ -148,6 +149,20 @@ public class OrderServicesImplTest {
 
         assertEquals("Return period exceeded", exception.getMessage());
     }
+
+    @Test
+    void createOrderReturn_InvalidStatusTransition(){
+
+        originalOrder.setOrderReturn(true);
+
+        when(orderJPARepository.findById(orderId)).thenReturn(Optional.of(originalOrder));
+
+        InvalidOrderStatusTransitionException exception = assertThrows(InvalidOrderStatusTransitionException.class, () ->
+                orderServicesImpl.createOrderReturn(orderId));
+
+        assertEquals("A returned order cannot be reactivated.", exception.getMessage());
+    }
+
     /***************PRIVATE METHODS***********/
     private void initObjects() {
 

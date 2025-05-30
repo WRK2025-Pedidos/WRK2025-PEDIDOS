@@ -1,4 +1,4 @@
-package com.gft.orders.integrationtest;
+package com.gft.orders.integrationTest;
 
 import com.gft.orders.business.model.OrderOffer;
 import org.junit.jupiter.api.Test;

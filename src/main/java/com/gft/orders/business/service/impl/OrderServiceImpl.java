@@ -1,7 +1,8 @@
 package com.gft.orders.business.service.impl;
 
-import com.gft.orders.business.config.OrderNotFoundException;
-import com.gft.orders.business.config.ReturnPeriodExceededException;
+import com.gft.orders.business.config.exceptions.InvalidOrderStatusTransitionException;
+import com.gft.orders.business.config.exceptions.OrderNotFoundException;
+import com.gft.orders.business.config.exceptions.ReturnPeriodExceededException;
 import com.gft.orders.business.mapper.OrderMapper;
 import com.gft.orders.business.model.Order;
 import com.gft.orders.business.service.OrderServices;
@@ -51,6 +52,10 @@ public class OrderServiceImpl implements OrderServices {
 
         OrderJPA originalOrder = orderJPARepository.findById(orderId)
                                                     .orElseThrow(() -> new OrderNotFoundException("Original order not found"));
+
+        if(originalOrder.getOrderReturn()==true){
+            throw new InvalidOrderStatusTransitionException("A returned order cannot be reactivated.");
+        }
 
         if(orderJPARepository.idDateBeforeThirtyDays(orderId, LocalDateTime.now())) {
             throw new ReturnPeriodExceededException("Return period exceeded");

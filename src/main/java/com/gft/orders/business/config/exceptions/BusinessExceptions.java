@@ -1,4 +1,4 @@
-package com.gft.orders.business.config;
+package com.gft.orders.business.config.exceptions;
 
 public class BusinessExceptions extends RuntimeException {
     private static final long serialVersionUID = 1L;

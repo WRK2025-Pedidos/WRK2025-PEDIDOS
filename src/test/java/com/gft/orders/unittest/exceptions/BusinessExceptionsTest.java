@@ -1,6 +1,6 @@
 package com.gft.orders.unittest.exceptions;
 
-import com.gft.orders.business.config.BusinessExceptions;
+import com.gft.orders.business.config.exceptions.BusinessExceptions;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
