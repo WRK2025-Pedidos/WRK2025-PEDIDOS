@@ -28,7 +28,7 @@ CREATE TABLE IF NOT EXISTS order_lines (
 
 CREATE TABLE IF NOT EXISTS order_offers (
                                             order_id UUID NOT NULL,
-                                            offer_id UUID NOT NULL,
+                                            offer_id BIGINT NOT NULL,
                                             PRIMARY KEY (order_id, offer_id),
                                             FOREIGN KEY (order_id) REFERENCES orders(id)
 );
