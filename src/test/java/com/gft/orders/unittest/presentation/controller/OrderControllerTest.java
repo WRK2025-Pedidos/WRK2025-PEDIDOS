@@ -69,7 +69,7 @@ class OrderControllerTest extends AbstractControllerTest {
         mockMvc.perform(post("/orders")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(order)))
-                .andExpect(status().isOk())
+                .andExpect(status().isCreated())
                 .andExpect(content().string("\"" + orderId + "\""));
     }
 

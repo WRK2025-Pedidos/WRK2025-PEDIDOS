@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.Generated;
+import lombok.NoArgsConstructor;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
@@ -15,6 +16,7 @@ import java.util.UUID;
 @Table(name = "orders")
 @Data
 @EqualsAndHashCode(of = "id")
+@NoArgsConstructor
 public class OrderJPA {
 
     @Id

@@ -1,6 +1,5 @@
 package com.gft.orders.integrationTest.Controller;
 
-import com.gft.orders.business.config.OrderNotFoundException;
 import com.gft.orders.business.model.Order;
 import com.gft.orders.business.model.OrderLine;
 import com.gft.orders.business.service.OrderServices;
@@ -9,7 +8,6 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
-import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.test.web.servlet.MockMvc;
@@ -26,7 +24,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 
 @WebMvcTest(OrderController.class)
-public class OrderControllerIT extends AbstractControllerTest{
+public class OrderControllerIT extends AbstractControllerTest {
 
     @Autowired
     private MockMvc mockMvc;

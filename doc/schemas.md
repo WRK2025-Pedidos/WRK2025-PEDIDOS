@@ -60,12 +60,6 @@ Represents a complete order.
       }
     }
   ],
-  "orderReturn": {
-    "value": "boolean"
-  },
-  "parentOrderId": {
-    "value": "string"
-  },
   "offers": [
     {
       "uuid": "string"     
@@ -101,4 +95,5 @@ Describes a single line in an order (i.e., a product and its quantity).
 
 
 ```
+
 ---
