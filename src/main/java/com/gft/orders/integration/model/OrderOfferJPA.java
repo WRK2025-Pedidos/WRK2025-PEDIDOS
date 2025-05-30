@@ -15,7 +15,7 @@ public class OrderOfferJPA {
 
     @Id
     @GeneratedValue(generator = "UUID")
-    @Column(name = "id", nullable = false)
+    @Column(name = "order_id", nullable = false)
     private UUID orderId;
 
     @Column(name = "offer_id")

@@ -1,4 +1,4 @@
-package com.gft.orders.integrationTest;
+package com.gft.orders.integrationtest;
 
 import com.gft.orders.business.mapper.OrderMapper;
 import com.gft.orders.business.model.Order;
