@@ -53,7 +53,8 @@ public class LogAspectTest {
     void shouldLogBeforeMethodWithArguments() {
         Object[] arguments = {"arg1", 2};
 
-        when(joinPoint.getArgs()).thenReturn(arguments);
+        when(joinPoint.getArgs()).thenReturn(arguments);  // Se pasan argumentos
+
         logAspect.logBefore(joinPoint);
 
         verify(logger).info("Iniciando método: {} con argumentos: {}", "public void createOrder(..)", arguments);
