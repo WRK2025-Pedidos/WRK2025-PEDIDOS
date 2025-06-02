@@ -13,7 +13,7 @@ public class LogAspect {
     private final Logger logger = LoggerFactory.getLogger(LogAspect.class);
 
     @Pointcut("execution(* com.gft.orders.business..*(..))")
-    public void businessMethods() {}
+    public void businessMethods() { }
 
     @Before("businessMethods()")
     public void logBefore(JoinPoint joinPoint) {
