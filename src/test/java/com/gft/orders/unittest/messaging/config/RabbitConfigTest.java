@@ -69,6 +69,6 @@ public class RabbitConfigTest {
 
     @Test
     void constants_shouldHaveCorrectValues() {
-        assertEquals("order", RabbitConfig.EXCHANGE_PRODUCT);
+        assertEquals("orders", RabbitConfig.EXCHANGE_PRODUCT);
     }
 }
