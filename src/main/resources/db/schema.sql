@@ -8,7 +8,7 @@ CREATE TABLE IF NOT EXISTS orders(
                                      id                  UUID                NOT NULL,
                                      cart_id             UUID                NOT NULL,
                                      creation_date       TIMESTAMP           NOT NULL,
-                                     total_price         DECIMAL(10, 3)      NOT NULL,
+                                     total_price         DECIMAL(10,2)      NOT NULL,
                                      country_tax         DOUBLE PRECISION    NOT NULL,
                                      payment_method      DOUBLE PRECISION    NOT NULL,
                                      order_return        BOOLEAN            NOT NULL,
@@ -21,8 +21,8 @@ CREATE TABLE IF NOT EXISTS order_lines (
                                        product             BIGINT              NOT NULL,
                                        quantity            INT                 NOT NULL,
                                        line_weight         DOUBLE PRECISION    NOT NULL,
-                                       product_price       DECIMAL(10,3)       NOT NULL,
-                                       line_price          DECIMAL(10,3)       NOT NULL,
+                                       product_price       DECIMAL(10,2)       NOT NULL,
+                                       line_price          DECIMAL(10,2)       NOT NULL,
                                        FOREIGN KEY (order_id) REFERENCES orders(id)
                                        );
 
