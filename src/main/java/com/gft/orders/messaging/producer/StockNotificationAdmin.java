@@ -7,7 +7,7 @@ import org.springframework.stereotype.Component;
 @Component
 public class StockNotificationAdmin {
 
-    private final RabbitTemplate rabbitTemplate; // constructor
+    private final RabbitTemplate rabbitTemplate;
 
     public StockNotificationAdmin(RabbitTemplate rabbitTemplate) {
         this.rabbitTemplate = rabbitTemplate;

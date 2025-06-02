@@ -6,10 +6,10 @@ import org.springframework.amqp.rabbit.annotation.RabbitListener;
 import org.springframework.stereotype.Component;
 
 @Component
-public class StockNoticationChange {
+public class StockNotificationChange {
     private final StockNotificationAdmin stockNotificationAdmin;
 
-    public StockNoticationChange(StockNotificationAdmin stockNotificationAdmin) {
+    public StockNotificationChange(StockNotificationAdmin stockNotificationAdmin) {
         this.stockNotificationAdmin = stockNotificationAdmin;
     }
 
