@@ -43,6 +43,12 @@ public class LogAspectTest {
     }
 
     @Test
+    void shouldExecutePointcutWithoutErrors() {
+        // Para cubrir al 100%, no hace nada
+        logAspect.businessMethods();
+    }
+
+    @Test
     void shouldLogBeforeMethod() {
         logAspect.logBefore(joinPoint);
 
