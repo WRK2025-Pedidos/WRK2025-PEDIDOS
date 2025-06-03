@@ -35,9 +35,13 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 class OrderControllerTest extends AbstractControllerTest {
     @MockitoBean
     private OrderServices orderServices;
+
     Order order1;
     Order order2;
+
+    @MockitoBean
     private OrderJPARepository orderJPARepository;
+
     @BeforeEach
     void init() {
         order1 = Instancio.create(Order.class);
