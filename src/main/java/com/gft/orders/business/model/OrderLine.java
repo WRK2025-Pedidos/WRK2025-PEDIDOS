@@ -1,9 +1,7 @@
 package com.gft.orders.business.model;
 
 import lombok.*;
-
 import java.math.BigDecimal;
-import java.util.UUID;
 
 @Generated
 @Data
@@ -17,5 +15,6 @@ public class OrderLine {
     private Double lineWeight;
     private BigDecimal productPrice;
     private BigDecimal linePrice;
+    private int returnedQuantity = 0;
 }
 

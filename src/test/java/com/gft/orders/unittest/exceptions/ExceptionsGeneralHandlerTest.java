@@ -1,6 +1,7 @@
 package com.gft.orders.unittest.exceptions;
 
 import com.gft.orders.business.config.exceptions.BusinessExceptions;
+import com.gft.orders.business.config.exceptions.InvalidReturnQuantityException;
 import com.gft.orders.presentation.config.ErrorResponse;
 import com.gft.orders.presentation.config.ExceptionsGeneralHandler;
 import org.junit.jupiter.api.BeforeEach;
@@ -97,5 +98,16 @@ class ExceptionsGeneralHandlerTest {
 
         assertEquals(HttpStatus.BAD_REQUEST, response.getStatusCode());
         assertTrue(((ErrorResponse)response.getBody()).getError().contains("unknown type"));
+    }
+
+    @Test
+    void handleInvalidReturnQuantity_ShouldReturnBadRequest_Test() {
+        String errorMessage = "Invalid return quantity for product ID 123";
+        InvalidReturnQuantityException ex = new InvalidReturnQuantityException(errorMessage);
+
+        ResponseEntity<Object> response = handler.handleInvalidReturnQuantity(ex);
+
+        assertEquals(400, response.getStatusCodeValue());
+         assertEquals(errorMessage, ((ErrorResponse) response.getBody()).getError());
     }
 }

@@ -1,5 +1,6 @@
 package com.gft.orders.integrationtest.Controller;
 
+import com.gft.orders.business.config.exceptions.InvalidReturnQuantityException;
 import com.gft.orders.business.model.Order;
 import com.gft.orders.business.model.OrderLine;
 import com.gft.orders.business.service.OrderServices;
@@ -107,12 +108,29 @@ public class OrderControllerIT extends AbstractControllerTest {
         assertResponseBodyIsOk(result, -999.99);
     }
 
+    @Test
+    void createOrderReturn_invalidQuantity() throws Exception {
+        when(orderServices.createOrderReturn(testOrderId)).thenThrow(new InvalidReturnQuantityException("La cantidad a devolver no puede ser mayor que la cantidad comprada"));
+
+        MvcResult result = mockMvc.perform(post("/orders/" + testOrderId + "/return")
+                        .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isBadRequest())  // Esperamos un error 400
+                .andReturn();
+
+        String responseBody = result.getResponse().getContentAsString();
+        assertThat(responseBody).contains("La cantidad a devolver no puede ser mayor que la cantidad comprada");
+    }
+
     /**********PRIVATE METHODS*********/
 
     private void initData() {
         testOrderId = UUID.fromString("11111111-1111-1111-1111-111111111111");
         UUID testCartId = UUID.fromString("22222222-2222-2222-2222-222222222222");
-        OrderLine testOrderLine = new OrderLine(1L,1, 1.0, BigDecimal.valueOf(999.99), BigDecimal.valueOf(999.99));
+        OrderLine testOrderLine = new OrderLine(1L,1, 1.0, BigDecimal.valueOf(999.99), BigDecimal.valueOf(999.99),1);
+
+        Map<Long, Integer> returnProductQuantity = new HashMap<>();
+        returnProductQuantity.put(1L, 1);
+
         testOrder = new Order(testOrderId,
                         testCartId,
                         LocalDateTime.now(),
@@ -121,7 +139,8 @@ public class OrderControllerIT extends AbstractControllerTest {
                         1.0,
                         List.of(testOrderLine),
                         List.of(),
-                        false
+                        false,
+                        returnProductQuantity
         );
     }
 }
