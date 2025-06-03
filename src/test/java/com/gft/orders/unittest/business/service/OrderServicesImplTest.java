@@ -2,6 +2,7 @@ package com.gft.orders.unittest.business.service;
 
 import com.gft.orders.business.config.exceptions.InvalidOrderStatusTransitionException;
 import com.gft.orders.business.config.exceptions.InvalidReturnQuantityException;
+import com.gft.orders.business.config.exceptions.OrderNotFoundException;
 import com.gft.orders.business.config.exceptions.ReturnPeriodExceededException;
 import com.gft.orders.business.mapper.OrderMapper;
 import com.gft.orders.business.model.DTO.ReturnLineDTO;
@@ -274,6 +275,23 @@ public class OrderServicesImplTest {
         );
 
         assertEquals("Producto no encontrado en el pedido.", exception.getMessage());
+    }
+
+    @Test
+    void shouldThrowOrderNotFoundExceptionWhenOrderIsNotFound() {
+        // Dado que no se encuentra la orden
+        when(orderJPARepository.findById(eq(originalOrder.getId()))).thenReturn(Optional.empty());
+
+        Map<Long, Integer> returnLines = new HashMap<>();
+        returnLines.put(123L, 5);
+        ReturnLineDTO returnLineDTO = new ReturnLineDTO(originalOrder.getId(), returnLines);
+
+        // Se lanza la excepción OrderNotFoundException
+        OrderNotFoundException exception = assertThrows(OrderNotFoundException.class, () ->
+                orderServicesImpl.processReturnLines(returnLineDTO)
+        );
+
+        assertEquals("Original order not found", exception.getMessage());
     }
 
     /***************PRIVATE METHODS***********/
