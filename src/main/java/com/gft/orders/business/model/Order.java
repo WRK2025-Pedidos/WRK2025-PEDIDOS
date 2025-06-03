@@ -1,8 +1,6 @@
 package com.gft.orders.business.model;
 
 import lombok.*;
-import org.dozer.Mapping;
-import org.dozer.classmap.RelationshipType;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
