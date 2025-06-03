@@ -1,6 +1,8 @@
 package com.gft.orders.unittest.business.service;
 
 import com.gft.orders.business.config.exceptions.InvalidOrderStatusTransitionException;
+import com.gft.orders.business.config.exceptions.InvalidReturnQuantityException;
+import com.gft.orders.business.config.exceptions.ReturnPeriodExceededException;
 import com.gft.orders.business.mapper.OrderMapper;
 import com.gft.orders.business.model.DTO.ReturnLineDTO;
 import com.gft.orders.business.model.Order;
@@ -124,6 +126,33 @@ public class OrderServicesImplTest {
         verify(orderJPARepository).save(originalOrder);
     }
 
+    @Test
+    void shouldThrowInvalidReturnQuantityExceptionWhenReturnQuantityExceedsPurchasedQuantity() {
+
+        Long productId = 123L;
+        int purchasedQuantity = 10;
+        int quantityToReturn = 15;
+
+        OrderLineJPA orderLineJPA = new OrderLineJPA();
+        orderLineJPA.setProduct(productId);
+        orderLineJPA.setQuantity(purchasedQuantity);
+        orderLineJPA.setProductPrice(new BigDecimal("10.00"));
+        orderLineJPA.setLinePrice(new BigDecimal("100.00"));
+
+        originalOrder.setOrderLines(new ArrayList<>(Collections.singletonList(orderLineJPA)));
+
+        Map<Long, Integer> returnLines = new HashMap<>();
+        returnLines.put(productId, quantityToReturn);
+        ReturnLineDTO returnLineDTO = new ReturnLineDTO(originalOrder.getId(), returnLines);
+
+        when(orderJPARepository.findById(eq(originalOrder.getId()))).thenReturn(Optional.of(originalOrder));
+
+        InvalidReturnQuantityException exception = assertThrows(InvalidReturnQuantityException.class, () ->
+                orderServicesImpl.processReturnLines(returnLineDTO)
+        );
+
+        assertEquals("La cantidad a devolver no puede ser mayor que la cantidad comprada.", exception.getMessage());
+    }
 
     @Test
     void findAllOrders() {
@@ -192,6 +221,59 @@ public class OrderServicesImplTest {
                 orderServicesImpl.createOrderReturn(orderId));
 
         assertEquals("A returned order cannot be reactivated.", exception.getMessage());
+    }
+
+    @Test
+    void shouldThrowInvalidOrderStatusTransitionExceptionWhenOrderHasBeenReturned() {
+
+        originalOrder.setOrderReturn(true);
+
+        Map<Long, Integer> returnLines = new HashMap<>();
+        ReturnLineDTO returnLineDTO = new ReturnLineDTO(originalOrder.getId(), returnLines);
+
+        when(orderJPARepository.findById(eq(originalOrder.getId()))).thenReturn(Optional.of(originalOrder));
+
+        InvalidOrderStatusTransitionException exception = assertThrows(InvalidOrderStatusTransitionException.class, () ->
+                orderServicesImpl.processReturnLines(returnLineDTO)
+        );
+
+        assertEquals("A returned order cannot be reactivated.", exception.getMessage());
+    }
+
+    @Test
+    void shouldThrowReturnPeriodExceededExceptionWhenReturnPeriodIsExpired() {
+
+        Map<Long, Integer> returnLines = new HashMap<>();
+        ReturnLineDTO returnLineDTO = new ReturnLineDTO(originalOrder.getId(), returnLines);
+
+        when(orderJPARepository.findById(eq(originalOrder.getId()))).thenReturn(Optional.of(originalOrder));
+        when(orderJPARepository.idDateBeforeThirtyDays(eq(originalOrder.getId()), any(LocalDateTime.class))).thenReturn(true);
+
+        ReturnPeriodExceededException exception = assertThrows(ReturnPeriodExceededException.class, () ->
+                orderServicesImpl.processReturnLines(returnLineDTO)
+        );
+
+        assertEquals("Return period exceeded", exception.getMessage());
+    }
+
+    @Test
+    void shouldThrowInvalidReturnQuantityExceptionWhenOrderLinesAreEmpty() {
+        Long productIdToReturn = 123L;
+        int quantityToReturn = 5;
+
+        Map<Long, Integer> returnLines = new HashMap<>();
+        returnLines.put(productIdToReturn, quantityToReturn);
+        ReturnLineDTO returnLineDTO = new ReturnLineDTO(originalOrder.getId(), returnLines);
+
+        when(orderJPARepository.findById(eq(originalOrder.getId()))).thenReturn(Optional.of(originalOrder));
+
+        originalOrder.setOrderLines(Collections.emptyList());
+
+        InvalidReturnQuantityException exception = assertThrows(InvalidReturnQuantityException.class, () ->
+                orderServicesImpl.processReturnLines(returnLineDTO)
+        );
+
+        assertEquals("Producto no encontrado en el pedido.", exception.getMessage());
     }
 
     /***************PRIVATE METHODS***********/
