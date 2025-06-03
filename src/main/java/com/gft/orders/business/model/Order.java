@@ -28,4 +28,5 @@ public class Order {
 
     private Boolean orderReturn;
 
+    private Map<Long, Integer> returnedProductQuantity = new HashMap<>();
 }

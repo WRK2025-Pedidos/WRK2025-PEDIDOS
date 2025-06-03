@@ -9,7 +9,9 @@ import lombok.NoArgsConstructor;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.UUID;
 
 @Generated
@@ -36,5 +38,10 @@ public class OrderJPA {
     private List<OrderOfferJPA> orderOffers;
 
     private Boolean orderReturn;
+
+    @ElementCollection
+    @MapKeyColumn(name = "product_id")
+    @Column(name = "returned_quantity")
+    private Map<Long, Integer> returnedProductQuantity = new HashMap<>();
 
 }

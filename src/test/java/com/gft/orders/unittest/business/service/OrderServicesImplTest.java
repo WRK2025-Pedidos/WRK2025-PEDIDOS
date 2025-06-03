@@ -2,9 +2,11 @@ package com.gft.orders.unittest.business.service;
 
 import com.gft.orders.business.config.exceptions.InvalidOrderStatusTransitionException;
 import com.gft.orders.business.mapper.OrderMapper;
+import com.gft.orders.business.model.DTO.ReturnLineDTO;
 import com.gft.orders.business.model.Order;
 import com.gft.orders.business.service.impl.OrderServiceImpl;
 import com.gft.orders.integration.model.OrderJPA;
+import com.gft.orders.integration.model.OrderLineJPA;
 import com.gft.orders.integration.repositories.OrderJPARepository;
 import org.instancio.Instancio;
 import org.junit.jupiter.api.BeforeEach;
@@ -16,10 +18,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Optional;
-import java.util.UUID;
+import java.util.*;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
@@ -69,7 +68,7 @@ public class OrderServicesImplTest {
     }
 
     @Test
-    void shouldFindOrder() {
+    void shouldFindOrderById() {
 
         UUID uuid = UUID.randomUUID();
 
@@ -83,7 +82,7 @@ public class OrderServicesImplTest {
     }
 
     @Test
-    void shouldNotFindOrder() {
+    void shouldNotFindOrderById() {
 
         UUID uuid = UUID.randomUUID();
 
@@ -93,6 +92,38 @@ public class OrderServicesImplTest {
 
         assertTrue(optional.isEmpty());
     }
+
+    @Test
+    void shouldProcessReturnLinesSuccessfully() {
+        Long productId = 123L;
+        int purchasedQuantity = 10;
+        int quantityToReturn = 5;
+        BigDecimal productPrice = new BigDecimal("10.00");
+
+        OrderLineJPA orderLineJPA = new OrderLineJPA();
+        orderLineJPA.setProduct(productId);
+        orderLineJPA.setQuantity(purchasedQuantity);
+        orderLineJPA.setProductPrice(productPrice);
+        orderLineJPA.setLinePrice(productPrice.multiply(BigDecimal.valueOf(purchasedQuantity)));
+
+        originalOrder.setOrderLines(new ArrayList<>(Collections.singletonList(orderLineJPA)));
+
+        Map<Long, Integer> returnLines = new HashMap<>();
+        returnLines.put(productId, quantityToReturn);
+        ReturnLineDTO returnLineDTO = new ReturnLineDTO(originalOrder.getId(), returnLines);
+
+        when(orderJPARepository.findById(eq(originalOrder.getId()))).thenReturn(Optional.of(originalOrder));
+        when(orderJPARepository.idDateBeforeThirtyDays(eq(originalOrder.getId()), any(LocalDateTime.class))).thenReturn(false);
+
+        BigDecimal result = orderServicesImpl.processReturnLines(returnLineDTO);
+
+        assertNotNull(result);
+        assertEquals(new BigDecimal("-50.00"), result);
+        assertEquals(5, orderLineJPA.getQuantity());
+        assertEquals(5, originalOrder.getReturnedProductQuantity().get(productId));
+        verify(orderJPARepository).save(originalOrder);
+    }
+
 
     @Test
     void findAllOrders() {
