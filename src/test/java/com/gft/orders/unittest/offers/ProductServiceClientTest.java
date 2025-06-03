@@ -10,6 +10,7 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.*;
+import org.springframework.web.client.RestClientException;
 import org.springframework.web.client.RestTemplate;
 
 import java.util.List;
@@ -77,13 +78,31 @@ public class ProductServiceClientTest {
                 any(),
                 any(),
                 any(ParameterizedTypeReference.class)))
-                .thenThrow(new RuntimeException("Connection error"));
+                .thenThrow(new ProductServiceException("Connection error"));
 
         Exception exception = assertThrows(ProductServiceException.class, () -> productServiceClient.getProductsCategories(Set.of(1L)));
 
         assertTrue(exception.getMessage().contains("Connection error"));
+
     }
 
+    @Test
+    void getProductsCategories_WhenRestClientExceptionOccurs_ThrowsException() {
+
+        String errorMessage = "Connection refused: localhost/127.0.0.1:8080";
+
+        when(restTemplate.exchange(
+                anyString(),
+                any(),
+                any(HttpEntity.class),
+                any(ParameterizedTypeReference.class)))
+                .thenThrow(new RestClientException(errorMessage));
+
+        Exception exception = assertThrows(ProductServiceException.class, () -> productServiceClient.getProductsCategories(Set.of(1L)));
+
+        assertTrue(exception.getMessage().contains("Failed to retrieve product categories from external service"));
+        assertTrue(exception.getMessage().contains(errorMessage));
+    }
     @Test
     void getOffersByCategories_success(){
 
@@ -125,5 +144,23 @@ public class ProductServiceClientTest {
         assertThrows(ProductServiceException.class, () -> {
             productServiceClient.getOffersByCategories(Set.of(1L));
         });
+    }
+
+    @Test
+    void getOffersByCategories_WhenRestClientException_ThrowsException() {
+
+        String error = "Read timed out";
+
+        when(restTemplate.exchange(
+                anyString(),
+                any(),
+                any(HttpEntity.class),
+                any(ParameterizedTypeReference.class)))
+                .thenThrow(new RestClientException(error));
+
+        Exception exception = assertThrows(ProductServiceException.class, () -> productServiceClient.getOffersByCategories(Set.of(1L)));
+
+        assertTrue(exception.getMessage().contains("Failed to retrieve offers by categories from external service"));
+        assertTrue(exception.getMessage().contains(error));
     }
 }

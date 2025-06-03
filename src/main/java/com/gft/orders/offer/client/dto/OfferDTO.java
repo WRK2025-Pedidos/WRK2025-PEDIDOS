@@ -13,7 +13,7 @@ public class OfferDTO {
 
     private Long id;
     private String type;
-    private String category;
+    private Long category;
     private Integer quantity;
 
 }

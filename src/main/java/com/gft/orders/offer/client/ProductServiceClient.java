@@ -43,7 +43,7 @@ public class ProductServiceClient {
             return response.getBody();
 
         }catch (RestClientException e){
-            throw new ProductServiceException("Error: "+ e.getMessage());
+            throw new ProductServiceException("Failed to retrieve product categories from external service: " + e.getMessage());
         }
 
     }
@@ -67,7 +67,7 @@ public class ProductServiceClient {
             return response.getBody();
 
         }catch (RestClientException e){
-            throw new ProductServiceException("Error: "+ e.getMessage());
+            throw new ProductServiceException("Failed to retrieve offers by categories from external service: " + e.getMessage());
         }
     }
 }
