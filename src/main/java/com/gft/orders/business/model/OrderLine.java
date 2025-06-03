@@ -3,7 +3,6 @@ package com.gft.orders.business.model;
 import lombok.*;
 
 import java.math.BigDecimal;
-import java.util.UUID;
 
 @Generated
 @Data
