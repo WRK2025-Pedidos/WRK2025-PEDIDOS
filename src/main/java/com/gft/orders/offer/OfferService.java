@@ -5,7 +5,6 @@ import com.gft.orders.offer.client.dto.OfferDto;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
-import java.util.stream.Collectors;
 
 @Service
 public class OfferService {
@@ -15,8 +14,6 @@ public class OfferService {
     public OfferService(ProductServiceClient productServiceClient) {
         this.productServiceClient = productServiceClient;
     }
-
-    public record ProductCategoryResponse(Long productId, Long categoryId) {}
 
     public List<Long> getApplicableOffers(Map<Long, Integer> productQuantities) {
 
@@ -36,9 +33,9 @@ public class OfferService {
         Map<Long, Long> productsCategories = productServiceClient.getProductsCategories(productQuantities.keySet());
 
         Map<Long, Integer> quantityPerCategory = new HashMap<>();
-        productQuantities.forEach((productId, quantitiy) -> {
+        productQuantities.forEach((productId, quantity) -> {
             Long categoryId = productsCategories.get(productId);
-            quantityPerCategory.merge(categoryId, quantitiy, Integer::sum);
+            quantityPerCategory.merge(categoryId, quantity, Integer::sum);
         });
 
         offersByCategory.forEach((categoryId, offers) -> {
@@ -54,7 +51,6 @@ public class OfferService {
 
         return applicableOffers;
     }
-
 
     private boolean isOfferApplicable(OfferDto offer, int totalQuantityInCategory) {
 
