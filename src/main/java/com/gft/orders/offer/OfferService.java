@@ -1,7 +1,7 @@
 package com.gft.orders.offer;
 
 import com.gft.orders.offer.client.ProductServiceClient;
-import com.gft.orders.offer.client.dto.OfferDto;
+import com.gft.orders.offer.client.dto.OfferDTO;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
@@ -21,12 +21,12 @@ public class OfferService {
 
         Set<Long> uniqueCategories = new HashSet<>(productsCategories.values());
 
-        Map<Long, List<OfferDto>> offersByCategory = productServiceClient.getOffersByCategories(uniqueCategories);
+        Map<Long, List<OfferDTO>> offersByCategory = productServiceClient.getOffersByCategories(uniqueCategories);
 
         return filterOffers(productQuantities, offersByCategory);
     }
 
-    private List<Long> filterOffers(Map<Long, Integer> productQuantities, Map<Long, List<OfferDto>> offersByCategory) {
+    private List<Long> filterOffers(Map<Long, Integer> productQuantities, Map<Long, List<OfferDTO>> offersByCategory) {
 
         List<Long> applicableOffers = new ArrayList<>();
 
@@ -52,7 +52,7 @@ public class OfferService {
         return applicableOffers;
     }
 
-    private boolean isOfferApplicable(OfferDto offer, int totalQuantityInCategory) {
+    private boolean isOfferApplicable(OfferDTO offer, int totalQuantityInCategory) {
 
         return switch (offer.getType().toUpperCase()) {
             case "SEASON" -> true;

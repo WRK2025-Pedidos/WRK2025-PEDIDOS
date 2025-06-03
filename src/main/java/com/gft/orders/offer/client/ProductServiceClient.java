@@ -1,6 +1,6 @@
 package com.gft.orders.offer.client;
 
-import com.gft.orders.offer.client.dto.OfferDto;
+import com.gft.orders.offer.client.dto.OfferDTO;
 import com.gft.orders.offer.client.exception.ProductServiceException;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpEntity;
@@ -19,7 +19,7 @@ import java.util.Set;
 public class ProductServiceClient {
 
     private final RestTemplate restTemplate;
-    private final String productServiceUrl = "http://urlProductos"; //TODO actualizar cuando producto la tenga disponible
+    private final String productServiceUrl = "http://productsUrl"; //TODO actualizar cuando producto la tenga disponible
 
     public ProductServiceClient(RestTemplate restTemplate) {
         this.restTemplate = restTemplate;
@@ -48,16 +48,16 @@ public class ProductServiceClient {
 
     }
 
-    public Map<Long, List<OfferDto>> getOffersByCategories(Set<Long> familyIds) {
+    public Map<Long, List<OfferDTO>> getOffersByCategories(Set<Long> familyIds) {
 
         try{
             String url = productServiceUrl + "/offersByCategories"; // TODO actualizar cuando productos tenga el endpoint disponible
 
-            ResponseEntity<Map<Long, List<OfferDto>>> response = restTemplate.exchange(
+            ResponseEntity<Map<Long, List<OfferDTO>>> response = restTemplate.exchange(
                     url,
                     HttpMethod.POST,
                     new HttpEntity<>(familyIds),
-                    new ParameterizedTypeReference<Map<Long, List<OfferDto>>>() {}
+                    new ParameterizedTypeReference<Map<Long, List<OfferDTO>>>() {}
             );
 
             if(response.getStatusCode() != HttpStatus.OK || response.getBody() == null) {
