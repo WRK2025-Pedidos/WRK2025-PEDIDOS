@@ -15,6 +15,10 @@ public class OfferController {
 
     private final OfferService offerService;
 
+    public OfferController(OfferService offerService) {
+        this.offerService = offerService;
+    }
+
     @GetMapping
     public ResponseEntity<List<Long>> getApplicableOffers(@RequestParam Map<Long, Integer> productQuantities) {
 
