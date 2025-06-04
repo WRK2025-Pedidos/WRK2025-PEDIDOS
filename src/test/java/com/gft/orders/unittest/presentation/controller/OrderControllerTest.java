@@ -31,6 +31,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 
 @WebMvcTest(value = OrderController.class)
+@Import(ExceptionsGeneralHandler.class)
 class OrderControllerTest extends AbstractControllerTest {
     @MockitoBean
     private OrderServices orderServices;

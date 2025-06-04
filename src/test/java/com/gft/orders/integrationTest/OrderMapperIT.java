@@ -88,13 +88,7 @@ public class OrderMapperIT {
         order.setCountryTax(21.0);
         order.setPaymentMethod(2.0);
 
-        line1 = OrderLine.builder()
-                .product(3L)
-                .quantity(3)
-                .lineWeight(2.0)
-                .productPrice(BigDecimal.valueOf(50.25))
-                .linePrice(BigDecimal.valueOf(150.75))
-                .build();
+        line1 = new OrderLine(3L, 3, 2.0, BigDecimal.valueOf(50.25), BigDecimal.valueOf(150.75));
 
         order.setOrderLines(List.of(line1));
     }

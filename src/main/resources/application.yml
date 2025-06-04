@@ -27,4 +27,4 @@ spring:
 external:
   api:
     base:
-      url: https:https://workshop-7uvd.onrender.com/api/v1
+      url: https://workshop-7uvd.onrender.com/api/v1
