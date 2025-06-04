@@ -8,7 +8,6 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.amqp.core.DirectExchange;
-import org.springframework.amqp.core.TopicExchange;
 import org.springframework.amqp.rabbit.connection.ConnectionFactory;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.amqp.support.converter.Jackson2JsonMessageConverter;
@@ -61,7 +60,6 @@ public class RabbitConfigTest {
     @Test
     void rabbitTemplate_shouldUseJsonMessageConverterWhenCreated() {
         MessageConverter converter = rabbitConfig.jsonMessageConverter(objectMapper);
-
         RabbitTemplate template = rabbitConfig.rabbitTemplate(connectionFactory, converter);
 
         assertNotNull(template);
