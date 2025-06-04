@@ -18,7 +18,6 @@ spring:
       mode: always
       schema-locations: classpath:/db/schema.sql
       data-locations: classpath:/db/data.sql
-
   rabbitmq:
     host: localhost
     port: 5672
