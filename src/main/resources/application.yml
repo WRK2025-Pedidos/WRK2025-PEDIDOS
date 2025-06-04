@@ -2,9 +2,9 @@ spring:
   application:
     name: orders
   datasource:
-    url: jdbc:postgresql://localhost:5432/springdb
-    username: springuser
-    password: springpass
+    url: jdbc:postgresql://amazondb.crdhamcx3fst.us-east-1.rds.amazonaws.com/AmazonDB
+    username: amazon
+    password: amazon1234
     driver-class-name: org.postgresql.Driver
   jpa:
     hibernate:
