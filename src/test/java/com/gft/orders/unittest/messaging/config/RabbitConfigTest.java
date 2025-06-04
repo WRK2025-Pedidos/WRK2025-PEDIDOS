@@ -60,7 +60,6 @@ public class RabbitConfigTest {
     @Test
     void rabbitTemplate_shouldUseJsonMessageConverterWhenCreated() {
         MessageConverter converter = rabbitConfig.jsonMessageConverter(objectMapper);
-
         RabbitTemplate template = rabbitConfig.rabbitTemplate(connectionFactory, converter);
 
         assertNotNull(template);
