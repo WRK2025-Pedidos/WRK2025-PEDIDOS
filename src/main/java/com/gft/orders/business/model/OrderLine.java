@@ -12,7 +12,10 @@ import java.math.BigDecimal;
 public class OrderLine {
 
     private Long product;
-    private int quantity;
+
+    @Builder.Default
+    private int quantity = 0;
+
     private Double lineWeight;
     private BigDecimal productPrice;
     private BigDecimal linePrice;
