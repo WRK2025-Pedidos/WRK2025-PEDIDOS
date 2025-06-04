@@ -15,8 +15,8 @@ public class RabbitConfig {
     public static final String EXCHANGE_PRODUCT = "orders";
 
     @Bean
-    public TopicExchange productExchange() {
-        return new TopicExchange(EXCHANGE_PRODUCT);
+    public DirectExchange productExchange() {
+        return new DirectExchange(EXCHANGE_PRODUCT);
     }
 
     @Bean
@@ -25,7 +25,7 @@ public class RabbitConfig {
     }
 
     @Bean
-    public Binding bindingStockLowQueue(Queue stockLowQueue, TopicExchange productExchange) {
+    public Binding bindingStockLowQueue(Queue stockLowQueue, DirectExchange productExchange) {
         return BindingBuilder.bind(stockLowQueue).to(productExchange).with("stock.low");
     }
 
@@ -40,5 +40,4 @@ public class RabbitConfig {
         template.setMessageConverter(messageConverter);
         return template;
     }
-
 }

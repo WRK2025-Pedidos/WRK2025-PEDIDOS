@@ -7,7 +7,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
-import org.springframework.amqp.core.TopicExchange;
+import org.springframework.amqp.core.DirectExchange;
 import org.springframework.amqp.rabbit.connection.ConnectionFactory;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.amqp.support.converter.Jackson2JsonMessageConverter;
@@ -30,7 +30,7 @@ public class RabbitConfigTest {
 
     @Test
     void productExchange_shouldReturnTopicExchangeWithCorrectName() {
-        TopicExchange exchange = rabbitConfig.productExchange();
+        DirectExchange exchange = rabbitConfig.productExchange();
 
         assertNotNull(exchange);
         assertEquals(RabbitConfig.EXCHANGE_PRODUCT, exchange.getName());
