@@ -139,7 +139,7 @@ public class ProductServiceClientTest {
                 any(),
                 any(),
                 any(ParameterizedTypeReference.class)))
-                .thenReturn(new ResponseEntity<>(null, HttpStatus.OK));
+                .thenReturn(new ResponseEntity<>(null, HttpStatus.NOT_FOUND));
 
         assertThrows(ProductServiceException.class, () -> {
             productServiceClient.getOffersByCategories(Set.of(1L));

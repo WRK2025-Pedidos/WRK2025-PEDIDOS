@@ -36,7 +36,7 @@ public class ProductServiceClient {
                     new ParameterizedTypeReference<Map<Long, Long>>() {}
             );
 
-            if (response.getStatusCode() != HttpStatus.OK || response.getBody() == null) {
+            if (response.getStatusCode() != HttpStatus.OK ) {
                 throw new ProductServiceException("Invalid response of Product Service");
             }
 
@@ -60,7 +60,7 @@ public class ProductServiceClient {
                     new ParameterizedTypeReference<Map<Long, List<OfferDTO>>>() {}
             );
 
-            if(response.getStatusCode() != HttpStatus.OK || response.getBody() == null) {
+            if(response.getStatusCode() != HttpStatus.OK) {
                 throw new ProductServiceException("Invalid response of Product Service");
             }
 
