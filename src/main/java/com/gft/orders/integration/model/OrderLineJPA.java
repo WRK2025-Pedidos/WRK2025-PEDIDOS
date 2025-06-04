@@ -31,4 +31,6 @@ public class OrderLineJPA {
     private Double lineWeight;
     private BigDecimal productPrice;
     private BigDecimal linePrice;
+
+    private int returnedQuantity = 0;
 }

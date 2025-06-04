@@ -1,6 +1,7 @@
 package com.gft.orders.presentation.config;
 
 import com.gft.orders.business.config.exceptions.BusinessExceptions;
+import com.gft.orders.business.config.exceptions.InvalidReturnQuantityException;
 import com.gft.orders.business.config.exceptions.OrderNotFoundException;
 import com.gft.orders.business.config.exceptions.ReturnPeriodExceededException;
 import org.slf4j.Logger;
@@ -32,6 +33,14 @@ public class ExceptionsGeneralHandler extends ResponseEntityExceptionHandler {
         logger.error("Business error: {}", ex.getMessage(), ex);
 
         return ResponseEntity.internalServerError().body(new ErrorResponse(ex.getMessage()));
+    }
+
+    @ExceptionHandler(InvalidReturnQuantityException.class)
+    public ResponseEntity<Object> handleInvalidReturnQuantity(InvalidReturnQuantityException ex) {
+
+        logger.warn("Invalid return quantity: {}", ex.getMessage());
+
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ErrorResponse(ex.getMessage()));
     }
 
     @ExceptionHandler(NoSuchFieldException.class)

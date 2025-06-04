@@ -19,7 +19,13 @@ spring:
       schema-locations: classpath:/db/schema.sql
       data-locations: classpath:/db/data.sql
 
+  rabbitmq:
+    host: 91.126.226.193
+    port: 27033
+    username: admin
+    password: admin
+
 external:
   api:
     base:
-      url: https:https://workshop-7uvd.onrender.com/api/v1
+      url: https://workshop-7uvd.onrender.com/api/v1

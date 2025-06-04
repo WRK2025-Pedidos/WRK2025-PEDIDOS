@@ -34,6 +34,7 @@ class OrderTest {
         assertNull(orderConstructor.getPaymentMethod());
         assertNull(orderConstructor.getCreationDate());
         assertNull(orderConstructor.getOrderLines());
+        assertNull(orderConstructor.getOrderReturn());
     }
 
     @Test
@@ -127,6 +128,12 @@ class OrderTest {
         order.setOrderReturn(true);
 
         assertTrue(order.getOrderReturn());
+    }
+
+    @Test
+    void returnedProductQuantity_Test() {
+        order.getReturnedProductQuantity().put(1L, 10);
+        assertEquals(10, order.getReturnedProductQuantity().get(1L).intValue());
     }
 
     /***********PRIVATE METHODS***********/

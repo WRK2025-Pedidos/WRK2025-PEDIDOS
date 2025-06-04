@@ -1,8 +1,6 @@
 package com.gft.orders.business.model;
 
 import lombok.*;
-import org.dozer.Mapping;
-import org.dozer.classmap.RelationshipType;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
@@ -24,7 +22,9 @@ public class Order {
     private Double paymentMethod;
 
     private List<OrderLine> orderLines;
+    private List<OrderOffer> orderOffers;
 
     private Boolean orderReturn;
 
+    private Map<Long, Integer> returnedProductQuantity = new HashMap<>();
 }

@@ -1,4 +1,4 @@
-package com.gft.orders.integrationTest.repository;
+package com.gft.orders.integrationtest.repository;
 
 import com.gft.orders.integration.model.OrderJPA;
 import com.gft.orders.integration.repositories.OrderJPARepository;
@@ -21,10 +21,10 @@ public class OrderJPARepositoryIT {
     @Autowired
     OrderJPARepository repository;
 
+    private final UUID id = UUID.fromString("11111111-1111-1111-1111-111111111111");
+
     @Test
     void findOrderByIdTest(){
-
-        UUID id = UUID.fromString("11111111-1111-1111-1111-111111111111");
 
         Optional<OrderJPA> order = repository.findById(id);
 
@@ -36,7 +36,6 @@ public class OrderJPARepositoryIT {
     @Test
     void idDateBeforeThirtyDaysTest(){
 
-        UUID id = UUID.fromString("11111111-1111-1111-1111-111111111111");
 
         Boolean response = repository.idDateBeforeThirtyDays(id, LocalDateTime.now());
 
