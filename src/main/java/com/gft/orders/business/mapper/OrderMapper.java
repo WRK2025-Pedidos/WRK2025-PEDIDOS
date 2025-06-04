@@ -65,13 +65,13 @@ public class OrderMapper {
 
     public OrderLine toOrderLineModel(OrderLineJPA orderLineJPA) {
 
-        return new OrderLine(
-                orderLineJPA.getProduct(),
-                orderLineJPA.getQuantity(),
-                orderLineJPA.getLineWeight(),
-                orderLineJPA.getProductPrice(),
-                orderLineJPA.getLinePrice()
-        );
+        return OrderLine.builder()
+                .product(orderLineJPA.getProduct())
+                .quantity(orderLineJPA.getQuantity())
+                .lineWeight(orderLineJPA.getLineWeight())
+                .productPrice(orderLineJPA.getProductPrice())
+                .linePrice(orderLineJPA.getLinePrice())
+                .build();
 
     }
 

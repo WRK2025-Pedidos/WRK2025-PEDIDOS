@@ -6,6 +6,7 @@ import java.math.BigDecimal;
 
 @Generated
 @Data
+@Builder
 @NoArgsConstructor
 @AllArgsConstructor
 public class OrderLine {
