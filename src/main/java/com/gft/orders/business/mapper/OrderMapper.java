@@ -72,6 +72,7 @@ public class OrderMapper {
                 .productPrice(orderLineJPA.getProductPrice())
                 .linePrice(orderLineJPA.getLinePrice())
                 .build();
+
     }
 
     public OrderLineJPA toOrderLineJPA(OrderLine orderLine) {
