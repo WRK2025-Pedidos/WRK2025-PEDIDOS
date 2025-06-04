@@ -18,11 +18,12 @@ spring:
       mode: always
       schema-locations: classpath:/db/schema.sql
       data-locations: classpath:/db/data.sql
+
   rabbitmq:
-    host: localhost
-    port: 5672
-    username: guest
-    password: guest
+    host: 91.126.226.193
+    port: 27033
+    username: admin
+    password: admin
 
 external:
   api:
