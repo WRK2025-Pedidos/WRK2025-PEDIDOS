@@ -1,5 +1,6 @@
 package com.gft.orders.business.service;
 
+import com.gft.orders.business.model.DTO.ReturnLineDTO;
 import com.gft.orders.business.model.Order;
 
 import java.math.BigDecimal;
@@ -16,4 +17,6 @@ public interface OrderServices {
     List<Order> findAllOrders();
 
     BigDecimal createOrderReturn(UUID orderId);
+
+    BigDecimal processReturnLines(ReturnLineDTO returnLineDTO);
 }

@@ -14,9 +14,9 @@ public class ReturnLineDTOTest {
     void createReturnLineDTOTest() {
 
         UUID orderId = UUID.randomUUID();
-        UUID productId = UUID.randomUUID();
+        Long productId = 123L;
 
-        Map<UUID, Integer> returnLines = Map.of(productId, 5);
+        Map<Long, Integer> returnLines = Map.of(productId, 5);
 
         ReturnLineDTO dto = new ReturnLineDTO(orderId, returnLines);
 

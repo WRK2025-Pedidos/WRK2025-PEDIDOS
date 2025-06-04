@@ -4,5 +4,5 @@ import java.util.Map;
 import java.util.UUID;
 
 public record ReturnLineDTO(UUID original_order,
-                            Map<UUID, Integer> returnLines) {
+                            Map<Long, Integer> returnLines) {
 }
