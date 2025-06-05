@@ -1,4 +1,4 @@
-package com.gft.orders.integrationtest.Controller;
+package com.gft.orders.integrationTest.Controller;
 
 import com.gft.orders.business.config.exceptions.InvalidReturnQuantityException;
 import com.gft.orders.business.model.Order;

@@ -1,4 +1,4 @@
-package com.gft.orders.integrationtest.repository;
+package com.gft.orders.integrationTest.repository;
 
 import com.gft.orders.integration.model.OrderJPA;
 import com.gft.orders.integration.repositories.OrderJPARepository;

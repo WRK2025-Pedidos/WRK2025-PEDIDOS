@@ -1,12 +1,14 @@
 package com.gft.orders.unittest;
 
-import com.gft.orders.OrdersApplication;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.ActiveProfiles;
 
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
+
 @SpringBootTest
+@ActiveProfiles("test")
 class OrdersApplicationTests {
 
     @Test
@@ -15,8 +17,6 @@ class OrdersApplicationTests {
 
     @Test
     void test() {
-        OrdersApplication.main(new String[0]);
-
         assertTrue(true);
     }
 

@@ -1,4 +1,4 @@
-package com.gft.orders.integrationtest.Controller;
+package com.gft.orders.integrationTest.Controller;
 
 import static org.assertj.core.api.Assertions.assertThat;
 

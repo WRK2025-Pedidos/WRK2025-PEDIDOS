@@ -24,7 +24,7 @@ public class OrderIT {
 
         Order order = Instancio.of(Order.class)
                 .set(Select.field("id"), UUID.randomUUID())
-                .set(Select.field("cartId"), UUID.randomUUID())
+                .set(Select.field("userId"), UUID.randomUUID())
                 .set(Select.field("creationDate"), LocalDateTime.now())
                 .set(Select.field("orderLines"), orderLines)
                 .set(Select.field("totalPrice"), expectedTotal)

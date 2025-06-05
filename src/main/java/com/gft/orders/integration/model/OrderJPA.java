@@ -1,6 +1,5 @@
 package com.gft.orders.integration.model;
 
-import com.gft.orders.business.model.OrderOffer;
 import jakarta.persistence.*;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -25,7 +24,7 @@ public class OrderJPA {
     @Id
     private UUID id;
 
-    private UUID cartId;
+    private UUID userId;
     private BigDecimal totalPrice;
     private Double countryTax;
     private Double paymentMethod;
