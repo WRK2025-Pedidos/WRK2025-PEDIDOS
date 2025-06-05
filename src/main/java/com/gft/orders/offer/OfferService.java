@@ -2,11 +2,13 @@ package com.gft.orders.offer;
 
 import com.gft.orders.offer.client.ProductServiceClient;
 import com.gft.orders.offer.client.dto.OfferDTO;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
 
 @Service
+@Slf4j
 public class OfferService {
 
     private final ProductServiceClient productServiceClient;
@@ -16,6 +18,9 @@ public class OfferService {
     }
 
     public List<Long> getApplicableOffers(Map<Long, Integer> productQuantities) {
+
+        log.info("Iniciando lógica de negocio para obtener ofertas aplicables.");
+        log.debug("Cantidades de productos recibidas en OfferService: {}", productQuantities);
 
         Map<Long, String> productsCategories = productServiceClient.getProductsCategories(productQuantities.keySet());
 

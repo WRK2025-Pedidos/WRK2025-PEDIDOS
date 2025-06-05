@@ -4,6 +4,7 @@ import com.gft.orders.offer.client.dto.CategoriesRequest;
 import com.gft.orders.offer.client.dto.OfferDTO;
 import com.gft.orders.offer.client.dto.ProductDTO;
 import com.gft.orders.offer.client.exception.ProductServiceException;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpMethod;
@@ -19,6 +20,7 @@ import java.util.Map;
 import java.util.Set;
 
 @Component
+@Slf4j
 public class ProductServiceClient {
 
     private final RestTemplate restTemplate;
@@ -29,6 +31,8 @@ public class ProductServiceClient {
     }
 
     public Map<Long, String> getProductsCategories(Set<Long> productIds) {
+        log.info("ProductServiceClient: Iniciando llamada a la API externa de productos para obtener categorias.");
+
         try{
             String url = productServiceUrl + "/products/list-by-ids";
 
@@ -62,6 +66,8 @@ public class ProductServiceClient {
     }
 
     public Map<String, List<OfferDTO>> getOffersByCategories(Set<String> families) {
+
+        log.info("ProductServiceClient: Iniciando llamada a la API externa de promociones.");
 
         try{
             String url = productServiceUrl + "/promotions/get-by-category";
