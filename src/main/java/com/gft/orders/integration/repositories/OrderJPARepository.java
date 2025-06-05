@@ -13,7 +13,7 @@ public interface OrderJPARepository extends JpaRepository<OrderJPA, UUID> {
             SELECT CASE WHEN COUNT(o) > 0 THEN true ELSE false END
             FROM OrderJPA o
             WHERE o.id = :orderId
-            AND o.creationDate < :dateLimit
+            AND o.creationDate > :dateLimit
            """)
     boolean idDateBeforeThirtyDays(UUID orderId, LocalDateTime dateLimit);
 }
