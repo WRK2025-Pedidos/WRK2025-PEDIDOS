@@ -22,11 +22,6 @@ public class OfferController {
     }
 
     @GetMapping
-<<<<<<< Updated upstream
-    public ResponseEntity<List<Long>> getApplicableOffers(@RequestParam Map<Long, Integer> productQuantities) {
-
-        List<Long> offerIds = offerService.getApplicableOffers(productQuantities);
-=======
     public ResponseEntity<List<Long>> getApplicableOffers(@RequestParam("productQuantitiesJson") String productQuantitiesJson) throws JsonProcessingException {
 
         Map<String, Integer> stringKeyQuantities;
@@ -42,7 +37,6 @@ public class OfferController {
         }
 
         List<Long> offerIds = offerService.getApplicableOffers(actualProductQuantities);
->>>>>>> Stashed changes
 
         return ResponseEntity.ok(offerIds);
     }
