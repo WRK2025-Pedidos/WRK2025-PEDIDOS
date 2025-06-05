@@ -22,8 +22,8 @@ spring:
   rabbitmq:
     host: 91.126.226.193
     port: 27033
-    username: admin
-    password: admin
+   # username: admin
+   # password: admin
 
 external:
   api:
