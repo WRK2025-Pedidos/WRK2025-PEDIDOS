@@ -1,7 +1,6 @@
 package com.gft.orders.unittest.offers;
 
 import com.gft.orders.offer.client.ProductServiceClient;
-import com.gft.orders.offer.client.dto.CategoriesRequest;
 import com.gft.orders.offer.client.dto.OfferDTO;
 import com.gft.orders.offer.client.dto.ProductDTO;
 import com.gft.orders.offer.client.exception.ProductServiceException;
