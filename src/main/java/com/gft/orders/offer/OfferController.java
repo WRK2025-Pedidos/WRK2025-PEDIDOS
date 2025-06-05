@@ -3,6 +3,7 @@ package com.gft.orders.offer;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -17,9 +18,15 @@ public class OfferController {
     }
 
     @GetMapping
-    public ResponseEntity<List<Long>> getApplicableOffers(@RequestParam Map<Long, Integer> productQuantities) {
+    public ResponseEntity<List<Long>> getApplicableOffers(@RequestParam Map<String, Integer> productQuantities) {
 
-        List<Long> offerIds = offerService.getApplicableOffers(productQuantities);
+        Map<Long, Integer> productQuantitiesMap = new HashMap<>();
+
+        for (Map.Entry<String, Integer> entry : productQuantities.entrySet()) {
+                productQuantitiesMap.put(Long.parseLong(entry.getKey()), entry.getValue());
+        }
+
+        List<Long> offerIds = offerService.getApplicableOffers(productQuantitiesMap);
 
         return ResponseEntity.ok(offerIds);
     }
