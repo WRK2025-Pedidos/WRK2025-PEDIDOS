@@ -1,5 +1,6 @@
 package com.gft.orders.offer.client;
 
+import com.gft.orders.offer.client.dto.CategoriesRequest;
 import com.gft.orders.offer.client.dto.OfferDTO;
 import com.gft.orders.offer.client.dto.ProductDTO;
 import com.gft.orders.offer.client.exception.ProductServiceException;
@@ -68,7 +69,7 @@ public class ProductServiceClient {
             ResponseEntity<Map<String, List<OfferDTO>>> response = restTemplate.exchange(
                     url,
                     HttpMethod.POST,
-                    new HttpEntity<>(families),
+                    new HttpEntity<>(new CategoriesRequest(families)),
                     new ParameterizedTypeReference<Map<String, List<OfferDTO>>>() {}
             );
 
