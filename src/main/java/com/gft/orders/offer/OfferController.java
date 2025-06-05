@@ -22,6 +22,5 @@ public class OfferController {
         List<Long> offerIds = offerService.getApplicableOffers(productQuantities);
 
         return ResponseEntity.ok(offerIds);
-
     }
 }
