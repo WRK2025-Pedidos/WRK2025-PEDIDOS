@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
 @Service
+@Generated
 public class ExternalApiServiceImpl implements ExternalApiService {
 
     private final RestTemplate restTemplate;
@@ -17,7 +18,6 @@ public class ExternalApiServiceImpl implements ExternalApiService {
         this.externalApiBaseUrl = externalApiBaseUrl;
     }
 
-    @Generated
     @Override
     public String getDataFromExternalApi() {
         return "Calling external API from: " + externalApiBaseUrl;

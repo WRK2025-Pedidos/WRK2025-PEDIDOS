@@ -1,4 +1,4 @@
-package com.gft.orders.integrationtest.repository;
+package com.gft.orders.integrationTest.repository;
 
 import com.gft.orders.integration.model.OrderJPA;
 import com.gft.orders.integration.repositories.OrderJPARepository;
@@ -34,12 +34,26 @@ public class OrderJPARepositoryIT {
     }
 
     @Test
-    void idDateBeforeThirtyDaysTest(){
+    void idDateBeforeThirtyDaysTest_success(){
 
+
+        Boolean response = repository.idDateBeforeThirtyDays(id, LocalDateTime.now().minusDays(30));
+
+        assertEquals(Boolean.TRUE, response);
+
+    }
+
+    @Test
+    void idDateBeforeThirtyDaysTest_fail(){
+
+        Optional<OrderJPA> order = repository.findById(id);
+        order.get().setCreationDate(LocalDateTime.now().minusDays(40));
+
+        repository.save(order.get());
 
         Boolean response = repository.idDateBeforeThirtyDays(id, LocalDateTime.now());
 
-        assertEquals(Boolean.TRUE, response);
+        assertEquals(Boolean.FALSE, response);
 
     }
 }

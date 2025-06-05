@@ -2,7 +2,6 @@ package com.gft.orders.unittest.integration.repository;
 
 import com.gft.orders.integration.model.OrderJPA;
 import com.gft.orders.integration.model.OrderLineJPA;
-import com.gft.orders.integration.model.OrderOfferJPA;
 import com.gft.orders.integration.repositories.OrderJPARepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -66,7 +65,7 @@ public class OrderJPARepositoryTest {
     private OrderJPA createTestOrder() {
         OrderJPA order = new OrderJPA();
         order.setId(UUID.randomUUID());
-        order.setCartId(UUID.randomUUID());
+        order.setUserId(UUID.randomUUID());
 
         OrderLineJPA line = new OrderLineJPA();
         line.setProduct(5L);

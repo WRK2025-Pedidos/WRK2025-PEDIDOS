@@ -17,24 +17,24 @@ public class OfferService {
 
     public List<Long> getApplicableOffers(Map<Long, Integer> productQuantities) {
 
-        Map<Long, Long> productsCategories = productServiceClient.getProductsCategories(productQuantities.keySet());
+        Map<Long, String> productsCategories = productServiceClient.getProductsCategories(productQuantities.keySet());
 
-        Set<Long> uniqueCategories = new HashSet<>(productsCategories.values());
+        Set<String> uniqueCategories = new HashSet<>(productsCategories.values());
 
-        Map<Long, List<OfferDTO>> offersByCategory = productServiceClient.getOffersByCategories(uniqueCategories);
+        Map<String, List<OfferDTO>> offersByCategory = productServiceClient.getOffersByCategories(uniqueCategories);
 
         return filterOffers(productQuantities, offersByCategory);
     }
 
-    private List<Long> filterOffers(Map<Long, Integer> productQuantities, Map<Long, List<OfferDTO>> offersByCategory) {
+    private List<Long> filterOffers(Map<Long, Integer> productQuantities, Map<String, List<OfferDTO>> offersByCategory) {
 
         List<Long> applicableOffers = new ArrayList<>();
 
-        Map<Long, Long> productsCategories = productServiceClient.getProductsCategories(productQuantities.keySet());
+        Map<Long, String> productsCategories = productServiceClient.getProductsCategories(productQuantities.keySet());
 
-        Map<Long, Integer> quantityPerCategory = new HashMap<>();
+        Map<String, Integer> quantityPerCategory = new HashMap<>();
         productQuantities.forEach((productId, quantity) -> {
-            Long categoryId = productsCategories.get(productId);
+            String categoryId = productsCategories.get(productId);
             quantityPerCategory.merge(categoryId, quantity, Integer::sum);
         });
 

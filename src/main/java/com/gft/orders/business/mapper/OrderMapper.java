@@ -18,7 +18,7 @@ public class OrderMapper {
 
         Order order = new Order();
         order.setId(orderJPA.getId());
-        order.setCartId(orderJPA.getCartId());
+        order.setUserId(orderJPA.getUserId());
         order.setCreationDate(orderJPA.getCreationDate());
         order.setTotalPrice(orderJPA.getTotalPrice());
         order.setCountryTax(orderJPA.getCountryTax());
@@ -38,7 +38,7 @@ public class OrderMapper {
 
         OrderJPA orderJPA = new OrderJPA();
         orderJPA.setId(order.getId());
-        orderJPA.setCartId(order.getCartId());
+        orderJPA.setUserId(order.getUserId());
         orderJPA.setCreationDate(order.getCreationDate());
         orderJPA.setTotalPrice(order.getTotalPrice());
         orderJPA.setCountryTax(order.getCountryTax());

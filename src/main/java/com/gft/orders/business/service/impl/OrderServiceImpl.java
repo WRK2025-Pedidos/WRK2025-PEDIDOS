@@ -61,7 +61,7 @@ public class OrderServiceImpl implements OrderServices {
             throw new InvalidOrderStatusTransitionException("A returned order cannot be reactivated.");
         }
 
-        if(orderJPARepository.idDateBeforeThirtyDays(orderId, LocalDateTime.now())) {
+        if(orderJPARepository.idDateBeforeThirtyDays(orderId, LocalDateTime.now().minusDays(30))) {
             throw new ReturnPeriodExceededException("Return period exceeded");
         }
 

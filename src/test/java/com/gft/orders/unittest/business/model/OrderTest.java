@@ -28,7 +28,7 @@ class OrderTest {
         Order orderConstructor = new Order();
 
         assertNull(orderConstructor.getId());
-        assertNull(orderConstructor.getCartId());
+        assertNull(orderConstructor.getUserId());
         assertNull(orderConstructor.getTotalPrice());
         assertNull(orderConstructor.getCountryTax());
         assertNull(orderConstructor.getPaymentMethod());
@@ -52,9 +52,9 @@ class OrderTest {
 
         UUID cartId = UUID.randomUUID();
 
-        order.setCartId(cartId);
+        order.setUserId(cartId);
 
-        assertEquals(cartId, order.getCartId());
+        assertEquals(cartId, order.getUserId());
     }
 
     @Test
@@ -113,11 +113,11 @@ class OrderTest {
         UUID cartId = UUID.randomUUID();
 
         order.setId(id);
-        order.setCartId(cartId);
+        order.setUserId(cartId);
 
         Order order2 = new Order();
         order2.setId(id);
-        order2.setCartId(cartId);
+        order2.setUserId(cartId);
 
         assertEquals(order, order2);
     }
