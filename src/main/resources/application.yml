@@ -20,12 +20,15 @@ spring:
       data-locations: classpath:/db/data.sql
 
   rabbitmq:
-    host: 91.126.226.193
-    port: 27033
-   # username: admin
-   # password: admin
-  autoconfigure:
-    exclude: org.springframework.boot.autoconfigure.amqp.RabbitAutoConfiguration
+#    host: 91.126.226.193
+#    port: 27033
+#    username: admin
+#    password: admin
+
+     host: localhost
+     port: 5672
+     username: guest
+     password: guest
 
 external:
   api:
