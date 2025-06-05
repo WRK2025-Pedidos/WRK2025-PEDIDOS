@@ -1,10 +1,12 @@
 package com.gft.orders.presentation.controllers;
 
+import com.gft.orders.business.model.DTO.ReturnLineDTO;
 import com.gft.orders.business.service.OrderServices;
 import com.gft.orders.business.model.Order;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.math.BigDecimal;
@@ -58,4 +60,20 @@ public class OrderController {
         return orderServices.createOrderReturn(id);
     }
 
+    @PostMapping("/{orderId}/return")
+    public ResponseEntity<Object> processReturnLines(@PathVariable UUID orderId, @RequestBody ReturnLineDTO returnLineDTO) {
+
+        if (!returnLineDTO.original_order().equals(orderId)) {
+            return new ResponseEntity<>("El ID del pedido no coincide", HttpStatus.BAD_REQUEST);
+        }
+
+        try {
+            BigDecimal returnAmount = orderServices.processReturnLines(returnLineDTO);
+
+            return ResponseEntity.ok(returnAmount);
+
+        } catch (Exception e) {
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
+        }
+    }
 }
