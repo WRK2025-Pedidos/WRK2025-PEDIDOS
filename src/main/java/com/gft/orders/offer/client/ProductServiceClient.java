@@ -1,6 +1,7 @@
 package com.gft.orders.offer.client;
 
 import com.gft.orders.offer.client.dto.OfferDTO;
+import com.gft.orders.offer.client.dto.ProductDTO;
 import com.gft.orders.offer.client.exception.ProductServiceException;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpEntity;
@@ -11,6 +12,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestClientException;
 import org.springframework.web.client.RestTemplate;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -19,28 +21,38 @@ import java.util.Set;
 public class ProductServiceClient {
 
     private final RestTemplate restTemplate;
-    private final String productServiceUrl = "http://productsUrl"; //TODO actualizar cuando producto la tenga disponible
+    private final String productServiceUrl = "https://workshop-7uvd.onrender.com/api/v1";
 
     public ProductServiceClient(RestTemplate restTemplate) {
         this.restTemplate = restTemplate;
     }
 
-    public Map<Long, Long> getProductsCategories(Set<Long> productIds) {
+    public Map<Long, String> getProductsCategories(Set<Long> productIds) {
         try{
-            String url = productServiceUrl + "/productsCategories"; // TODO actualizar cuando productos tenga el endpoint disponible
+            String url = productServiceUrl + "/products/list-by-ids";
 
-            ResponseEntity<Map<Long, Long>> response =  restTemplate.exchange(
+            Map<Long, String> productsCategories = new HashMap<>();
+
+            ResponseEntity<List<ProductDTO>> response =  restTemplate.exchange(
                     url,
                     HttpMethod.POST,
                     new HttpEntity<>(productIds),
-                    new ParameterizedTypeReference<Map<Long, Long>>() {}
+                    new ParameterizedTypeReference<List<ProductDTO>>() {}
             );
 
             if (response.getStatusCode() != HttpStatus.OK ) {
                 throw new ProductServiceException("Invalid response of Product Service");
             }
 
-            return response.getBody();
+            if (response.getBody() == null) {
+                return new HashMap<>();
+            }
+
+            for (ProductDTO productDTO : response.getBody()) {
+                productsCategories.put(productDTO.id(), productDTO.category());
+            }
+
+            return productsCategories;
 
         }catch (RestClientException e){
             throw new ProductServiceException("Failed to retrieve product categories from external service: " + e.getMessage());
@@ -48,16 +60,16 @@ public class ProductServiceClient {
 
     }
 
-    public Map<Long, List<OfferDTO>> getOffersByCategories(Set<Long> familyIds) {
+    public Map<String, List<OfferDTO>> getOffersByCategories(Set<String> families) {
 
         try{
-            String url = productServiceUrl + "/offersByCategories"; // TODO actualizar cuando productos tenga el endpoint disponible
+            String url = productServiceUrl + "/promotions/get-by-category";
 
-            ResponseEntity<Map<Long, List<OfferDTO>>> response = restTemplate.exchange(
+            ResponseEntity<Map<String, List<OfferDTO>>> response = restTemplate.exchange(
                     url,
                     HttpMethod.POST,
-                    new HttpEntity<>(familyIds),
-                    new ParameterizedTypeReference<Map<Long, List<OfferDTO>>>() {}
+                    new HttpEntity<>(families),
+                    new ParameterizedTypeReference<Map<String, List<OfferDTO>>>() {}
             );
 
             if(response.getStatusCode() != HttpStatus.OK) {

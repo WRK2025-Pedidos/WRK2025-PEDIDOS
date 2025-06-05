@@ -16,16 +16,16 @@ CREATE TABLE IF NOT EXISTS orders(
 );
 
 CREATE TABLE IF NOT EXISTS order_lines (
-                                       id                  UUID                NOT NULL,
-                                       order_id            UUID                NOT NULL,
-                                       product             BIGINT              NOT NULL,
-                                       quantity            INT                 NOT NULL,
-                                       line_weight         DOUBLE PRECISION    NOT NULL,
-                                       product_price       DECIMAL(10,2)       NOT NULL,
-                                       line_price          DECIMAL(10,2)       NOT NULL,
-                                       returned_quantity   INT                 NOT NULL DEFAULT 0,
-                                       FOREIGN KEY (order_id) REFERENCES orders(id)
-                                       );
+                                           id                  UUID                NOT NULL,
+                                           order_id            UUID                NOT NULL,
+                                           product             BIGINT              NOT NULL,
+                                           quantity            INT                 NOT NULL,
+                                           line_weight         DOUBLE PRECISION    NOT NULL,
+                                           product_price       DECIMAL(10,2)       NOT NULL,
+                                           line_price          DECIMAL(10,2)       NOT NULL,
+                                           returned_quantity   INT                 NOT NULL DEFAULT 0,
+                                           FOREIGN KEY (order_id) REFERENCES orders(id)
+);
 
 CREATE TABLE IF NOT EXISTS order_offers (
                                             order_id UUID NOT NULL,

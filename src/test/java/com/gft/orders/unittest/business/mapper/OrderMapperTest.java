@@ -43,7 +43,7 @@ public class OrderMapperTest {
         assertNotNull(result);
         assertEquals(orderJPA.getId(), result.getId());
         assertEquals(orderJPA.getTotalPrice(), result.getTotalPrice());
-        assertEquals(orderJPA.getCartId(), result.getCartId());
+        assertEquals(orderJPA.getUserId(), result.getUserId());
         assertEquals(orderJPA.getCountryTax(), result.getCountryTax());
         assertEquals(orderJPA.getPaymentMethod(), result.getPaymentMethod());
         assertEquals(orderJPA.getCreationDate(), result.getCreationDate());
@@ -66,7 +66,7 @@ public class OrderMapperTest {
         assertNotNull(result);
         assertEquals(order.getId(), result.getId());
         assertEquals(order.getTotalPrice(), result.getTotalPrice());
-        assertEquals(order.getCartId(), result.getCartId());
+        assertEquals(order.getUserId(), result.getUserId());
         assertEquals(order.getCountryTax(), result.getCountryTax());
         assertEquals(order.getPaymentMethod(), result.getPaymentMethod());
         assertEquals(order.getCreationDate(), result.getCreationDate());
@@ -130,7 +130,7 @@ public class OrderMapperTest {
     private void initData() {
         orderJPA = new OrderJPA();
         orderJPA.setId(UUID.randomUUID());
-        orderJPA.setCartId(UUID.randomUUID());
+        orderJPA.setUserId(UUID.randomUUID());
         orderJPA.setCreationDate(LocalDateTime.now());
         orderJPA.setTotalPrice(BigDecimal.valueOf(100.50));
         orderJPA.setCountryTax(21.0);
@@ -148,7 +148,7 @@ public class OrderMapperTest {
 
         order = new Order();
         order.setId(UUID.randomUUID());
-        order.setCartId(UUID.randomUUID());
+        order.setUserId(UUID.randomUUID());
         order.setCreationDate(LocalDateTime.now());
         order.setTotalPrice(BigDecimal.valueOf(150.75));
         order.setCountryTax(21.0);
