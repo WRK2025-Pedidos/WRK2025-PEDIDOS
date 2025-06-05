@@ -46,7 +46,7 @@ public class OrderControllerIT extends AbstractControllerTest {
         List<Order> orders = Collections.singletonList(testOrder);
         when(orderServices.findAllOrders()).thenReturn(List.of(testOrder));
 
-        MvcResult result = mockMvc.perform(get("/orders"))
+        MvcResult result = mockMvc.perform(get("/api/v1/orders"))
                 .andExpect(status().isOk())
                 .andReturn();
 
@@ -59,7 +59,7 @@ public class OrderControllerIT extends AbstractControllerTest {
 
         when(orderServices.findOrderById(testOrderId)).thenReturn(Optional.of(testOrder));
 
-        MvcResult result = mockMvc.perform(get("/orders/" + testOrderId))
+        MvcResult result = mockMvc.perform(get("/api/v1/orders/" + testOrderId))
                 .andExpect(status().isOk())
                 .andReturn();
 
@@ -72,7 +72,7 @@ public class OrderControllerIT extends AbstractControllerTest {
 
         when(orderServices.findOrderById(testOrderId)).thenReturn(Optional.empty());
 
-        MvcResult result = mockMvc.perform(get("/orders/" + testOrderId))
+        MvcResult result = mockMvc.perform(get("/api/v1/orders/" + testOrderId))
                 .andExpect(status().isNotFound())
                 .andReturn();
 
@@ -88,7 +88,7 @@ public class OrderControllerIT extends AbstractControllerTest {
 
         String requestBody = objectMapper.writeValueAsString(testOrder);
 
-        MvcResult result = mockMvc.perform(post("/orders").content(requestBody).contentType(MediaType.APPLICATION_JSON))
+        MvcResult result = mockMvc.perform(post("/api/v1/orders").content(requestBody).contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isCreated())
                 .andReturn();
 
@@ -100,7 +100,7 @@ public class OrderControllerIT extends AbstractControllerTest {
 
         when(orderServices.createOrderReturn(testOrderId)).thenReturn(BigDecimal.valueOf(-999.99));
 
-        MvcResult result = mockMvc.perform(post("/orders/" + testOrderId + "/return")
+        MvcResult result = mockMvc.perform(post("/api/v1/orders/" + testOrderId + "/return")
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andReturn();
@@ -112,7 +112,7 @@ public class OrderControllerIT extends AbstractControllerTest {
     void createOrderReturn_invalidQuantity() throws Exception {
         when(orderServices.createOrderReturn(testOrderId)).thenThrow(new InvalidReturnQuantityException("La cantidad a devolver no puede ser mayor que la cantidad comprada"));
 
-        MvcResult result = mockMvc.perform(post("/orders/" + testOrderId + "/return")
+        MvcResult result = mockMvc.perform(post("/api/v1/orders/" + testOrderId + "/return")
                         .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isBadRequest())  // Esperamos un error 400
                 .andReturn();
