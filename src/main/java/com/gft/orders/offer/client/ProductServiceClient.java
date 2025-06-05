@@ -1,6 +1,5 @@
 package com.gft.orders.offer.client;
 
-import com.gft.orders.offer.client.dto.CategoriesRequest;
 import com.gft.orders.offer.client.dto.OfferDTO;
 import com.gft.orders.offer.client.dto.ProductDTO;
 import com.gft.orders.offer.client.exception.ProductServiceException;
