@@ -47,6 +47,7 @@ public class OrderMapper {
             List<OrderLineJPA> lines = order.getOrderLines().stream()
                     .map(line -> {
                         OrderLineJPA lineJPA = new OrderLineJPA();
+                        lineJPA.setId(line.getId());
                         lineJPA.setProduct(line.getProduct());
                         lineJPA.setQuantity(line.getQuantity());
                         lineJPA.setLineWeight(line.getLineWeight());
@@ -66,6 +67,7 @@ public class OrderMapper {
     public OrderLine toOrderLineModel(OrderLineJPA orderLineJPA) {
 
         return OrderLine.builder()
+                .id(orderLineJPA.getId())
                 .product(orderLineJPA.getProduct())
                 .quantity(orderLineJPA.getQuantity())
                 .lineWeight(orderLineJPA.getLineWeight())
@@ -78,7 +80,7 @@ public class OrderMapper {
     public OrderLineJPA toOrderLineJPA(OrderLine orderLine) {
 
         OrderLineJPA lineJPA = new OrderLineJPA();
-
+        lineJPA.setId(orderLine.getId());
         lineJPA.setProduct(orderLine.getProduct());
         lineJPA.setQuantity(orderLine.getQuantity());
         lineJPA.setLineWeight(orderLine.getLineWeight());

@@ -126,7 +126,7 @@ public class OrderControllerIT extends AbstractControllerTest {
     private void initData() {
         testOrderId = UUID.fromString("11111111-1111-1111-1111-111111111111");
         UUID testCartId = UUID.fromString("22222222-2222-2222-2222-222222222222");
-        OrderLine testOrderLine = new OrderLine(1L,1, 1.0, BigDecimal.valueOf(999.99), BigDecimal.valueOf(999.99),1);
+        OrderLine testOrderLine = new OrderLine(UUID.randomUUID(), 1L,1, 1.0, BigDecimal.valueOf(999.99), BigDecimal.valueOf(999.99),1);
 
         Map<Long, Integer> returnProductQuantity = new HashMap<>();
         returnProductQuantity.put(1L, 1);

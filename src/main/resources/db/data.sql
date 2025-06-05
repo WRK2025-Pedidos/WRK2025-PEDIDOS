@@ -1,3 +1,4 @@
+DELETE FROM orderjpa_returned_product_quantity;
 DELETE FROM order_offers;
 DELETE FROM order_lines;
 DELETE FROM orders;

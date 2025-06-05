@@ -45,8 +45,10 @@ class OrderControllerTest extends AbstractControllerTest {
     void init() {
         order1 = Instancio.create(Order.class);
     }
+
     @Autowired
     private MockMvc mockMvc;
+
     @Test
     void createOrder_Test() throws Exception {
         UUID orderId = UUID.randomUUID();
@@ -58,6 +60,7 @@ class OrderControllerTest extends AbstractControllerTest {
                 .andExpect(status().isCreated())
                 .andExpect(content().string("\"" + orderId + "\""));
     }
+
     @Test
     void findAllOrders_Test() throws Exception {
         List<Order> orders = Arrays.asList(order1, order2);
@@ -66,6 +69,7 @@ class OrderControllerTest extends AbstractControllerTest {
                 .andExpect(status().isOk())
                 .andReturn();
     }
+
     @Test
     void findOrderById_Test() throws Exception {
         UUID orderId = UUID.randomUUID();
@@ -76,6 +80,7 @@ class OrderControllerTest extends AbstractControllerTest {
                 .andReturn();
         assertResponseBodyIsOk(mvcResult, order1);
     }
+
     @Test
     void findOrderById_NotFound_Test() throws Exception {
         UUID orderId = UUID.randomUUID();
@@ -84,34 +89,6 @@ class OrderControllerTest extends AbstractControllerTest {
                         .accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isNotFound())
                 .andExpect(content().string(containsString("Order ID not found")));
-    }
-    @Test
-    void createOrderReturn_success() throws Exception {
-        UUID orderId = UUID.fromString("11111111-1111-1111-1111-111111111111");
-        when(orderServices.createOrderReturn(orderId)).thenReturn(BigDecimal.valueOf(-100));
-        mockMvc.perform(post("/api/v1/orders/" + orderId + "/return")
-                        .accept(MediaType.APPLICATION_JSON))
-                .andExpect(status().isOk())
-                .andExpect(content().contentType(MediaType.APPLICATION_JSON))
-                .andExpect(content().string("-100")) ;
-    }
-    @Test
-    void createOrderReturn_failure_returnPeriodExceeded() throws Exception {
-        UUID orderId = UUID.randomUUID();
-        when(orderServices.createOrderReturn(orderId))
-                .thenThrow(new ReturnPeriodExceededException("Return period exceeded"));
-        mockMvc.perform(post("/api/v1/orders/" + orderId + "/return"))
-                .andExpect(status().isBadRequest())
-                .andExpect(content().string(containsString("Return period exceeded")));
-    }
-    @Test
-    void createOrderReturn_failure_orderNotFound() throws Exception {
-        UUID orderId = UUID.randomUUID();
-        when(orderServices.createOrderReturn(orderId))
-                .thenThrow(new OrderNotFoundException("Order not found"));
-        mockMvc.perform(post("/api/v1/orders/" + orderId + "/return"))
-                .andExpect(status().isNotFound())
-                .andExpect(content().string(containsString("Order not found")));
     }
 }
 

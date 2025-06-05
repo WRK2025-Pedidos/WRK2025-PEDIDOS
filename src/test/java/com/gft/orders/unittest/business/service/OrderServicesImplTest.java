@@ -5,7 +5,8 @@ import com.gft.orders.business.config.exceptions.InvalidReturnQuantityException;
 import com.gft.orders.business.config.exceptions.OrderNotFoundException;
 import com.gft.orders.business.config.exceptions.ReturnPeriodExceededException;
 import com.gft.orders.business.mapper.OrderMapper;
-import com.gft.orders.business.model.DTO.ReturnLineDTO;
+// Using the correct DTO name: ReturnLinesDTO from your provided test class
+import com.gft.orders.business.model.DTO.ReturnLinesDTO;
 import com.gft.orders.business.model.Order;
 import com.gft.orders.business.service.impl.OrderServiceImpl;
 import com.gft.orders.integration.model.OrderJPA;
@@ -22,6 +23,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.*;
+import java.util.stream.Collectors;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
@@ -55,26 +57,21 @@ public class OrderServicesImplTest {
 
     @Test
     void shouldSaveOrder() {
-
         UUID uuid = UUID.randomUUID();
-
         when(mapper.toOrderJPA(order1)).thenReturn(orderJPA1);
-
         OrderJPA savedEntity = new OrderJPA();
         savedEntity.setId(uuid);
-
         when(orderJPARepository.save(orderJPA1)).thenReturn(savedEntity);
 
         UUID result = orderServicesImpl.createOrder(order1);
 
         assertEquals(uuid, result);
+        verify(orderJPARepository).save(orderJPA1);
     }
 
     @Test
     void shouldFindOrderById() {
-
         UUID uuid = UUID.randomUUID();
-
         when(orderJPARepository.findById(uuid)).thenReturn(Optional.of(orderJPA1));
         when(mapper.toOrderModel(orderJPA1)).thenReturn(order1);
 
@@ -82,84 +79,253 @@ public class OrderServicesImplTest {
 
         assertTrue(optional.isPresent());
         assertEquals(order1, optional.get());
+        verify(orderJPARepository).findById(uuid);
+        verify(mapper).toOrderModel(orderJPA1);
     }
 
     @Test
     void shouldNotFindOrderById() {
-
         UUID uuid = UUID.randomUUID();
-
         when(orderJPARepository.findById(uuid)).thenReturn(Optional.empty());
 
         Optional<Order> optional = orderServicesImpl.findOrderById(uuid);
 
         assertTrue(optional.isEmpty());
+        verify(orderJPARepository).findById(uuid);
     }
 
     @Test
     void shouldProcessReturnLinesSuccessfully() {
+
+        UUID orderLineId = UUID.randomUUID();
         Long productId = 123L;
         int purchasedQuantity = 10;
-        int quantityToReturn = 5;
-        BigDecimal productPrice = new BigDecimal("10.00");
+        OrderLineJPA orderLineJPA = getOrderLineJPA(orderLineId, productId, purchasedQuantity);
 
-        OrderLineJPA orderLineJPA = new OrderLineJPA();
-        orderLineJPA.setProduct(productId);
-        orderLineJPA.setQuantity(purchasedQuantity);
-        orderLineJPA.setProductPrice(productPrice);
-        orderLineJPA.setLinePrice(productPrice.multiply(BigDecimal.valueOf(purchasedQuantity)));
+        originalOrder.setOrderLines(List.of(orderLineJPA));
+        originalOrder.setTotalPrice(new BigDecimal("100.00"));
 
-        originalOrder.setOrderLines(new ArrayList<>(Collections.singletonList(orderLineJPA)));
-
-        Map<Long, Integer> returnLines = new HashMap<>();
-        returnLines.put(productId, quantityToReturn);
-        ReturnLineDTO returnLineDTO = new ReturnLineDTO(originalOrder.getId(), returnLines);
+        ReturnLinesDTO returnLinesDTO = new ReturnLinesDTO(List.of(orderLineId));
 
         when(orderJPARepository.findById(eq(originalOrder.getId()))).thenReturn(Optional.of(originalOrder));
         when(orderJPARepository.idDateBeforeThirtyDays(eq(originalOrder.getId()), any(LocalDateTime.class))).thenReturn(false);
+        when(orderJPARepository.save(any(OrderJPA.class))).thenReturn(originalOrder);
 
-        BigDecimal result = orderServicesImpl.processReturnLines(returnLineDTO);
+        BigDecimal result = orderServicesImpl.processReturnLines(originalOrder.getId(), returnLinesDTO);
 
         assertNotNull(result);
-        assertEquals(new BigDecimal("-50.00"), result);
-        assertEquals(5, orderLineJPA.getQuantity());
-        assertEquals(5, originalOrder.getReturnedProductQuantity().get(productId));
+
+        assertEquals(new BigDecimal("100.00"), result);
+        assertEquals(purchasedQuantity, orderLineJPA.getQuantity());
+        assertEquals(purchasedQuantity, orderLineJPA.getReturnedQuantity());
+        assertEquals(0, BigDecimal.ZERO.compareTo(originalOrder.getTotalPrice()));
+        assertTrue(originalOrder.getOrderReturn());
+        assertEquals(purchasedQuantity, originalOrder.getReturnedProductQuantity().get(productId));
+
+        verify(orderJPARepository).save(originalOrder);
+        verify(orderJPARepository).findById(originalOrder.getId());
+        verify(orderJPARepository).idDateBeforeThirtyDays(eq(originalOrder.getId()), any(LocalDateTime.class));
+    }
+
+    private static OrderLineJPA getOrderLineJPA(UUID orderLineId, Long productId, int purchasedQuantity) {
+        BigDecimal productPrice = new BigDecimal("10.00");
+
+        OrderLineJPA orderLineJPA = new OrderLineJPA();
+        orderLineJPA.setId(orderLineId);
+        orderLineJPA.setProduct(productId);
+        orderLineJPA.setQuantity(purchasedQuantity);
+        orderLineJPA.setReturnedQuantity(0);
+        orderLineJPA.setProductPrice(productPrice);
+        orderLineJPA.setLinePrice(productPrice.multiply(BigDecimal.valueOf(purchasedQuantity)));
+        return orderLineJPA;
+    }
+
+    @Test
+    void shouldProcessMultipleReturnLinesSuccessfully() {
+
+        UUID orderLineId1 = UUID.randomUUID();
+        UUID orderLineId2 = UUID.randomUUID();
+        Long productId1 = 101L;
+        Long productId2 = 102L;
+        int quantity1 = 5;
+        int quantity2 = 3;
+        BigDecimal price1 = new BigDecimal("20.00");
+        BigDecimal price2 = new BigDecimal("5.00");
+
+        OrderLineJPA line1 = new OrderLineJPA();
+        line1.setId(orderLineId1);
+        line1.setProduct(productId1);
+        line1.setQuantity(quantity1);
+        line1.setReturnedQuantity(0);
+        line1.setProductPrice(price1);
+        line1.setLinePrice(price1.multiply(BigDecimal.valueOf(quantity1)));
+
+        OrderLineJPA line2 = new OrderLineJPA();
+        line2.setId(orderLineId2);
+        line2.setProduct(productId2);
+        line2.setQuantity(quantity2);
+        line2.setReturnedQuantity(0);
+        line2.setProductPrice(price2);
+        line2.setLinePrice(price2.multiply(BigDecimal.valueOf(quantity2)));
+
+        originalOrder.setOrderLines(new ArrayList<>(Arrays.asList(line1, line2)));
+        BigDecimal totalPrice = price1.multiply(BigDecimal.valueOf(quantity1))
+                .add(price2.multiply(BigDecimal.valueOf(quantity2)));
+        originalOrder.setTotalPrice(totalPrice);
+
+        ReturnLinesDTO returnLinesDTO = new ReturnLinesDTO(Arrays.asList(orderLineId1, orderLineId2));
+
+        when(orderJPARepository.findById(eq(originalOrder.getId()))).thenReturn(Optional.of(originalOrder));
+        when(orderJPARepository.idDateBeforeThirtyDays(eq(originalOrder.getId()), any(LocalDateTime.class))).thenReturn(false);
+        when(orderJPARepository.save(any(OrderJPA.class))).thenReturn(originalOrder); // Mock save
+
+        BigDecimal result = orderServicesImpl.processReturnLines(originalOrder.getId(), returnLinesDTO);
+
+        assertNotNull(result);
+        assertEquals(totalPrice, result);
+
+        assertEquals(quantity1, line1.getReturnedQuantity());
+        assertEquals(quantity2, line2.getReturnedQuantity());
+
+        assertEquals(0, BigDecimal.ZERO.compareTo(originalOrder.getTotalPrice()));
+        assertTrue(originalOrder.getOrderReturn());
+        assertEquals(quantity1, originalOrder.getReturnedProductQuantity().get(productId1));
+        assertEquals(quantity2, originalOrder.getReturnedProductQuantity().get(productId2));
+
         verify(orderJPARepository).save(originalOrder);
     }
 
     @Test
-    void shouldThrowInvalidReturnQuantityExceptionWhenReturnQuantityExceedsPurchasedQuantity() {
+    void shouldProcessPartialReturnOnAlreadyPartiallyReturnedLine() {
 
+        UUID orderLineId = UUID.randomUUID();
         Long productId = 123L;
         int purchasedQuantity = 10;
-        int quantityToReturn = 15;
+        int alreadyReturned = 3;
+        BigDecimal productPrice = new BigDecimal("10.00");
 
         OrderLineJPA orderLineJPA = new OrderLineJPA();
+        orderLineJPA.setId(orderLineId);
         orderLineJPA.setProduct(productId);
         orderLineJPA.setQuantity(purchasedQuantity);
-        orderLineJPA.setProductPrice(new BigDecimal("10.00"));
-        orderLineJPA.setLinePrice(new BigDecimal("100.00"));
+        orderLineJPA.setReturnedQuantity(alreadyReturned);
+        orderLineJPA.setProductPrice(productPrice);
+        orderLineJPA.setLinePrice(productPrice.multiply(BigDecimal.valueOf(purchasedQuantity)));
 
-        originalOrder.setOrderLines(new ArrayList<>(Collections.singletonList(orderLineJPA)));
+        originalOrder.setOrderLines(List.of(orderLineJPA));
+        originalOrder.setTotalPrice(new BigDecimal("100.00"));
 
-        Map<Long, Integer> returnLines = new HashMap<>();
-        returnLines.put(productId, quantityToReturn);
-        ReturnLineDTO returnLineDTO = new ReturnLineDTO(originalOrder.getId(), returnLines);
+        ReturnLinesDTO returnLinesDTO = new ReturnLinesDTO(List.of(orderLineId));
+
+        when(orderJPARepository.findById(eq(originalOrder.getId()))).thenReturn(Optional.of(originalOrder));
+        when(orderJPARepository.idDateBeforeThirtyDays(eq(originalOrder.getId()), any(LocalDateTime.class))).thenReturn(false);
+        when(orderJPARepository.save(any(OrderJPA.class))).thenReturn(originalOrder);
+
+        BigDecimal result = orderServicesImpl.processReturnLines(originalOrder.getId(), returnLinesDTO);
+
+        int quantityReturnedInThisOp = purchasedQuantity - alreadyReturned;
+        BigDecimal expectedRefund = productPrice.multiply(BigDecimal.valueOf(quantityReturnedInThisOp));
+
+        assertNotNull(result);
+        assertEquals(new BigDecimal("70.00"), result);
+
+        BigDecimal expectedTotalAfterRefund = new BigDecimal("30.00");
+        assertEquals(0, expectedTotalAfterRefund.compareTo(originalOrder.getTotalPrice()));
+
+        assertEquals(purchasedQuantity, orderLineJPA.getQuantity());
+        assertEquals(purchasedQuantity, orderLineJPA.getReturnedQuantity());
+        assertTrue(originalOrder.getOrderReturn());
+
+        verify(orderJPARepository).save(originalOrder);
+    }
+
+    @Test
+    void shouldThrowInvalidReturnQuantityExceptionWhenOrderLineNotFound() {
+
+        UUID nonExistentOrderLineId = UUID.randomUUID();
+        originalOrder.setOrderLines(new ArrayList<>());
+
+        ReturnLinesDTO returnLinesDTO = new ReturnLinesDTO(List.of(nonExistentOrderLineId));
 
         when(orderJPARepository.findById(eq(originalOrder.getId()))).thenReturn(Optional.of(originalOrder));
 
         InvalidReturnQuantityException exception = assertThrows(InvalidReturnQuantityException.class, () ->
-                orderServicesImpl.processReturnLines(returnLineDTO)
+                orderServicesImpl.processReturnLines(originalOrder.getId(), returnLinesDTO)
         );
 
-        assertEquals("La cantidad a devolver no puede ser mayor que la cantidad comprada.", exception.getMessage());
+        assertEquals("Order line with ID " + nonExistentOrderLineId + " not found in the specified order.", exception.getMessage());
+        verify(orderJPARepository).findById(originalOrder.getId());
+        verify(orderJPARepository, org.mockito.Mockito.never()).save(any(OrderJPA.class));
+    }
+
+
+    @Test
+    void shouldThrowInvalidReturnQuantityExceptionWhenOrderLineAlreadyFullyReturned() {
+
+        UUID orderLineId = UUID.randomUUID();
+        Long productId = 123L;
+        int purchasedQuantity = 10;
+
+        OrderLineJPA orderLineJPA = new OrderLineJPA();
+        orderLineJPA.setId(orderLineId);
+        orderLineJPA.setProduct(productId);
+        orderLineJPA.setQuantity(purchasedQuantity);
+        orderLineJPA.setReturnedQuantity(purchasedQuantity);
+        orderLineJPA.setProductPrice(new BigDecimal("10.00"));
+
+        originalOrder.setOrderLines(new ArrayList<>(List.of(orderLineJPA)));
+
+        ReturnLinesDTO returnLinesDTO = new ReturnLinesDTO(List.of(orderLineId));
+
+        when(orderJPARepository.findById(eq(originalOrder.getId()))).thenReturn(Optional.of(originalOrder));
+
+        InvalidReturnQuantityException exception = assertThrows(InvalidReturnQuantityException.class, () ->
+                orderServicesImpl.processReturnLines(originalOrder.getId(), returnLinesDTO)
+        );
+
+        assertEquals("Order line with ID " + orderLineId + " has already been fully returned.", exception.getMessage());
+        verify(orderJPARepository).findById(originalOrder.getId());
+        verify(orderJPARepository, org.mockito.Mockito.never()).save(any(OrderJPA.class));
+    }
+
+    @Test
+    void shouldThrowOrderNotFoundExceptionWhenOrderIsNotFound() {
+
+        UUID nonExistentOrderId = UUID.randomUUID();
+        when(orderJPARepository.findById(eq(nonExistentOrderId))).thenReturn(Optional.empty());
+
+        ReturnLinesDTO returnLinesDTO = new ReturnLinesDTO(List.of(UUID.randomUUID()));
+
+        OrderNotFoundException exception = assertThrows(OrderNotFoundException.class, () ->
+                orderServicesImpl.processReturnLines(nonExistentOrderId, returnLinesDTO)
+        );
+
+        assertEquals("Original order not found", exception.getMessage());
+        verify(orderJPARepository).findById(nonExistentOrderId);
+        verify(orderJPARepository, org.mockito.Mockito.never()).save(any(OrderJPA.class));
+    }
+
+    @Test
+    void shouldThrowReturnPeriodExceededExceptionWhenReturnPeriodIsExpired() {
+
+        when(orderJPARepository.findById(eq(originalOrder.getId()))).thenReturn(Optional.of(originalOrder));
+        when(orderJPARepository.idDateBeforeThirtyDays(eq(originalOrder.getId()), any(LocalDateTime.class))).thenReturn(true);
+
+        ReturnLinesDTO returnLinesDTO = new ReturnLinesDTO(Collections.emptyList());
+
+        ReturnPeriodExceededException exception = assertThrows(ReturnPeriodExceededException.class, () ->
+                orderServicesImpl.processReturnLines(originalOrder.getId(), returnLinesDTO)
+        );
+
+        assertEquals("Return period exceeded", exception.getMessage());
+        verify(orderJPARepository).findById(originalOrder.getId());
+        verify(orderJPARepository).idDateBeforeThirtyDays(eq(originalOrder.getId()), any(LocalDateTime.class));
+        verify(orderJPARepository, org.mockito.Mockito.never()).save(any(OrderJPA.class));
     }
 
     @Test
     void findAllOrders() {
-
         List<Order> ordersExpected = Arrays.asList(order1, order2);
-
         when(orderJPARepository.findAll()).thenReturn(Arrays.asList(orderJPA1, orderJPA2));
         when(mapper.toOrderModel(orderJPA1)).thenReturn(order1);
         when(mapper.toOrderModel(orderJPA2)).thenReturn(order2);
@@ -168,21 +334,21 @@ public class OrderServicesImplTest {
 
         assertEquals(2, result.size());
         assertTrue(result.containsAll(ordersExpected));
+        verify(orderJPARepository).findAll();
+        verify(mapper).toOrderModel(orderJPA1);
+        verify(mapper).toOrderModel(orderJPA2);
     }
 
     @Test
     void createOrderReturn_success() {
-
         when(orderJPARepository.findById(orderId)).thenReturn(Optional.of(originalOrder));
-
         when(orderJPARepository.idDateBeforeThirtyDays(eq(orderId), any(LocalDateTime.class))).thenReturn(false);
-
         when(orderJPARepository.save(any(OrderJPA.class))).thenReturn(originalOrder);
 
         BigDecimal result = orderServicesImpl.createOrderReturn(orderId);
 
         assertTrue(originalOrder.getOrderReturn());
-        assertEquals(new BigDecimal("-100.00"), result);
+        assertEquals(new BigDecimal("-100.00"), result); // Total price of originalOrder was 100.00
 
         verify(orderJPARepository).findById(orderId);
         verify(orderJPARepository).save(originalOrder);
@@ -191,112 +357,40 @@ public class OrderServicesImplTest {
 
     @Test
     void createOrderReturn_failure() {
-
         when(orderJPARepository.findById(orderId)).thenReturn(Optional.empty());
 
-        RuntimeException exception = assertThrows(RuntimeException.class, () -> orderServicesImpl.createOrderReturn(orderId));
+        OrderNotFoundException exception = assertThrows(OrderNotFoundException.class, () -> orderServicesImpl.createOrderReturn(orderId));
 
         assertEquals("Original order not found", exception.getMessage());
+        verify(orderJPARepository).findById(orderId);
     }
 
     @Test
     void createOrderReturn_ReturnPeriodExceeded(){
-
         when(orderJPARepository.findById(orderId)).thenReturn(Optional.of(originalOrder));
-
         when(orderJPARepository.idDateBeforeThirtyDays(eq(orderId), any(LocalDateTime.class))).thenReturn(true);
 
-        RuntimeException exception = assertThrows(RuntimeException.class, () -> orderServicesImpl.createOrderReturn(orderId));
+        ReturnPeriodExceededException exception = assertThrows(ReturnPeriodExceededException.class, () -> orderServicesImpl.createOrderReturn(orderId));
 
         assertEquals("Return period exceeded", exception.getMessage());
+        verify(orderJPARepository).findById(orderId);
+        verify(orderJPARepository).idDateBeforeThirtyDays(eq(orderId), any(LocalDateTime.class));
     }
 
     @Test
     void createOrderReturn_InvalidStatusTransition(){
-
-        originalOrder.setOrderReturn(true);
-
+        originalOrder.setOrderReturn(true); // Mark as already returned
         when(orderJPARepository.findById(orderId)).thenReturn(Optional.of(originalOrder));
 
         InvalidOrderStatusTransitionException exception = assertThrows(InvalidOrderStatusTransitionException.class, () ->
                 orderServicesImpl.createOrderReturn(orderId));
 
         assertEquals("A returned order cannot be reactivated.", exception.getMessage());
-    }
-
-    @Test
-    void shouldThrowInvalidOrderStatusTransitionExceptionWhenOrderHasBeenReturned() {
-
-        originalOrder.setOrderReturn(true);
-
-        Map<Long, Integer> returnLines = new HashMap<>();
-        ReturnLineDTO returnLineDTO = new ReturnLineDTO(originalOrder.getId(), returnLines);
-
-        when(orderJPARepository.findById(eq(originalOrder.getId()))).thenReturn(Optional.of(originalOrder));
-
-        InvalidOrderStatusTransitionException exception = assertThrows(InvalidOrderStatusTransitionException.class, () ->
-                orderServicesImpl.processReturnLines(returnLineDTO)
-        );
-
-        assertEquals("A returned order cannot be reactivated.", exception.getMessage());
-    }
-
-    @Test
-    void shouldThrowReturnPeriodExceededExceptionWhenReturnPeriodIsExpired() {
-
-        Map<Long, Integer> returnLines = new HashMap<>();
-        ReturnLineDTO returnLineDTO = new ReturnLineDTO(originalOrder.getId(), returnLines);
-
-        when(orderJPARepository.findById(eq(originalOrder.getId()))).thenReturn(Optional.of(originalOrder));
-        when(orderJPARepository.idDateBeforeThirtyDays(eq(originalOrder.getId()), any(LocalDateTime.class))).thenReturn(true);
-
-        ReturnPeriodExceededException exception = assertThrows(ReturnPeriodExceededException.class, () ->
-                orderServicesImpl.processReturnLines(returnLineDTO)
-        );
-
-        assertEquals("Return period exceeded", exception.getMessage());
-    }
-
-    @Test
-    void shouldThrowInvalidReturnQuantityExceptionWhenOrderLinesAreEmpty() {
-        Long productIdToReturn = 123L;
-        int quantityToReturn = 5;
-
-        Map<Long, Integer> returnLines = new HashMap<>();
-        returnLines.put(productIdToReturn, quantityToReturn);
-        ReturnLineDTO returnLineDTO = new ReturnLineDTO(originalOrder.getId(), returnLines);
-
-        when(orderJPARepository.findById(eq(originalOrder.getId()))).thenReturn(Optional.of(originalOrder));
-
-        originalOrder.setOrderLines(Collections.emptyList());
-
-        InvalidReturnQuantityException exception = assertThrows(InvalidReturnQuantityException.class, () ->
-                orderServicesImpl.processReturnLines(returnLineDTO)
-        );
-
-        assertEquals("Producto no encontrado en el pedido.", exception.getMessage());
-    }
-
-    @Test
-    void shouldThrowOrderNotFoundExceptionWhenOrderIsNotFound() {
-        // Dado que no se encuentra la orden
-        when(orderJPARepository.findById(eq(originalOrder.getId()))).thenReturn(Optional.empty());
-
-        Map<Long, Integer> returnLines = new HashMap<>();
-        returnLines.put(123L, 5);
-        ReturnLineDTO returnLineDTO = new ReturnLineDTO(originalOrder.getId(), returnLines);
-
-        // Se lanza la excepción OrderNotFoundException
-        OrderNotFoundException exception = assertThrows(OrderNotFoundException.class, () ->
-                orderServicesImpl.processReturnLines(returnLineDTO)
-        );
-
-        assertEquals("Original order not found", exception.getMessage());
+        verify(orderJPARepository).findById(orderId);
     }
 
     /***************PRIVATE METHODS***********/
     private void initObjects() {
-
         order1 = Instancio.create(Order.class);
         order2 = Instancio.create(Order.class);
         orderJPA1 = Instancio.create(OrderJPA.class);
@@ -307,5 +401,6 @@ public class OrderServicesImplTest {
         originalOrder.setId(orderId);
         originalOrder.setTotalPrice(new BigDecimal("100.00"));
         originalOrder.setOrderReturn(false);
+        originalOrder.setReturnedProductQuantity(new HashMap<>()); // Initialize the map for tests
     }
 }

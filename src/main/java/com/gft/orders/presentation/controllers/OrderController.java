@@ -1,5 +1,6 @@
 package com.gft.orders.presentation.controllers;
 
+import com.gft.orders.business.model.DTO.ReturnLinesDTO;
 import com.gft.orders.business.service.OrderServices;
 import com.gft.orders.business.model.Order;
 import io.swagger.v3.oas.annotations.Operation;
@@ -52,10 +53,15 @@ public class OrderController {
 
     }
 
-    @PostMapping("/{id}/return")
-    public BigDecimal returnOrder(@PathVariable UUID id) {
+    @PostMapping("/{orderId}/return")
+    public BigDecimal returnOrder(@PathVariable UUID orderId) {
 
-        return orderServices.createOrderReturn(id);
+        return orderServices.createOrderReturn(orderId);
     }
 
+    @PostMapping("/{orderId}/return-lines")
+    @ResponseStatus(HttpStatus.OK)
+    public BigDecimal returnOrderLines(@PathVariable UUID orderId, @RequestBody ReturnLinesDTO returnLinesDTO) {
+        return orderServices.processReturnLines(orderId, returnLinesDTO);
+    }
 }

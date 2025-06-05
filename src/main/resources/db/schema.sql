@@ -28,8 +28,16 @@ CREATE TABLE IF NOT EXISTS order_lines (
                                        );
 
 CREATE TABLE IF NOT EXISTS order_offers (
-                                            order_id UUID NOT NULL,
-                                            offer_id BIGINT NOT NULL,
-                                            PRIMARY KEY (order_id, offer_id),
-                                            FOREIGN KEY (order_id) REFERENCES orders(id)
+                                        order_id UUID NOT NULL,
+                                        offer_id BIGINT NOT NULL,
+                                        PRIMARY KEY (order_id, offer_id),
+                                        FOREIGN KEY (order_id) REFERENCES orders(id)
+);
+
+CREATE TABLE IF NOT EXISTS order_returned_product_quantities (
+                                         order_id            UUID                NOT NULL,
+                                         product_id          BIGINT              NOT NULL,
+                                         returned_quantity   INT                 NOT NULL,
+                                         PRIMARY KEY (order_id, product_id),
+                                         FOREIGN KEY (order_id) REFERENCES orders(id)
 );

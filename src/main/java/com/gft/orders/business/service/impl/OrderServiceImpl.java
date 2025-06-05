@@ -5,9 +5,8 @@ import com.gft.orders.business.config.exceptions.InvalidReturnQuantityException;
 import com.gft.orders.business.config.exceptions.OrderNotFoundException;
 import com.gft.orders.business.config.exceptions.ReturnPeriodExceededException;
 import com.gft.orders.business.mapper.OrderMapper;
-import com.gft.orders.business.model.DTO.ReturnLineDTO;
+import com.gft.orders.business.model.DTO.ReturnLinesDTO;
 import com.gft.orders.business.model.Order;
-import com.gft.orders.business.model.OrderLine;
 import com.gft.orders.business.service.OrderServices;
 import com.gft.orders.integration.model.OrderJPA;
 import com.gft.orders.integration.model.OrderLineJPA;
@@ -55,13 +54,13 @@ public class OrderServiceImpl implements OrderServices {
     public BigDecimal createOrderReturn(UUID orderId) {
 
         OrderJPA originalOrder = orderJPARepository.findById(orderId)
-                                                    .orElseThrow(() -> new OrderNotFoundException("Original order not found"));
+                .orElseThrow(() -> new OrderNotFoundException("Original order not found"));
 
-        if(originalOrder.getOrderReturn()==true){
+        if (originalOrder.getOrderReturn() == true) {
             throw new InvalidOrderStatusTransitionException("A returned order cannot be reactivated.");
         }
 
-        if(orderJPARepository.idDateBeforeThirtyDays(orderId, LocalDateTime.now().minusDays(30))) {
+        if (orderJPARepository.idDateBeforeThirtyDays(orderId, LocalDateTime.now().minusDays(30))) {
             throw new ReturnPeriodExceededException("Return period exceeded");
         }
 
@@ -74,48 +73,55 @@ public class OrderServiceImpl implements OrderServices {
 
     @Override
     @Transactional
-    public BigDecimal processReturnLines(ReturnLineDTO returnLineDTO) {
-        OrderJPA originalOrder = orderJPARepository.findById(returnLineDTO.original_order())
+    public BigDecimal processReturnLines(UUID orderId, ReturnLinesDTO returnLinesDTO) {
+        OrderJPA originalOrder = orderJPARepository.findById(orderId)
                 .orElseThrow(() -> new OrderNotFoundException("Original order not found"));
 
-        if (originalOrder.getOrderReturn()) {
-            throw new InvalidOrderStatusTransitionException("A returned order cannot be reactivated.");
-        }
-
-        if (orderJPARepository.idDateBeforeThirtyDays(returnLineDTO.original_order(), LocalDateTime.now())) {
+        if (orderJPARepository.idDateBeforeThirtyDays(orderId, LocalDateTime.now().minusDays(30))) {
             throw new ReturnPeriodExceededException("Return period exceeded");
         }
 
-        Map<Long, Integer> returnLines = returnLineDTO.returnLines();
+        BigDecimal totalRefundAmountForThisOperation = BigDecimal.ZERO;
 
-        for (Map.Entry<Long, Integer> entry : returnLines.entrySet()) {
-            Long productId = entry.getKey();
-            Integer quantityToReturn = entry.getValue();
-
+        for (UUID orderLineId : returnLinesDTO.returnLines()) {
             Optional<OrderLineJPA> orderLineOptional = originalOrder.getOrderLines().stream()
-                    .filter(line -> line.getProduct().equals(productId))
+                    .filter(line -> line.getId().equals(orderLineId))
                     .findFirst();
 
             if (orderLineOptional.isEmpty()) {
-                throw new InvalidReturnQuantityException("Producto no encontrado en el pedido.");
+                throw new InvalidReturnQuantityException("Order line with ID " + orderLineId + " not found in the specified order.");
             }
 
             OrderLineJPA orderLine = orderLineOptional.get();
 
-            if (quantityToReturn > orderLine.getQuantity()) {
-                throw new InvalidReturnQuantityException("La cantidad a devolver no puede ser mayor que la cantidad comprada.");
+            if (orderLine.getReturnedQuantity() == orderLine.getQuantity()) {
+                throw new InvalidReturnQuantityException("Order line with ID " + orderLineId + " has already been fully returned.");
             }
 
-            originalOrder.getReturnedProductQuantity().put(productId, quantityToReturn);
+            int quantityToReturn = orderLine.getQuantity() - orderLine.getReturnedQuantity();
 
-            orderLine.setQuantity(orderLine.getQuantity() - quantityToReturn);
+            if (quantityToReturn <= 0) {
+                throw new InvalidReturnQuantityException("No quantity available to return for order line with ID " + orderLineId + ".");
+            }
 
-            BigDecimal totalReturnAmount = orderLine.getProductPrice().multiply(BigDecimal.valueOf(quantityToReturn));
-            originalOrder.setTotalPrice(originalOrder.getTotalPrice().subtract(totalReturnAmount));
+            orderLine.setReturnedQuantity(orderLine.getQuantity());
+
+            BigDecimal itemReturnAmount = orderLine.getProductPrice().multiply(BigDecimal.valueOf(quantityToReturn));
+            totalRefundAmountForThisOperation = totalRefundAmountForThisOperation.add(itemReturnAmount);
+
+            originalOrder.getReturnedProductQuantity()
+                    .merge(orderLine.getProduct(), quantityToReturn, Integer::sum);
         }
+
+        originalOrder.setTotalPrice(originalOrder.getTotalPrice().subtract(totalRefundAmountForThisOperation));
+
+        boolean isOrderFullyReturned = originalOrder.getOrderLines().stream()
+                .allMatch(line -> line.getReturnedQuantity() == line.getQuantity());
+
+        originalOrder.setOrderReturn(isOrderFullyReturned);
 
         orderJPARepository.save(originalOrder);
 
-        return originalOrder.getTotalPrice().negate();
+        return totalRefundAmountForThisOperation;
     }
 }

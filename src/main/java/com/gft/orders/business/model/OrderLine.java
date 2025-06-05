@@ -2,6 +2,7 @@ package com.gft.orders.business.model;
 
 import lombok.*;
 import java.math.BigDecimal;
+import java.util.UUID;
 
 @Generated
 @Data
@@ -10,6 +11,7 @@ import java.math.BigDecimal;
 @AllArgsConstructor
 public class OrderLine {
 
+    private UUID id;
     private Long product;
 
     @Builder.Default
