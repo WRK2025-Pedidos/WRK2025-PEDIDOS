@@ -34,20 +34,20 @@ external:
     base:
       url: https://workshop-7uvd.onrender.com/api/v1
 
-management:
-  tracing:
-    sampling:
-      probability: 1.0
-  zipkin:
-    tracing:
-      endpoint: "http://91.126.226.193:27031/api/v2/spans"
-  endpoints:
-    web:
-      exposure:
-        include: "health, info, metrics, prometheus"
-  endpoint:
-    health:
-      show-details: always
+#management:
+#  tracing:
+#    sampling:
+#      probability: 1.0
+#  zipkin:
+#    tracing:
+#      endpoint: "http://91.126.226.193:27031/api/v2/spans"
+#  endpoints:
+#    web:
+#      exposure:
+#        include: "health, info, metrics, prometheus"
+#  endpoint:
+#    health:
+#      show-details: always
 
 logging:
   level:
