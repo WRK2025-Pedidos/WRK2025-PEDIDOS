@@ -31,17 +31,17 @@ public class OfferServiceTest {
     void getApplicableOffers_shouldReturnFilteredOffers() {
 
         Map<Long, Integer> productQuantities = Map.of(1L, 2, 2L, 2);
-        Map<Long, Long> productCategories = Map.of(1L, 10L, 2L, 20L);
-        Set<Long> uniqueCategories = Set.of(10L, 20L);
+        Map<Long, String> productCategories = Map.of(1L, "food", 2L, "toys");
+        Set<String> uniqueCategories = Set.of("food", "toys");
 
-        OfferDTO seasonOffer = new OfferDTO(1L, "SEASON", 10L, null);
-        OfferDTO quantityOffer = new OfferDTO(2L, "QUANTITY", 20L, 2);
-        OfferDTO quantityOfferInvalid = new OfferDTO(3L, "QUANTITY", 20L, 5);
-        OfferDTO typeDefault = new OfferDTO(1L, "X", 10L, null);
+        OfferDTO seasonOffer = new OfferDTO(1L, "SEASON", "food", null);
+        OfferDTO quantityOffer = new OfferDTO(2L, "QUANTITY", "toys", 2);
+        OfferDTO quantityOfferInvalid = new OfferDTO(3L, "QUANTITY", "toys", 5);
+        OfferDTO typeDefault = new OfferDTO(1L, "X", "food", null);
 
-        Map<Long, List<OfferDTO>> offersByCategory = Map.of(
-                10L, List.of(seasonOffer, typeDefault),
-                20L, List.of(quantityOffer, quantityOfferInvalid)
+        Map<String, List<OfferDTO>> offersByCategory = Map.of(
+                "food", List.of(seasonOffer, typeDefault),
+                "toys", List.of(quantityOffer, quantityOfferInvalid)
         );
 
         when(productServiceClient.getProductsCategories(anySet()))

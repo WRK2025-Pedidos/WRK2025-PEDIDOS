@@ -137,6 +137,11 @@
                         </goals>
                     </execution>
                 </executions>
+                <configuration>
+                    <excludes>
+                        <exclude>com/gft/orders/business/config/RestTemplateConfig*</exclude>
+                    </excludes>
+                </configuration>
             </plugin>
         </plugins>
     </build>

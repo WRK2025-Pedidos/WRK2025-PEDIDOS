@@ -1,4 +1,4 @@
-package com.gft.orders.integrationtest;
+package com.gft.orders.integrationTest;
 
 import com.gft.orders.business.mapper.OrderMapper;
 import com.gft.orders.business.model.Order;
@@ -9,6 +9,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.ActiveProfiles;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
@@ -17,6 +18,7 @@ import java.util.UUID;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+@ActiveProfiles("test")
 @SpringBootTest
 public class OrderMapperIT {
 
@@ -32,6 +34,7 @@ public class OrderMapperIT {
     void setUp() {
         initData();
     }
+
     @Test
     void contextLoads() {
         assertNotNull(orderMapper);
@@ -64,7 +67,7 @@ public class OrderMapperIT {
     private void initData() {
         orderJPA = new OrderJPA();
         orderJPA.setId(UUID.randomUUID());
-        orderJPA.setCartId(UUID.randomUUID());
+        orderJPA.setUserId(UUID.randomUUID());
         orderJPA.setCreationDate(LocalDateTime.now());
         orderJPA.setTotalPrice(BigDecimal.valueOf(100.50));
         orderJPA.setCountryTax(21.0);
@@ -82,7 +85,7 @@ public class OrderMapperIT {
 
         order = new Order();
         order.setId(UUID.randomUUID());
-        order.setCartId(UUID.randomUUID());
+        order.setUserId(UUID.randomUUID());
         order.setCreationDate(LocalDateTime.now());
         order.setTotalPrice(BigDecimal.valueOf(150.75));
         order.setCountryTax(21.0);

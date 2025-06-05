@@ -14,7 +14,7 @@ import java.util.*;
 public class Order {
 
     private UUID id;
-    private UUID cartId;
+    private UUID userId;
     private LocalDateTime creationDate;
 
     private BigDecimal totalPrice;

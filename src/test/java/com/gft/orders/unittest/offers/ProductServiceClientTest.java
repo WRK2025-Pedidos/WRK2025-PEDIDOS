@@ -2,6 +2,7 @@ package com.gft.orders.unittest.offers;
 
 import com.gft.orders.offer.client.ProductServiceClient;
 import com.gft.orders.offer.client.dto.OfferDTO;
+import com.gft.orders.offer.client.dto.ProductDTO;
 import com.gft.orders.offer.client.exception.ProductServiceException;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -13,6 +14,7 @@ import org.springframework.http.*;
 import org.springframework.web.client.RestClientException;
 import org.springframework.web.client.RestTemplate;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -30,27 +32,31 @@ public class ProductServiceClientTest {
     @InjectMocks
     private ProductServiceClient productServiceClient;
 
-    private final String baseUrl = "http://productsUrl";
+    private final String baseUrl = "https://workshop-7uvd.onrender.com/api/v1";
 
     @Test
     void getProductsCategories_success() {
 
         Set<Long> productIds = Set.of(1L, 2L);
-        Map<Long, Long> expectedResponse = Map.of(1L, 10L, 2L, 20L);
+        List<ProductDTO> mockProductResponse = List.of(
+                new ProductDTO(1L, "food"),
+                new ProductDTO(2L, "toys")
+        );
 
         when(restTemplate.exchange(
-                baseUrl + "/productsCategories",
+                baseUrl + "/products/list-by-ids",
                 HttpMethod.POST,
                 new HttpEntity<>(productIds),
-                new ParameterizedTypeReference<Map<Long, Long>>() {}
-        )).thenReturn(new ResponseEntity<>(expectedResponse, HttpStatus.OK));
+                new ParameterizedTypeReference<List<ProductDTO>>() {}
+        )).thenReturn(new ResponseEntity<>(mockProductResponse, HttpStatus.OK));
 
+        Map<Long, String> expectedResultFromMethod = Map.of(1L, "food", 2L, "toys");
 
-        Map<Long, Long> result = productServiceClient.getProductsCategories(productIds);
+        Map<Long, String> result = productServiceClient.getProductsCategories(productIds);
 
-        assertEquals(expectedResponse, result);
+        assertEquals(expectedResultFromMethod, result);
         verify(restTemplate).exchange(
-                eq(baseUrl + "/productsCategories"),
+                eq(baseUrl + "/products/list-by-ids"),
                 eq(HttpMethod.POST),
                 argThat(entity -> ((Set<?>) entity.getBody()).containsAll(productIds)),
                 any(ParameterizedTypeReference.class));
@@ -67,8 +73,30 @@ public class ProductServiceClientTest {
                 any(ParameterizedTypeReference.class)))
                 .thenReturn(new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR));
 
-        assertThrows(ProductServiceException.class, () -> productServiceClient.getProductsCategories(Set.of(1L)));
+        Exception exception = assertThrows(ProductServiceException.class, () -> productServiceClient.getProductsCategories(Set.of(1L)));
+
+        assertTrue(exception.getMessage().contains("Invalid response of Product Service"));
+
     }
+
+    @Test
+    void getProductsCategories_WhenBodyIsNull_ReturnsEmptyMap() {
+        Set<Long> productIds = Set.of(1L);
+
+        when(restTemplate.exchange(
+                anyString(),
+                any(),
+                any(),
+                any(ParameterizedTypeReference.class)))
+                .thenReturn(new ResponseEntity<>(null, HttpStatus.OK));
+
+        Map<Long, String> result = productServiceClient.getProductsCategories(productIds);
+
+        assertNotNull(result);
+        assertTrue(result.isEmpty());
+        assertEquals(new HashMap<>(), result);
+    }
+
 
     @Test
     void getProductsCategories_WhenRestClientException_ThrowsException() {
@@ -106,26 +134,26 @@ public class ProductServiceClientTest {
     @Test
     void getOffersByCategories_success(){
 
-        Set<Long> categoryIds = Set.of(10L,20L);
-        Map<Long, List<OfferDTO>> expectedResponse = Map.of(
-                10L, List.of(new OfferDTO(1L, "SEASON", null, null)),
-                20L, List.of(new OfferDTO(2L, "QUANTITY", null, 3))
+        Set<String> categoryIds = Set.of("food", "toys");
+        Map<String, List<OfferDTO>> expectedResponse = Map.of(
+                "food", List.of(new OfferDTO(1L, "SEASON", null, null)),
+                "toys", List.of(new OfferDTO(2L, "QUANTITY", null, 3))
                 );
 
         when(restTemplate.exchange(
-                baseUrl + "/offersByCategories",
+                baseUrl + "/promotions/get-by-category",
                 HttpMethod.POST,
                 new HttpEntity<>(categoryIds),
-                new ParameterizedTypeReference<Map<Long, List<OfferDTO>>>() {}
+                new ParameterizedTypeReference<Map<String, List<OfferDTO>>>() {}
         )).thenReturn(new ResponseEntity<>(expectedResponse, HttpStatus.OK));
 
-        Map<Long, List<OfferDTO>> result = productServiceClient.getOffersByCategories(categoryIds);
+        Map<String, List<OfferDTO>> result = productServiceClient.getOffersByCategories(categoryIds);
 
         assertEquals(2, result.size());
-        assertEquals(1, result.get(10L).size());
+        assertEquals(1, result.get("food").size());
 
         verify(restTemplate).exchange(
-                eq(baseUrl + "/offersByCategories"),
+                eq(baseUrl + "/promotions/get-by-category"),
                 eq(HttpMethod.POST),
                 argThat(entity -> ((Set<?>) entity.getBody()).containsAll(categoryIds)),
                 any(ParameterizedTypeReference.class));
@@ -142,7 +170,7 @@ public class ProductServiceClientTest {
                 .thenReturn(new ResponseEntity<>(null, HttpStatus.NOT_FOUND));
 
         assertThrows(ProductServiceException.class, () -> {
-            productServiceClient.getOffersByCategories(Set.of(1L));
+            productServiceClient.getOffersByCategories(Set.of("1L"));
         });
     }
 
@@ -158,7 +186,7 @@ public class ProductServiceClientTest {
                 any(ParameterizedTypeReference.class)))
                 .thenThrow(new RestClientException(error));
 
-        Exception exception = assertThrows(ProductServiceException.class, () -> productServiceClient.getOffersByCategories(Set.of(1L)));
+        Exception exception = assertThrows(ProductServiceException.class, () -> productServiceClient.getOffersByCategories(Set.of("1L")));
 
         assertTrue(exception.getMessage().contains("Failed to retrieve offers by categories from external service"));
         assertTrue(exception.getMessage().contains(error));
