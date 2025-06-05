@@ -5,15 +5,20 @@ import lombok.Generated;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.time.OffsetDateTime;
+
 @Generated
 @Getter
 @Setter
 @AllArgsConstructor
-public class OfferDTO {
+public class PromotionDTO {
 
     private Long id;
-    private String type;
-    private String category;
+    private OffsetDateTime startDate;
+    private OffsetDateTime endDate;
+    private Double discount;
+    private String promotionType;
     private Integer quantity;
+    private String category;
 
 }

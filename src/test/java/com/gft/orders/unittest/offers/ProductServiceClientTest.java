@@ -2,7 +2,7 @@ package com.gft.orders.unittest.offers;
 
 import com.gft.orders.offer.client.ProductServiceClient;
 import com.gft.orders.offer.client.dto.CategoriesRequest;
-import com.gft.orders.offer.client.dto.OfferDTO;
+import com.gft.orders.offer.client.dto.PromotionDTO;
 import com.gft.orders.offer.client.dto.ProductDTO;
 import com.gft.orders.offer.client.exception.ProductServiceException;
 import org.junit.jupiter.api.Test;
@@ -15,10 +15,12 @@ import org.springframework.http.*;
 import org.springframework.web.client.RestClientException;
 import org.springframework.web.client.RestTemplate;
 
+import java.time.OffsetDateTime;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.*;
@@ -132,14 +134,22 @@ public class ProductServiceClientTest {
         assertTrue(exception.getMessage().contains("Failed to retrieve product categories from external service"));
         assertTrue(exception.getMessage().contains(errorMessage));
     }
+
     @Test
-    void getOffersByCategories_success(){
+    void getOffersByCategories_success() {
+        OffsetDateTime now = OffsetDateTime.now();
+        OffsetDateTime futureDate = now.plusDays(30);
 
         Set<String> categoryIds = Set.of("food", "toys");
-        Map<String, List<OfferDTO>> expectedResponse = Map.of(
-                "food", List.of(new OfferDTO(1L, "SEASON", null, null)),
-                "toys", List.of(new OfferDTO(2L, "QUANTITY", null, 3))
-                );
+
+        List<PromotionDTO> externalApiResponse = List.of(
+                new PromotionDTO(1L, now, futureDate, 0.05, "SEASON", null, "food"),
+                new PromotionDTO(2L, now, futureDate, 0.10, "QUANTITY", 3, "toys"),
+                new PromotionDTO(3L, now, futureDate, 0.15, "SALE", null, "food") // Example: another 'food' promotion
+        );
+
+        Map<String, List<PromotionDTO>> expectedResultAfterProcessing = externalApiResponse.stream()
+                .collect(Collectors.groupingBy(PromotionDTO::getCategory));
 
         when(restTemplate.exchange(
                 eq(baseUrl + "/promotions/get-by-category"),
@@ -151,13 +161,15 @@ public class ProductServiceClientTest {
                     }
                     return false;
                 }),
+
                 any(ParameterizedTypeReference.class)
-        )).thenReturn(new ResponseEntity<>(expectedResponse, HttpStatus.OK));
+        )).thenReturn(new ResponseEntity<>(externalApiResponse, HttpStatus.OK));
 
-        Map<String, List<OfferDTO>> result = productServiceClient.getOffersByCategories(categoryIds);
+        Map<String, List<PromotionDTO>> result = productServiceClient.getOffersByCategories(categoryIds);
 
-        assertEquals(2, result.size());
-        assertEquals(1, result.get("food").size());
+        assertEquals(expectedResultAfterProcessing.size(), result.size());
+        assertEquals(expectedResultAfterProcessing.get("food").size(), result.get("food").size());
+        assertEquals(expectedResultAfterProcessing.get("toys").size(), result.get("toys").size());
 
         verify(restTemplate).exchange(
                 eq(baseUrl + "/promotions/get-by-category"),
@@ -169,8 +181,10 @@ public class ProductServiceClientTest {
                     }
                     return false;
                 }),
-                any(ParameterizedTypeReference.class));
+                any(ParameterizedTypeReference.class)
+        );
     }
+
 
     @Test
     void getOffersByCategories_WhenEmptyResponse_ThrowsException(){

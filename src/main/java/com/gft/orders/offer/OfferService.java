@@ -1,7 +1,7 @@
 package com.gft.orders.offer;
 
 import com.gft.orders.offer.client.ProductServiceClient;
-import com.gft.orders.offer.client.dto.OfferDTO;
+import com.gft.orders.offer.client.dto.PromotionDTO;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
@@ -26,12 +26,12 @@ public class OfferService {
 
         Set<String> uniqueCategories = new HashSet<>(productsCategories.values());
 
-        Map<String, List<OfferDTO>> offersByCategory = productServiceClient.getOffersByCategories(uniqueCategories);
+        Map<String, List<PromotionDTO>> offersByCategory = productServiceClient.getOffersByCategories(uniqueCategories);
 
         return filterOffers(productQuantities, offersByCategory);
     }
 
-    private List<Long> filterOffers(Map<Long, Integer> productQuantities, Map<String, List<OfferDTO>> offersByCategory) {
+    private List<Long> filterOffers(Map<Long, Integer> productQuantities, Map<String, List<PromotionDTO>> offersByCategory) {
 
         List<Long> applicableOffers = new ArrayList<>();
 
@@ -57,11 +57,11 @@ public class OfferService {
         return applicableOffers;
     }
 
-    private boolean isOfferApplicable(OfferDTO offer, int totalQuantityInCategory) {
+    private boolean isOfferApplicable(PromotionDTO promotion, int totalQuantityInCategory) {
 
-        return switch (offer.getType().toUpperCase()) {
+        return switch (promotion.getPromotionType().toUpperCase()) {
             case "SEASON" -> true;
-            case "QUANTITY" -> totalQuantityInCategory >= offer.getQuantity();
+            case "QUANTITY" -> totalQuantityInCategory >= promotion.getQuantity();
             default -> false;
         };
     }

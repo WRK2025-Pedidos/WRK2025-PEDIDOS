@@ -1,7 +1,7 @@
 package com.gft.orders.offer.client;
 
 import com.gft.orders.offer.client.dto.CategoriesRequest;
-import com.gft.orders.offer.client.dto.OfferDTO;
+import com.gft.orders.offer.client.dto.PromotionDTO;
 import com.gft.orders.offer.client.dto.ProductDTO;
 import com.gft.orders.offer.client.exception.ProductServiceException;
 import lombok.extern.slf4j.Slf4j;
@@ -18,6 +18,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 @Component
 @Slf4j
@@ -65,25 +66,31 @@ public class ProductServiceClient {
 
     }
 
-    public Map<String, List<OfferDTO>> getOffersByCategories(Set<String> families) {
+    public Map<String, List<PromotionDTO>> getOffersByCategories(Set<String> families) {
 
         log.info("ProductServiceClient: Iniciando llamada a la API externa de promociones.");
 
         try{
             String url = productServiceUrl + "/promotions/get-by-category";
 
-            ResponseEntity<Map<String, List<OfferDTO>>> response = restTemplate.exchange(
+            ResponseEntity<List<PromotionDTO>> response = restTemplate.exchange(
                     url,
                     HttpMethod.POST,
                     new HttpEntity<>(new CategoriesRequest(families)),
-                    new ParameterizedTypeReference<Map<String, List<OfferDTO>>>() {}
+                    new ParameterizedTypeReference<List<PromotionDTO>>() {}
             );
 
             if(response.getStatusCode() != HttpStatus.OK) {
                 throw new ProductServiceException("Invalid response of Product Service");
             }
 
-            return response.getBody();
+            if (response.getBody() == null) {
+                log.warn("ProductService returned an empty body for promotions.");
+                return new HashMap<>();
+            }
+
+            return response.getBody().stream()
+                    .collect(Collectors.groupingBy(PromotionDTO::getCategory));
 
         }catch (RestClientException e){
             throw new ProductServiceException("Failed to retrieve offers by categories from external service: " + e.getMessage());

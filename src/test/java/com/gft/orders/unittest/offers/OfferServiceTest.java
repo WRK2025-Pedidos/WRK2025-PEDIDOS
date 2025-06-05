@@ -2,13 +2,14 @@ package com.gft.orders.unittest.offers;
 
 import com.gft.orders.offer.OfferService;
 import com.gft.orders.offer.client.ProductServiceClient;
-import com.gft.orders.offer.client.dto.OfferDTO;
+import com.gft.orders.offer.client.dto.PromotionDTO;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
+import java.time.OffsetDateTime;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -34,12 +35,17 @@ public class OfferServiceTest {
         Map<Long, String> productCategories = Map.of(1L, "food", 2L, "toys");
         Set<String> uniqueCategories = Set.of("food", "toys");
 
-        OfferDTO seasonOffer = new OfferDTO(1L, "SEASON", "food", null);
-        OfferDTO quantityOffer = new OfferDTO(2L, "QUANTITY", "toys", 2);
-        OfferDTO quantityOfferInvalid = new OfferDTO(3L, "QUANTITY", "toys", 5);
-        OfferDTO typeDefault = new OfferDTO(1L, "X", "food", null);
+        OffsetDateTime now = OffsetDateTime.now();
+        OffsetDateTime futureDate = now.plusDays(30);
+        PromotionDTO seasonOffer = new PromotionDTO(1L, now, futureDate, 0.05, "SEASON", null, "food");
 
-        Map<String, List<OfferDTO>> offersByCategory = Map.of(
+        PromotionDTO quantityOffer = new PromotionDTO(2L, now, futureDate, 0.10, "QUANTITY", 2, "toys");
+
+        PromotionDTO quantityOfferInvalid = new PromotionDTO(3L, now, futureDate,0.15,"QUANTITY",5,"toys");
+
+        PromotionDTO typeDefault = new PromotionDTO(1L,now,futureDate,0.03,"GENERIC_TYPE",null,"food");
+
+        Map<String, List<PromotionDTO>> offersByCategory = Map.of(
                 "food", List.of(seasonOffer, typeDefault),
                 "toys", List.of(quantityOffer, quantityOfferInvalid)
         );
