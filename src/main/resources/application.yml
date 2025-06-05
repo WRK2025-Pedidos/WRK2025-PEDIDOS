@@ -24,6 +24,8 @@ spring:
     port: 27033
    # username: admin
    # password: admin
+  autoconfigure:
+    exclude: org.springframework.boot.autoconfigure.amqp.RabbitAutoConfiguration
 
 external:
   api:
