@@ -17,7 +17,7 @@ public class OfferController {
     }
 
     @GetMapping
-    public ResponseEntity<List<Long>> getApplicableOffers(@RequestBody Map<Long, Integer> productQuantities) {
+    public ResponseEntity<List<Long>> getApplicableOffers(@RequestParam Map<Long, Integer> productQuantities) {
 
         List<Long> offerIds = offerService.getApplicableOffers(productQuantities);
 
