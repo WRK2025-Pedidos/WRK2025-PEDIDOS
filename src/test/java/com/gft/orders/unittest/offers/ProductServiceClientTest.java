@@ -1,6 +1,7 @@
 package com.gft.orders.unittest.offers;
 
 import com.gft.orders.offer.client.ProductServiceClient;
+import com.gft.orders.offer.client.dto.CategoriesRequest;
 import com.gft.orders.offer.client.dto.OfferDTO;
 import com.gft.orders.offer.client.dto.ProductDTO;
 import com.gft.orders.offer.client.exception.ProductServiceException;
@@ -141,10 +142,16 @@ public class ProductServiceClientTest {
                 );
 
         when(restTemplate.exchange(
-                baseUrl + "/promotions/get-by-category",
-                HttpMethod.POST,
-                new HttpEntity<>(categoryIds),
-                new ParameterizedTypeReference<Map<String, List<OfferDTO>>>() {}
+                eq(baseUrl + "/promotions/get-by-category"),
+                eq(HttpMethod.POST),
+                argThat(httpEntity -> {
+                    if (httpEntity.getBody() instanceof CategoriesRequest) {
+                        CategoriesRequest requestBody = (CategoriesRequest) httpEntity.getBody();
+                        return requestBody.categories().equals(categoryIds);
+                    }
+                    return false;
+                }),
+                any(ParameterizedTypeReference.class)
         )).thenReturn(new ResponseEntity<>(expectedResponse, HttpStatus.OK));
 
         Map<String, List<OfferDTO>> result = productServiceClient.getOffersByCategories(categoryIds);
@@ -155,7 +162,13 @@ public class ProductServiceClientTest {
         verify(restTemplate).exchange(
                 eq(baseUrl + "/promotions/get-by-category"),
                 eq(HttpMethod.POST),
-                argThat(entity -> ((Set<?>) entity.getBody()).containsAll(categoryIds)),
+                argThat(httpEntity -> {
+                    if (httpEntity.getBody() instanceof CategoriesRequest) {
+                        CategoriesRequest requestBody = (CategoriesRequest) httpEntity.getBody();
+                        return requestBody.categories().equals(categoryIds);
+                    }
+                    return false;
+                }),
                 any(ParameterizedTypeReference.class));
     }
 
@@ -165,7 +178,7 @@ public class ProductServiceClientTest {
         when(restTemplate.exchange(
                 anyString(),
                 any(),
-                any(),
+                any(HttpEntity.class),
                 any(ParameterizedTypeReference.class)))
                 .thenReturn(new ResponseEntity<>(null, HttpStatus.NOT_FOUND));
 
