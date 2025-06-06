@@ -24,6 +24,9 @@ spring:
     port: 27033
     username: admin
     password: admin
+    listener:
+      simple:
+        default-requeue-rejected: false
 #     host:  84.121.194.152
 #     port: 5672
 #     username: guest
