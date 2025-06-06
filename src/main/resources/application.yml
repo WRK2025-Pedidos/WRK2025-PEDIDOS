@@ -20,34 +20,34 @@ spring:
       data-locations: classpath:/db/data.sql
 
   rabbitmq:
-#    host: 91.126.226.193
-#    port: 27033
-#    username: admin
-#    password: admin
-     host:  84.121.194.152
-     port: 5672
-     username: guest
-     password: guest
+    host: 91.126.226.193
+    port: 27033
+    username: admin
+    password: admin
+#     host:  84.121.194.152
+#     port: 5672
+#     username: guest
+#     password: guest
 
 external:
   api:
     base:
       url: https://workshop-7uvd.onrender.com/api/v1
 
-#management:
-#  tracing:
-#    sampling:
-#      probability: 1.0
-#  zipkin:
-#    tracing:
-#      endpoint: "http://91.126.226.193:27031/api/v2/spans"
-#  endpoints:
-#    web:
-#      exposure:
-#        include: "health, info, metrics, prometheus"
-#  endpoint:
-#    health:
-#      show-details: always
+management:
+  tracing:
+    sampling:
+      probability: 1.0
+  zipkin:
+    tracing:
+      endpoint: "http://91.126.226.193:27031/api/v2/spans"
+  endpoints:
+    web:
+      exposure:
+        include: "health, info, metrics, prometheus"
+  endpoint:
+    health:
+      show-details: always
 
 logging:
   level:
