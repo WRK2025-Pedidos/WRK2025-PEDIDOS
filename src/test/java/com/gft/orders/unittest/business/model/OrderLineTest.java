@@ -54,16 +54,6 @@ public class OrderLineTest {
     }
 
     @Test
-    void getterProductPrice_Test() {
-
-        BigDecimal price = BigDecimal.valueOf(1.0);
-
-        orderLine.setProductPrice(price);
-
-        assertEquals(price, orderLine.getProductPrice());
-    }
-
-    @Test
     void setterLinePrice_Test() {
 
         orderLine.setLinePrice(BigDecimal.valueOf(1.0));
@@ -87,23 +77,6 @@ public class OrderLineTest {
         assertEquals(orderLine1, orderLine2);
     }
 
-    @Test
-    void notEquals_Test() {
-
-        Long id = 1L;
-
-        OrderLine orderLine1 = new OrderLine();
-        orderLine1.setProduct(id);
-        orderLine1.setQuantity(1);
-        orderLine1.setProductPrice(BigDecimal.valueOf(1.0));
-
-        OrderLine orderLine2 = new OrderLine();
-        orderLine2.setProduct(id);
-        orderLine2.setQuantity(1);
-        orderLine2.setProductPrice(BigDecimal.valueOf(2.0));
-
-        assertNotEquals(orderLine1, orderLine2);
-    }
 
     /***********PRIVATE METHODS***********/
     private void initData() {

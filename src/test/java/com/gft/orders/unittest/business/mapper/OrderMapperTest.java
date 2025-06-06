@@ -54,7 +54,6 @@ public class OrderMapperTest {
         assertEquals(line1JPA.getLinePrice(), resultLine.getLinePrice());
         assertEquals(line1JPA.getLineWeight(), resultLine.getLineWeight());
         assertEquals(line1JPA.getQuantity(), resultLine.getQuantity());
-        assertEquals(line1JPA.getProductPrice(), resultLine.getProductPrice());
 
     }
 
@@ -77,7 +76,6 @@ public class OrderMapperTest {
         assertEquals(line1.getLinePrice(), resultLine.getLinePrice());
         assertEquals(line1.getLineWeight(), resultLine.getLineWeight());
         assertEquals(line1.getQuantity(), resultLine.getQuantity());
-        assertEquals(line1.getProductPrice(), resultLine.getProductPrice());
 
         }
 
@@ -90,7 +88,6 @@ public class OrderMapperTest {
         assertEquals(line1JPA.getLinePrice(), result.getLinePrice());
         assertEquals(line1JPA.getLineWeight(), result.getLineWeight());
         assertEquals(line1JPA.getQuantity(), result.getQuantity());
-        assertEquals(line1JPA.getProductPrice(), result.getProductPrice());
 
     }
 
@@ -103,7 +100,6 @@ public class OrderMapperTest {
         assertEquals(line1.getLinePrice(), result.getLinePrice());
         assertEquals(line1.getLineWeight(), result.getLineWeight());
         assertEquals(line1.getQuantity(), result.getQuantity());
-        assertEquals(line1.getProductPrice(), result.getProductPrice());
     }
 
     @Test
@@ -140,7 +136,6 @@ public class OrderMapperTest {
         line1JPA.setProduct(5L);
         line1JPA.setQuantity(2);
         line1JPA.setLineWeight(1.5);
-        line1JPA.setProductPrice(BigDecimal.valueOf(50.25));
         line1JPA.setLinePrice(BigDecimal.valueOf(100.50));
 
         orderJPA.setOrderLines(List.of(line1JPA));
@@ -158,7 +153,6 @@ public class OrderMapperTest {
                 .product(1L)
                 .quantity(3)
                 .lineWeight(2.0)
-                .productPrice(BigDecimal.valueOf(50.25))
                 .linePrice(BigDecimal.valueOf(150.75))
                 .build();
 

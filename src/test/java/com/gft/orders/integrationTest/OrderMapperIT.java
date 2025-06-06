@@ -77,7 +77,6 @@ public class OrderMapperIT {
         line1JPA.setProduct(2L);
         line1JPA.setQuantity(2);
         line1JPA.setLineWeight(1.5);
-        line1JPA.setProductPrice(BigDecimal.valueOf(50.25));
         line1JPA.setLinePrice(BigDecimal.valueOf(100.50));
 
         orderJPA.setOrderLines(List.of(line1JPA));
@@ -95,7 +94,6 @@ public class OrderMapperIT {
                 .product(3L)
                 .quantity(3)
                 .lineWeight(2.0)
-                .productPrice(BigDecimal.valueOf(50.25))
                 .linePrice(BigDecimal.valueOf(150.75))
                 .build();
 

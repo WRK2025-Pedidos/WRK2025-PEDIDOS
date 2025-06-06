@@ -18,7 +18,6 @@ public class OrderLine {
     private int quantity = 0;
 
     private Double lineWeight;
-    private BigDecimal productPrice;
     private BigDecimal linePrice;
     private int returnedQuantity = 0;
 }

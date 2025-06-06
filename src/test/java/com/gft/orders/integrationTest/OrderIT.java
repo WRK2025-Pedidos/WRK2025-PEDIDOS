@@ -37,13 +37,11 @@ public class OrderIT {
     private List<OrderLine> createSampleOrderLines() {
         OrderLine line1 = Instancio.of(OrderLine.class)
                 .set(Select.field("quantity"), 2)
-                .set(Select.field("productPrice"), BigDecimal.valueOf(10.00))
                 .set(Select.field("linePrice"), BigDecimal.valueOf(20.00))
                 .create();
 
         OrderLine line2 = Instancio.of(OrderLine.class)
                 .set(Select.field("quantity"), 3)
-                .set(Select.field("productPrice"), BigDecimal.valueOf(15.00))
                 .set(Select.field("linePrice"), BigDecimal.valueOf(45.00))
                 .create();
 

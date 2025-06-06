@@ -71,7 +71,6 @@ public class OrderJPARepositoryTest {
         line.setProduct(5L);
         line.setQuantity(1);
         line.setLineWeight(0.5);
-        line.setProductPrice(BigDecimal.TEN);
         line.setLinePrice(BigDecimal.TEN);
 
         order.setOrderLines(List.of(line));

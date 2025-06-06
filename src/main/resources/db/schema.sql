@@ -21,7 +21,6 @@ CREATE TABLE IF NOT EXISTS order_lines (
                                        product             BIGINT              NOT NULL,
                                        quantity            INT                 NOT NULL,
                                        line_weight         DOUBLE PRECISION    NOT NULL,
-                                       product_price       DECIMAL(10,2)       NOT NULL,
                                        line_price          DECIMAL(10,2)       NOT NULL,
                                        returned_quantity   INT                 NOT NULL DEFAULT 0,
                                        FOREIGN KEY (order_id) REFERENCES orders(id)

@@ -51,7 +51,6 @@ public class OrderMapper {
                         lineJPA.setProduct(line.getProduct());
                         lineJPA.setQuantity(line.getQuantity());
                         lineJPA.setLineWeight(line.getLineWeight());
-                        lineJPA.setProductPrice(line.getProductPrice());
                         lineJPA.setLinePrice(line.getLinePrice());
                         lineJPA.setOrder(orderJPA);
                         return lineJPA;
@@ -71,7 +70,6 @@ public class OrderMapper {
                 .product(orderLineJPA.getProduct())
                 .quantity(orderLineJPA.getQuantity())
                 .lineWeight(orderLineJPA.getLineWeight())
-                .productPrice(orderLineJPA.getProductPrice())
                 .linePrice(orderLineJPA.getLinePrice())
                 .build();
 
@@ -84,7 +82,6 @@ public class OrderMapper {
         lineJPA.setProduct(orderLine.getProduct());
         lineJPA.setQuantity(orderLine.getQuantity());
         lineJPA.setLineWeight(orderLine.getLineWeight());
-        lineJPA.setProductPrice(orderLine.getProductPrice());
         lineJPA.setLinePrice(orderLine.getLinePrice());
 
         return lineJPA;

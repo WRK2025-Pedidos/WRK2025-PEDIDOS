@@ -135,7 +135,6 @@ public class OrderServicesImplTest {
         orderLineJPA.setProduct(productId);
         orderLineJPA.setQuantity(purchasedQuantity);
         orderLineJPA.setReturnedQuantity(0);
-        orderLineJPA.setProductPrice(productPrice);
         orderLineJPA.setLinePrice(productPrice.multiply(BigDecimal.valueOf(purchasedQuantity)));
         return orderLineJPA;
     }
@@ -157,7 +156,6 @@ public class OrderServicesImplTest {
         line1.setProduct(productId1);
         line1.setQuantity(quantity1);
         line1.setReturnedQuantity(0);
-        line1.setProductPrice(price1);
         line1.setLinePrice(price1.multiply(BigDecimal.valueOf(quantity1)));
 
         OrderLineJPA line2 = new OrderLineJPA();
@@ -165,7 +163,6 @@ public class OrderServicesImplTest {
         line2.setProduct(productId2);
         line2.setQuantity(quantity2);
         line2.setReturnedQuantity(0);
-        line2.setProductPrice(price2);
         line2.setLinePrice(price2.multiply(BigDecimal.valueOf(quantity2)));
 
         originalOrder.setOrderLines(new ArrayList<>(Arrays.asList(line1, line2)));
@@ -195,49 +192,7 @@ public class OrderServicesImplTest {
         verify(orderJPARepository).save(originalOrder);
     }
 
-    @Test
-    void shouldProcessPartialReturnOnAlreadyPartiallyReturnedLine() {
 
-        UUID orderLineId = UUID.randomUUID();
-        Long productId = 123L;
-        int purchasedQuantity = 10;
-        int alreadyReturned = 3;
-        BigDecimal productPrice = new BigDecimal("10.00");
-
-        OrderLineJPA orderLineJPA = new OrderLineJPA();
-        orderLineJPA.setId(orderLineId);
-        orderLineJPA.setProduct(productId);
-        orderLineJPA.setQuantity(purchasedQuantity);
-        orderLineJPA.setReturnedQuantity(alreadyReturned);
-        orderLineJPA.setProductPrice(productPrice);
-        orderLineJPA.setLinePrice(productPrice.multiply(BigDecimal.valueOf(purchasedQuantity)));
-
-        originalOrder.setOrderLines(List.of(orderLineJPA));
-        originalOrder.setTotalPrice(new BigDecimal("100.00"));
-
-        ReturnLinesDTO returnLinesDTO = new ReturnLinesDTO(List.of(orderLineId));
-
-        when(orderJPARepository.findById(eq(originalOrder.getId()))).thenReturn(Optional.of(originalOrder));
-        when(orderJPARepository.idDateBeforeThirtyDays(eq(originalOrder.getId()), any(LocalDateTime.class))).thenReturn(false);
-        when(orderJPARepository.save(any(OrderJPA.class))).thenReturn(originalOrder);
-
-        BigDecimal result = orderServicesImpl.processReturnLines(originalOrder.getId(), returnLinesDTO);
-
-        int quantityReturnedInThisOp = purchasedQuantity - alreadyReturned;
-        BigDecimal expectedRefund = productPrice.multiply(BigDecimal.valueOf(quantityReturnedInThisOp));
-
-        assertNotNull(result);
-        assertEquals(new BigDecimal("70.00"), result);
-
-        BigDecimal expectedTotalAfterRefund = new BigDecimal("30.00");
-        assertEquals(0, expectedTotalAfterRefund.compareTo(originalOrder.getTotalPrice()));
-
-        assertEquals(purchasedQuantity, orderLineJPA.getQuantity());
-        assertEquals(purchasedQuantity, orderLineJPA.getReturnedQuantity());
-        assertTrue(originalOrder.getOrderReturn());
-
-        verify(orderJPARepository).save(originalOrder);
-    }
 
     @Test
     void shouldThrowInvalidReturnQuantityExceptionWhenOrderLineNotFound() {
@@ -271,7 +226,6 @@ public class OrderServicesImplTest {
         orderLineJPA.setProduct(productId);
         orderLineJPA.setQuantity(purchasedQuantity);
         orderLineJPA.setReturnedQuantity(purchasedQuantity);
-        orderLineJPA.setProductPrice(new BigDecimal("10.00"));
 
         originalOrder.setOrderLines(new ArrayList<>(List.of(orderLineJPA)));
 

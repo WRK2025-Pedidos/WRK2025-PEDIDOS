@@ -106,8 +106,7 @@ public class OrderServiceImpl implements OrderServices {
 
             orderLine.setReturnedQuantity(orderLine.getQuantity());
 
-            BigDecimal itemReturnAmount = orderLine.getProductPrice().multiply(BigDecimal.valueOf(quantityToReturn));
-            totalRefundAmountForThisOperation = totalRefundAmountForThisOperation.add(itemReturnAmount);
+            totalRefundAmountForThisOperation = totalRefundAmountForThisOperation.add(orderLine.getLinePrice());
 
             originalOrder.getReturnedProductQuantity()
                     .merge(orderLine.getProduct(), quantityToReturn, Integer::sum);
