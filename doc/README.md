@@ -39,7 +39,7 @@ It follows a layered software architecture that separates concerns across presen
 ## · Swagger UI
 
 After starting the app, browse :
-http://localhost:8080/swagger-ui.html
+[http://localhost:8080/swagger-ui.html](http://52.20.192.150:8080/swagger-ui/index.html#/)
 to explore and test the API.
 
 ---
