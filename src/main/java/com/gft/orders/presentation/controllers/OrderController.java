@@ -54,12 +54,14 @@ public class OrderController {
     }
 
     @PostMapping("/{orderId}/return")
+    @Operation(summary = "Create a order return", description = "Creates a new order returns the location of the new resource")
     public BigDecimal returnOrder(@PathVariable UUID orderId) {
 
         return orderServices.createOrderReturn(orderId);
     }
 
     @PostMapping("/{orderId}/return-lines")
+    @Operation(summary = "Create a order return lines", description = "Creates a new order and returns the location of the new resource")
     @ResponseStatus(HttpStatus.OK)
     public BigDecimal returnOrderLines(@PathVariable UUID orderId, @RequestBody ReturnLinesDTO returnLinesDTO) {
         return orderServices.processReturnLines(orderId, returnLinesDTO);
